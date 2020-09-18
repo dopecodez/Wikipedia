@@ -1,0 +1,48 @@
+{
+  "name": "wikipedia",
+  "version": "1.0.9",
+  "description": "A JavaScript wrapper for the wikipedia apis",
+  "main": "dist/src",
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "prepublishOnly": "tsc --build --clean && tsc",
+    "test": "tsc --noEmit && ava",
+    "build": "tsc --build --clean && tsc",
+    "postbuild": "copyfiles -u 1 test/parser/samples/*.txt dist/test",
+    "prepare": "npm run build",
+    "release": "np"
+  },
+  "author": "Govind S",
+  "license": "MIT",
+  "homepage": "https://github.com/dopecodez/wikipedia",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/dopecodez/wikipedia.git"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.5",
+    "ava": "^3.8.2",
+    "typescript": "^3.8.3",
+    "@ava/typescript": "^1.1.1"
+  },
+  "files": [
+    "dist/src"
+  ],
+  "types": "dist/src/",
+  "ava": {
+    "files": [
+      "test/*"
+    ],
+    "timeout": "1m",
+    "typescript": {
+      "rewritePaths": {
+        "test/": "dist/test/"
+      }
+    }
+  },
+  "dependencies": {},
+  "keywords": [
+  ]
+}
