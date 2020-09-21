@@ -22,15 +22,16 @@
     "url": "git://github.com/dopecodez/wikipedia.git"
   },
   "devDependencies": {
+    "@ava/typescript": "^1.1.1",
     "@types/node": "^13.13.5",
+    "@types/node-fetch": "^2.5.7",
     "ava": "^3.8.2",
-    "typescript": "^3.8.3",
-    "@ava/typescript": "^1.1.1"
+    "typescript": "^3.8.3"
   },
   "files": [
-    "dist/src"
+    "dist/source"
   ],
-  "types": "dist/src/",
+  "types": "dist/source/",
   "ava": {
     "files": [
       "test/*"
@@ -42,7 +43,8 @@
       }
     }
   },
-  "dependencies": {},
-  "keywords": [
-  ]
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
+  "keywords": []
 }
