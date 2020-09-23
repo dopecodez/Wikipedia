@@ -18,10 +18,10 @@ async function makeRequest(params: any): Promise<any> {
                 'User-Agent': USER_AGENT
             }
         }
-        console.log('this the param' + search)
         const response = await fetch(API_URL + search, options);
         const responseBuffer = await response.buffer();
-        return responseBuffer;
+        const result = JSON.parse(responseBuffer.toString());
+        return result;
     } catch (error) {
         throw error;
     }

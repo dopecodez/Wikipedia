@@ -13,7 +13,7 @@ wiki.search = async (query: string, results = 10, suggestion = false) => {
         }
         suggestion ? searchParams['srinfo'] = 'suggestion': null;
         const response = await request(searchParams);
-        console.log(response.toString());
+        return response.query.search;
     }
     catch (error) {
         throw error;
