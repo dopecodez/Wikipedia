@@ -1,23 +1,36 @@
 // import { options } from './types'
 import request from './request'
+import { pageOptions, searchOptions } from './types';
 
 const wiki = async() => {}
 
-wiki.search = async (query: string, results = 10, suggestion = false) => {
+wiki.search = async (query: string, searchOptions: searchOptions) => {
     try {
         const searchParams: any = {
             'list': 'search',
             'srprop': '',
-            'srlimit': results,
+            'srlimit': searchOptions.results || 10,
             'srsearch': query
         }
-        suggestion ? searchParams['srinfo'] = 'suggestion': null;
+        searchOptions.suggestion ? searchParams['srinfo'] = 'suggestion': null;
         const response = await request(searchParams);
         return response.query.search;
     }
     catch (error) {
         throw error;
     }
+}
+
+wiki.page = async (title: string, pageOptions: pageOptions) => {
+    const pageParams: any = {
+        prop: 'info|pageprops',
+        inprop: 'url',
+        ppprop: 'disambiguation',
+        titles: title
+    }
+    console.log(pageOptions);
+    const response = await request(pageParams);
+    return response.query.pages;
 }
 
 export default wiki;
