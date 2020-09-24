@@ -1,6 +1,6 @@
-// import { options } from './types'
 import request from './request'
 import { pageOptions, searchOptions } from './types';
+import page from './page';
 
 const wiki = async() => {}
 
@@ -30,7 +30,12 @@ wiki.page = async (title: string, pageOptions: pageOptions) => {
     }
     console.log(pageOptions);
     const response = await request(pageParams);
-    return response.query.pages;
+    let pageInfo = response.query.pages;
+    const pageId = Object.keys(pageInfo)[0];
+    pageInfo = pageInfo[pageId];
+    const summary = await page.summary(pageId);
+    pageInfo.summary = summary;
+    return pageInfo;
 }
 
 export default wiki;
