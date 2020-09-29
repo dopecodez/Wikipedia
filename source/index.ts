@@ -38,6 +38,38 @@ wiki.page = async (title: string, pageOptions: pageOptions) => {
     return pageInfo;
 }
 
+wiki.summary = async (title: string, pageOptions: pageOptions) => {
+    const pageParams: any = {
+        prop: 'info|pageprops',
+        inprop: 'url',
+        ppprop: 'disambiguation',
+        titles: title
+    }
+    console.log(pageOptions);
+    const response = await request(pageParams);
+    let pageInfo = response.query.pages;
+    const pageId = Object.keys(pageInfo)[0];
+    pageInfo = pageInfo[pageId];
+    const summary = await page.summary(pageId);
+    return summary;
+}
+
+wiki.images = async (title: string, pageOptions: pageOptions) => {
+    const pageParams: any = {
+        prop: 'info|pageprops',
+        inprop: 'url',
+        ppprop: 'disambiguation',
+        titles: title
+    }
+    console.log(pageOptions);
+    const response = await request(pageParams);
+    let pageInfo = response.query.pages;
+    const pageId = Object.keys(pageInfo)[0];
+    pageInfo = pageInfo[pageId];
+    const images = await page.images(pageId);
+    return images;
+}
+
 export default wiki;
 // For CommonJS default export support
 module.exports = wiki;
