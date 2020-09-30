@@ -2,7 +2,7 @@ import request from './request'
 import { pageOptions, searchOptions } from './optionTypes';
 import page from './page';
 import { pageResult, wikiSearchResult } from './resultTypes';
-import { imageError, pageError, searchError, summaryError } from './errors';
+import { imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 
 const wiki = async() => {}
@@ -73,6 +73,21 @@ wiki.images = async (title: string, pageOptions?: pageOptions) => {
         return images;
     } catch (error) {
         throw new imageError(error);
+    }
+}
+
+wiki.suggest = async (query: string ) => {
+    try {
+        let searchParams = {
+            'list': 'search',
+            'srinfo': 'suggestion',
+            'srprop': '',
+            'srsearch': query
+        }
+        let response = await request(searchParams);
+        return response.query.searchinfo ? response.query.searchinfo.suggestion : null
+    } catch (error) {
+        throw new wikiError(error);
     }
 }
 
