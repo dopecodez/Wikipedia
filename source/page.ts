@@ -23,7 +23,6 @@ page.images = async (pageId: string) => {
     }
     const response = await request(imageOptions);
     const images = [];
-    console.log(response.query.pages);
     const imageKeys = Object.keys(response.query.pages);
     for (const image of imageKeys) {
         const imageInfo = response.query.pages[image];

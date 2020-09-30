@@ -1,5 +1,6 @@
 import fetch, { RequestInit } from 'node-fetch';
 import { URLSearchParams } from 'url';
+import { wikiError } from './errors';
 
 const API_URL = 'http://en.wikipedia.org/w/api.php?',
     // RATE_LIMIT = false,
@@ -23,7 +24,7 @@ async function makeRequest(params: any): Promise<any> {
         const result = JSON.parse(responseBuffer.toString());
         return result;
     } catch (error) {
-        throw error;
+        throw new wikiError(error);
     }
 }
 
