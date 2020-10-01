@@ -1,8 +1,8 @@
 import fetch, { RequestInit } from 'node-fetch';
 import { URLSearchParams } from 'url';
 import { wikiError } from './errors';
-
-const API_URL = 'http://en.wikipedia.org/w/api.php?',
+ 
+let API_URL = 'http://en.wikipedia.org/w/api.php?',
     // RATE_LIMIT = false,
     // RATE_LIMIT_MIN_WAIT = undefined,
     // RATE_LIMIT_LAST_CALL = undefined,
@@ -26,6 +26,11 @@ async function makeRequest(params: any): Promise<any> {
     } catch (error) {
         throw new wikiError(error);
     }
+}
+
+export function setAPIUrl(prefix: string) {
+    API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/w/api.php?';
+    return API_URL;
 }
 
 export default makeRequest;

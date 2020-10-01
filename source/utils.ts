@@ -1,3 +1,3 @@
-export function isTitleNumber(title: any){
+export function isString(title: any){
     return isNaN(title);
 }

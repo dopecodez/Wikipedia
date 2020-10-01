@@ -1,10 +1,10 @@
-import request from './request'
+import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions } from './optionTypes';
 import page from './page';
 import { pageResult, wikiSearchResult } from './resultTypes';
 import { imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
-import { isTitleNumber } from './utils';
+import { isString } from './utils';
 
 const wiki = async() => {}
 
@@ -43,7 +43,7 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<pageResult
             inprop: 'url',
             ppprop: 'disambiguation',
         }
-        if (isTitleNumber(title)) {
+        if (isString(title)) {
             pageParams.titles = title
         } else {
             pageParams.pageids = title
@@ -81,16 +81,28 @@ wiki.images = async (title: string, pageOptions?: pageOptions) => {
     }
 }
 
-wiki.suggest = async (query: string ) => {
+
+wiki.languages = async () => {
     try {
-        let searchParams = {
-            'list': 'search',
-            'srinfo': 'suggestion',
-            'srprop': '',
-            'srsearch': query
+        const langParams = {
+            'meta': 'siteinfo',
+            'siprop': 'languages'
         }
-        let response = await request(searchParams);
-        return response.query.searchinfo ? response.query.searchinfo.suggestion : null
+        const response = await request(langParams);
+        const languages = [];
+        for (const lang of response.query.languages) {
+            languages.push({ [lang.code]: lang['*'] })
+        }
+        return languages;
+    } catch (error) {
+        throw new wikiError(error);
+    }
+}
+
+wiki.setLang = (language: string) => {
+    try{
+        const apiUrl = setAPIUrl(language);
+        return apiUrl;
     } catch (error) {
         throw new wikiError(error);
     }
