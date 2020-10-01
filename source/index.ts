@@ -4,6 +4,7 @@ import page from './page';
 import { pageResult, wikiSearchResult } from './resultTypes';
 import { imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
+import { isTitleNumber } from './utils';
 
 const wiki = async() => {}
 
@@ -37,12 +38,16 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<pageResult
             }
             title = searchResult.suggestion || title;
         }
-        const pageParams: any = {
+        let pageParams: any = {
             prop: 'info|pageprops',
             inprop: 'url',
             ppprop: 'disambiguation',
-            titles: title
         }
+        if (isTitleNumber(title)) {
+            pageParams.titles = title
+        } else {
+            pageParams.pageids = title
+        };
         const response = await request(pageParams);
         let pageInfo = response.query.pages;
         const pageId = Object.keys(pageInfo)[0];
