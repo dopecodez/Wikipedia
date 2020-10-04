@@ -8,3 +8,8 @@ export interface pageOptions {
     redirect?: boolean
     preload?: boolean
 }
+
+export interface geoOptions {
+    results?: number
+    radius?: number
+}

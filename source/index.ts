@@ -1,12 +1,12 @@
 import request, { setAPIUrl } from './request'
-import { pageOptions, searchOptions } from './optionTypes';
+import { pageOptions, searchOptions, geoOptions } from './optionTypes';
 import page from './page';
 import { pageResult, wikiSearchResult } from './resultTypes';
 import { imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 import { isString } from './utils';
 
-const wiki = async() => {}
+const wiki = async () => { }
 
 wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wikiSearchResult> => {
     try {
@@ -100,9 +100,26 @@ wiki.languages = async () => {
 }
 
 wiki.setLang = (language: string) => {
-    try{
+    try {
         const apiUrl = setAPIUrl(language);
         return apiUrl;
+    } catch (error) {
+        throw new wikiError(error);
+    }
+}
+
+wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOptions) => {
+    try {
+        let geoSearchParams: any = {
+            'list': 'geosearch',
+            'gsradius': geoOptions?.radius || 1000,
+            'gscoord': `${latitude}|${longitude}`,
+            'gslimit': geoOptions?.results || 10,
+            'gsprop': 'type'
+        }
+        const results = await request(geoSearchParams);
+        const searchPages = results.query.geosearch;
+        return searchPages;
     } catch (error) {
         throw new wikiError(error);
     }
