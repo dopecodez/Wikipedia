@@ -1,7 +1,7 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import page from './page';
-import { pageResult, wikiSearchResult } from './resultTypes';
+import Page from './page';
+import { wikiSearchResult } from './resultTypes';
 import { imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 import { isString } from './utils';
@@ -28,7 +28,7 @@ wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wiki
     }
 }
 
-wiki.page = async (title: string, pageOptions?: pageOptions): Promise<pageResult> => {
+wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
     let searchResult: wikiSearchResult;
     try {
         if (pageOptions?.autoSuggest) {
@@ -55,7 +55,8 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<pageResult
         if (pageInfo.missing == '') {
             throw new pageError(`${MSGS.PAGE_NOT_EXIST}${title}`)
         }
-        return pageInfo;
+        const page = new Page(pageInfo);
+        return page;
     } catch (error) {
         throw error;
     }
@@ -63,8 +64,8 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<pageResult
 
 wiki.summary = async (title: string, pageOptions?: pageOptions) => {
     try {
-        let response = await wiki.page(title, pageOptions);
-        const summary = await page.summary(response.pageid.toString());
+        let page = await wiki.page(title, pageOptions);
+        const summary = await page.summary();
         return summary;
     } catch (error) {
         throw new summaryError(error);
@@ -73,14 +74,13 @@ wiki.summary = async (title: string, pageOptions?: pageOptions) => {
 
 wiki.images = async (title: string, pageOptions?: pageOptions) => {
     try {
-        let response = await wiki.page(title, pageOptions);
-        const images = await page.images(response.pageid.toString());
+        let page = await wiki.page(title, pageOptions);
+        const images = await page.images();
         return images;
     } catch (error) {
         throw new imageError(error);
     }
 }
-
 
 wiki.languages = async () => {
     try {
