@@ -1,10 +1,10 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import Page from './page';
+import Page, {summary, images} from './page';
 import { wikiSearchResult } from './resultTypes';
 import { imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
-import { isString } from './utils';
+import { isString, setTitleForPage } from './utils';
 
 const wiki = async () => { }
 
@@ -29,14 +29,9 @@ wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wiki
 }
 
 wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
-    let searchResult: wikiSearchResult;
     try {
         if (pageOptions?.autoSuggest) {
-            searchResult = await wiki.search(title, { results: 1, suggestion: true })
-            if (!searchResult.suggestion && searchResult.search.length == 0) {
-                throw new pageError(`${MSGS.PAGE_NOT_SUGGEST}${title}`)
-            }
-            title = searchResult.suggestion || title;
+            title = await setTitleForPage(title);
         }
         let pageParams: any = {
             prop: 'info|pageprops',
@@ -64,9 +59,11 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
 
 wiki.summary = async (title: string, pageOptions?: pageOptions) => {
     try {
-        let page = await wiki.page(title, pageOptions);
-        const summary = await page.summary();
-        return summary;
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const result = await summary(title);
+        return result;
     } catch (error) {
         throw new summaryError(error);
     }
@@ -74,9 +71,11 @@ wiki.summary = async (title: string, pageOptions?: pageOptions) => {
 
 wiki.images = async (title: string, pageOptions?: pageOptions) => {
     try {
-        let page = await wiki.page(title, pageOptions);
-        const images = await page.images();
-        return images;
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const result = await images(title);
+        return result;
     } catch (error) {
         throw new imageError(error);
     }
@@ -123,6 +122,17 @@ wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOpt
     } catch (error) {
         throw new wikiError(error);
     }
+}
+
+wiki.suggest = async (query: string) => {
+    const suggestParams = {
+        'list': 'search',
+        'srinfo': 'suggestion',
+        'srprop': '',
+        'srsearch': query
+    }
+    let result = await request(suggestParams);
+    return result.query?.searchinfo?.suggestion ? result.query?.searchinfo?.suggestion : null;
 }
 
 export default wiki;

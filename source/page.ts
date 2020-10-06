@@ -1,5 +1,7 @@
+import { imageError, summaryError } from './errors';
 import request from './request';
 import { pageResult } from './resultTypes';
+import { setPageIdOrTitleParam } from './utils';
 
 export class Page {
     pageid!: number;
@@ -30,25 +32,34 @@ export class Page {
         this.canonicalurl = response.canonicalurl;
     }
 
-    public summary = async (): Promise<string> => {
-        const summaryOptions = {
-            prop: 'extracts',
-            explaintext: '',
-            exintro: '',
-            pageids: this.pageid
+    public summary = async (): Promise<any> => {
+        try {
+            const response = await summary(this.pageid.toString());
+            return response;
+        } catch (error) {
+            throw new summaryError(error);
         }
-        const response = await request(summaryOptions);
-        return response.query.pages[this.pageid].extract;
     }
 
     public images = async (): Promise<any> => {
-        const imageOptions = {
+        try {
+            const result = await images(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new imageError(error);
+        }
+    }
+}
+
+export const images = async (title: string): Promise<any> => {
+    try {
+        let imageOptions: any = {
             generator: 'images',
             gimlimit: 5,
             prop: 'imageinfo',
-            iiprop: 'url',
-            pageids: this.pageid
+            iiprop: 'url'
         }
+        imageOptions = setPageIdOrTitleParam(imageOptions, title);
         const response = await request(imageOptions);
         const images = [];
         const imageKeys = Object.keys(response.query.pages);
@@ -58,6 +69,28 @@ export class Page {
             images.push(imageInfo);
         }
         return images;
+    } catch (error) {
+        throw new imageError(error);
+    }
+}
+
+export const summary = async (title: string): Promise<any> => {
+    try {
+        let summaryOptions: any = {
+            prop: 'extracts',
+            explaintext: '',
+            exintro: '',
+        }
+        summaryOptions = setPageIdOrTitleParam(summaryOptions, title);
+        const response = await request(summaryOptions);
+        if (summaryOptions.pageIds) {
+            return response.query.pages[title].extract;
+        } else {
+            const pageId = Object.keys(response.query.pages)[0];
+            return response.query.pages[pageId].extract;
+        }
+    } catch (error) {
+        throw new summaryError(error);
     }
 }
 
