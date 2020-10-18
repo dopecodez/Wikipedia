@@ -1,4 +1,4 @@
-import { htmlError, imageError, summaryError } from './errors';
+import { contentError, htmlError, imageError, summaryError } from './errors';
 import request from './request';
 import { pageResult } from './resultTypes';
 import { setPageIdOrTitleParam } from './utils';
@@ -17,6 +17,8 @@ export class Page {
     fullurl!: string;
     editurl!: string;
     canonicalurl!: string;
+    revId!: number
+    parentId!: number
     constructor(response: pageResult) {
         this.pageid = response.pageid;
         this.ns = response.ns;
@@ -54,6 +56,17 @@ export class Page {
         try {
             const result = await html(this.pageid.toString());
             return result;
+        } catch (error) {
+            throw new htmlError(error);
+        }
+    }
+
+    public content = async (): Promise<any> => {
+        try {
+            const result = await content(this.pageid.toString());
+            this.parentId = result.ids.parentId;
+            this.revId = result.ids.revId;
+            return result.result;
         } catch (error) {
             throw new htmlError(error);
         }
@@ -103,7 +116,7 @@ export const summary = async (title: string): Promise<string> => {
     }
 }
 
-export const html = async( title: string): Promise<string> => {
+export const html = async (title: string): Promise<string> => {
     try {
         let htmlOptions: any = {
             'prop': 'revisions',
@@ -121,6 +134,35 @@ export const html = async( title: string): Promise<string> => {
         }
     } catch (error) {
         throw new htmlError(error);
+    }
+}
+
+export const content = async (title: string): Promise<any> => {
+    try {
+        let contentOptions: any = {
+            'prop': 'extracts|revisions',
+            'explaintext': '',
+            'rvprop': 'ids'
+        }
+        contentOptions = setPageIdOrTitleParam(contentOptions, title);
+        const response = await request(contentOptions);
+        let pageId;
+        if (contentOptions.pageIds) {
+            pageId = title;
+        } else {
+            pageId = Object.keys(response.query.pages)[0];
+        }
+        const result = response['query']['pages'][pageId]['extract'];
+        const ids = {
+            revisionId: response['query']['pages'][pageId]['revisions'][0]['revid'],
+            parentId: response['query']['pages'][pageId]['revisions'][0]['parentid']
+        }
+        return {
+            result,
+            ids
+        }
+    } catch (error) {
+        throw new contentError(error);
     }
 }
 

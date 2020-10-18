@@ -41,3 +41,10 @@ export class htmlError extends wikiError {
         this.name = 'htmlError';
     }
 }
+
+export class contentError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'contentError';
+    }
+}

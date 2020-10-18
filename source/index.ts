@@ -1,8 +1,8 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import Page, {summary, images, html} from './page';
+import Page, {summary, images, html, content} from './page';
 import { wikiSearchResult } from './resultTypes';
-import { imageError, pageError, searchError, summaryError, wikiError } from './errors';
+import { contentError, htmlError, imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 import { isString, setTitleForPage } from './utils';
 
@@ -91,7 +91,19 @@ wiki.html = async (title: string, pageOptions?: pageOptions) : Promise<any> => {
         const result = await html(title);
         return result;
     } catch (error) {
-        throw new imageError(error);
+        throw new htmlError(error);
+    }
+}
+
+wiki.content = async (title: string, pageOptions?: pageOptions) : Promise<any> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const response = await content(title);
+        return response.result;
+    } catch (error) {
+        throw new contentError(error);
     }
 }
 
