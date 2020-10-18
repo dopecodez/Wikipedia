@@ -1,4 +1,4 @@
-import { imageError, summaryError } from './errors';
+import { htmlError, imageError, summaryError } from './errors';
 import request from './request';
 import { pageResult } from './resultTypes';
 import { setPageIdOrTitleParam } from './utils';
@@ -49,6 +49,15 @@ export class Page {
             throw new imageError(error);
         }
     }
+
+    public html = async (): Promise<any> => {
+        try {
+            const result = await html(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new htmlError(error);
+        }
+    }
 }
 
 export const images = async (title: string): Promise<any> => {
@@ -74,7 +83,7 @@ export const images = async (title: string): Promise<any> => {
     }
 }
 
-export const summary = async (title: string): Promise<any> => {
+export const summary = async (title: string): Promise<string> => {
     try {
         let summaryOptions: any = {
             prop: 'extracts',
@@ -91,6 +100,27 @@ export const summary = async (title: string): Promise<any> => {
         }
     } catch (error) {
         throw new summaryError(error);
+    }
+}
+
+export const html = async( title: string): Promise<string> => {
+    try {
+        let htmlOptions: any = {
+            'prop': 'revisions',
+            'rvprop': 'content',
+            'rvlimit': 1,
+            'rvparse': ''
+        }
+        htmlOptions = setPageIdOrTitleParam(htmlOptions, title);
+        const response = await request(htmlOptions);
+        if (htmlOptions.pageIds) {
+            return response.query.pages[title].revisions[0]['*'];
+        } else {
+            const pageId = Object.keys(response.query.pages)[0];
+            return response.query.pages[pageId].revisions[0]['*'];
+        }
+    } catch (error) {
+        throw new htmlError(error);
     }
 }
 

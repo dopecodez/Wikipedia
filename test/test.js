@@ -1,9 +1,10 @@
 const wiki = require('../dist/index');
 
 (async () => {
-	const result = await wiki.summary('batma', {autoSuggest: true});
+	const page = await wiki.page('batman');
+	console.log(page);
+	const result = await page.html();
 	console.log(result);
-	// console.log(result.pageid)
 })().catch(error => {
 	console.log(`${error.message}`);
 	process.exit(1);

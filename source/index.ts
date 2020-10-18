@@ -1,11 +1,13 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import Page, {summary, images} from './page';
+import Page, {summary, images, html} from './page';
 import { wikiSearchResult } from './resultTypes';
 import { imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 import { isString, setTitleForPage } from './utils';
 
+//The intial wiki function
+//All APIs are based on https://www.mediawiki.org/wiki/API:Main_page
 const wiki = async () => { }
 
 wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wikiSearchResult> => {
@@ -57,7 +59,7 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
     }
 }
 
-wiki.summary = async (title: string, pageOptions?: pageOptions) => {
+wiki.summary = async (title: string, pageOptions?: pageOptions) : Promise<string> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -69,7 +71,7 @@ wiki.summary = async (title: string, pageOptions?: pageOptions) => {
     }
 }
 
-wiki.images = async (title: string, pageOptions?: pageOptions) => {
+wiki.images = async (title: string, pageOptions?: pageOptions) : Promise<any> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -81,7 +83,19 @@ wiki.images = async (title: string, pageOptions?: pageOptions) => {
     }
 }
 
-wiki.languages = async () => {
+wiki.html = async (title: string, pageOptions?: pageOptions) : Promise<any> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const result = await html(title);
+        return result;
+    } catch (error) {
+        throw new imageError(error);
+    }
+}
+
+wiki.languages = async () : Promise<any> => {
     try {
         const langParams = {
             'meta': 'siteinfo',
@@ -98,7 +112,7 @@ wiki.languages = async () => {
     }
 }
 
-wiki.setLang = (language: string) => {
+wiki.setLang = (language: string) : string => {
     try {
         const apiUrl = setAPIUrl(language);
         return apiUrl;
@@ -107,7 +121,7 @@ wiki.setLang = (language: string) => {
     }
 }
 
-wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOptions) => {
+wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOptions) : Promise<any> => {
     try {
         let geoSearchParams: any = {
             'list': 'geosearch',
@@ -124,15 +138,19 @@ wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOpt
     }
 }
 
-wiki.suggest = async (query: string) => {
-    const suggestParams = {
-        'list': 'search',
-        'srinfo': 'suggestion',
-        'srprop': '',
-        'srsearch': query
+wiki.suggest = async (query: string) : Promise<any> => {
+    try{
+        const suggestParams = {
+            'list': 'search',
+            'srinfo': 'suggestion',
+            'srprop': '',
+            'srsearch': query
+        }
+        let result = await request(suggestParams);
+        return result.query?.searchinfo?.suggestion ? result.query?.searchinfo?.suggestion : null;
+    } catch (error) {
+        throw new searchError(error);
     }
-    let result = await request(suggestParams);
-    return result.query?.searchinfo?.suggestion ? result.query?.searchinfo?.suggestion : null;
 }
 
 export default wiki;

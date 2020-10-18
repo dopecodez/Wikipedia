@@ -14,7 +14,6 @@ export class searchError extends wikiError {
     }
 }
 
-
 export class pageError extends wikiError {
     constructor(message: string) {
         super(message);
@@ -33,5 +32,12 @@ export class imageError extends wikiError {
     constructor(message: string) {
         super(message);
         this.name = 'imageError';
+    }
+}
+
+export class htmlError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'htmlError';
     }
 }
