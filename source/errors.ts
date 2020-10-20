@@ -48,3 +48,10 @@ export class contentError extends wikiError {
         this.name = 'contentError';
     }
 }
+
+export class sectionsError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'sectionError';
+    }
+}

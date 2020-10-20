@@ -1,4 +1,4 @@
-import { contentError, htmlError, imageError, summaryError } from './errors';
+import { contentError, htmlError, imageError, sectionsError, summaryError } from './errors';
 import request from './request';
 import { pageResult } from './resultTypes';
 import { setPageIdOrTitleParam } from './utils';
@@ -68,7 +68,16 @@ export class Page {
             this.revId = result.ids.revId;
             return result.result;
         } catch (error) {
-            throw new htmlError(error);
+            throw new contentError(error);
+        }
+    }
+
+    public categories = async (): Promise<any> => {
+        try {
+            const result = await categories(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new sectionsError(error);
         }
     }
 }
@@ -161,6 +170,26 @@ export const content = async (title: string): Promise<any> => {
             result,
             ids
         }
+    } catch (error) {
+        throw new contentError(error);
+    }
+}
+
+export const categories = async (title: string, limit = 100): Promise<any> => {
+    try {
+        let categoryOptions: any = {
+            prop: 'categories',
+			pllimit: limit,
+        }
+        categoryOptions = setPageIdOrTitleParam(categoryOptions, title);
+        const response = await request(categoryOptions);
+        let pageId;
+        if (categoryOptions.pageIds) {
+            pageId = title;
+        } else {
+            pageId = Object.keys(response.query.pages)[0];
+        }
+        return response.query.pages[pageId].categories.map((category : any)=> category.title)
     } catch (error) {
         throw new contentError(error);
     }
