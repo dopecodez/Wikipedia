@@ -70,3 +70,9 @@ export class geoSearchError extends wikiError {
     }
 }
 
+export class coordinatesError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'coordinatesError';
+    }
+}

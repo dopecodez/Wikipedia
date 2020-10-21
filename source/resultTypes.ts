@@ -42,3 +42,10 @@ export interface geoSearchResult {
     primary: string,
     type: string
 }
+
+export interface coordinatesResult {
+    lat: number
+    lon: number,
+    primary: string,
+    globe: string
+}

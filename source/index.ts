@@ -1,8 +1,8 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import Page, {summary, images, html, content, categories, links, externalLinks} from './page';
-import { geoSearchResult, imageResult, languageResult, wikiSearchResult } from './resultTypes';
-import { contentError, geoSearchError, htmlError, imageError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
+import Page, {summary, images, html, content, categories, links, externalLinks, coordinates} from './page';
+import { coordinatesResult, geoSearchResult, imageResult, languageResult, wikiSearchResult } from './resultTypes';
+import { contentError, coordinatesError, geoSearchError, htmlError, imageError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 import { isString, setTitleForPage } from './utils';
 
@@ -143,6 +143,18 @@ wiki.externalLinks = async (title: string, pageOptions?: pageOptions) : Promise<
     }
 }
 
+wiki.coordinates = async (title: string, pageOptions?: pageOptions) : Promise<coordinatesResult | null> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const response = await coordinates(title);
+        return response;
+    } catch (error) {
+        throw new coordinatesError(error);
+    }
+}
+
 wiki.languages = async () : Promise<Array<languageResult>> => {
     try {
         const langParams = {
@@ -186,7 +198,7 @@ wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOpt
     }
 }
 
-wiki.suggest = async (query: string) : Promise<string> => {
+wiki.suggest = async (query: string) : Promise<string | null> => {
     try{
         const suggestParams = {
             'list': 'search',

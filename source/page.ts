@@ -1,6 +1,6 @@
-import { contentError, htmlError, imageError, linksError, sectionsError, summaryError } from './errors';
+import { contentError, coordinatesError, htmlError, imageError, linksError, sectionsError, summaryError } from './errors';
 import request from './request';
-import { imageResult, pageResult } from './resultTypes';
+import { coordinatesResult, imageResult, pageResult } from './resultTypes';
 import { setPageIdOrTitleParam } from './utils';
 
 export class Page {
@@ -96,6 +96,15 @@ export class Page {
             return result;
         } catch (error) {
             throw new linksError(error);
+        }
+    }
+
+    public coordinates = async (): Promise<coordinatesResult> => {
+        try {
+            const result = await coordinates(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new coordinatesError(error);
         }
     }
 }
@@ -253,6 +262,26 @@ export const externalLinks = async (title: string): Promise<Array<string>> => {
         return result;
     } catch (error) {
         throw new linksError(error);
+    }
+}
+
+export const coordinates = async (title: string): Promise<coordinatesResult> => {
+    try {
+        let coordinatesOptions: any = {
+            prop: 'coordinates',
+        }
+        coordinatesOptions = setPageIdOrTitleParam(coordinatesOptions, title);
+        const response = await request(coordinatesOptions);
+        let pageId;
+        if (coordinatesOptions.pageIds) {
+            pageId = title;
+        } else {
+            pageId = Object.keys(response.query.pages)[0];
+        }
+        const coordinates = response.query.pages[pageId].coordinates;
+        return coordinates ? coordinates[0]: null;
+    } catch (error) {
+        throw new coordinatesError(error);
     }
 }
 
