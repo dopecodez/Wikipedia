@@ -63,3 +63,10 @@ export class linksError extends wikiError {
     }
 }
 
+export class geoSearchError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'geoSearchError';
+    }
+}
+

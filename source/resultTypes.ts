@@ -18,3 +18,27 @@ export interface pageResult {
     editurl: string,
     canonicalurl: string
 }
+
+export interface imageResult {
+    pageid: number,
+    ns: number,
+    title: string,
+    imagerepository: string,
+    imageinfo: any,
+    url: string
+}
+
+export interface languageResult {
+    [key: string]: string
+}
+
+export interface geoSearchResult {
+    pageid: number,
+    ns: number,
+    title: string,
+    lat: number,
+    lon: number,
+    dist: number,
+    primary: string,
+    type: string
+}

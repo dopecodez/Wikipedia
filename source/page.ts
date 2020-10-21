@@ -1,6 +1,6 @@
 import { contentError, htmlError, imageError, linksError, sectionsError, summaryError } from './errors';
 import request from './request';
-import { pageResult } from './resultTypes';
+import { imageResult, pageResult } from './resultTypes';
 import { setPageIdOrTitleParam } from './utils';
 
 export class Page {
@@ -34,7 +34,7 @@ export class Page {
         this.canonicalurl = response.canonicalurl;
     }
 
-    public summary = async (): Promise<any> => {
+    public summary = async (): Promise<string> => {
         try {
             const response = await summary(this.pageid.toString());
             return response;
@@ -43,7 +43,7 @@ export class Page {
         }
     }
 
-    public images = async (): Promise<any> => {
+    public images = async (): Promise<Array<imageResult>> => {
         try {
             const result = await images(this.pageid.toString());
             return result;
@@ -52,7 +52,7 @@ export class Page {
         }
     }
 
-    public html = async (): Promise<any> => {
+    public html = async (): Promise<string> => {
         try {
             const result = await html(this.pageid.toString());
             return result;
@@ -61,7 +61,7 @@ export class Page {
         }
     }
 
-    public content = async (): Promise<any> => {
+    public content = async (): Promise<string> => {
         try {
             const result = await content(this.pageid.toString());
             this.parentId = result.ids.parentId;
@@ -72,7 +72,7 @@ export class Page {
         }
     }
 
-    public categories = async (): Promise<any> => {
+    public categories = async (): Promise<Array<string>> => {
         try {
             const result = await categories(this.pageid.toString());
             return result;
@@ -81,17 +81,26 @@ export class Page {
         }
     }
 
-    public links = async (): Promise<any> => {
+    public links = async (): Promise<Array<string>> => {
         try {
             const result = await links(this.pageid.toString());
             return result;
         } catch (error) {
-            throw new sectionsError(error);
+            throw new linksError(error);
         }
-    } 
+    }
+
+    public externalLinks = async (): Promise<Array<string>> => {
+        try {
+            const result = await externalLinks(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new linksError(error);
+        }
+    }
 }
 
-export const images = async (title: string): Promise<any> => {
+export const images = async (title: string): Promise<Array<imageResult>> => {
     try {
         let imageOptions: any = {
             generator: 'images',
@@ -184,11 +193,11 @@ export const content = async (title: string): Promise<any> => {
     }
 }
 
-export const categories = async (title: string, limit = 100): Promise<any> => {
+export const categories = async (title: string, limit = 100): Promise<Array<string>> => {
     try {
         let categoryOptions: any = {
             prop: 'categories',
-			pllimit: limit,
+            pllimit: limit,
         }
         categoryOptions = setPageIdOrTitleParam(categoryOptions, title);
         const response = await request(categoryOptions);
@@ -198,14 +207,14 @@ export const categories = async (title: string, limit = 100): Promise<any> => {
         } else {
             pageId = Object.keys(response.query.pages)[0];
         }
-        return response.query.pages[pageId].categories.map((category : any)=> category.title)
+        return response.query.pages[pageId].categories.map((category: any) => category.title)
     } catch (error) {
         throw new sectionsError(error);
     }
 }
 
-export const links = async (title: string, limit = 100) => {
-    try{
+export const links = async (title: string, limit = 100): Promise<Array<string>> => {
+    try {
         let linksOptions: any = {
             prop: 'links',
             plnamespace: 0,
@@ -220,6 +229,27 @@ export const links = async (title: string, limit = 100) => {
             pageId = Object.keys(response.query.pages)[0];
         }
         let result = response.query.pages[pageId].links.map((link: any) => link.title)
+        return result;
+    } catch (error) {
+        throw new linksError(error);
+    }
+}
+
+export const externalLinks = async (title: string): Promise<Array<string>> => {
+    try {
+        let extLinksOptions: any = {
+            prop: 'extlinks',
+            ellimit: 'max',
+        }
+        extLinksOptions = setPageIdOrTitleParam(extLinksOptions, title);
+        const response = await request(extLinksOptions);
+        let pageId;
+        if (extLinksOptions.pageIds) {
+            pageId = title;
+        } else {
+            pageId = Object.keys(response.query.pages)[0];
+        }
+        let result = response.query.pages[pageId].extlinks.map((link: any) => link['*'])
         return result;
     } catch (error) {
         throw new linksError(error);
