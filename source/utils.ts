@@ -25,3 +25,13 @@ export function setPageIdOrTitleParam(params: any, title: string) {
     };
     return params;
 }
+
+export function setPageId(params: any, results: any): number {
+    let pageId;
+    if (params.pageIds) {
+        pageId = params.pageIds;
+    } else {
+        pageId = Object.keys(results.query.pages)[0];
+    }
+    return pageId;
+}

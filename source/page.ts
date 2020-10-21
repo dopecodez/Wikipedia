@@ -1,7 +1,7 @@
 import { contentError, coordinatesError, htmlError, imageError, linksError, sectionsError, summaryError } from './errors';
 import request from './request';
 import { coordinatesResult, imageResult, pageResult } from './resultTypes';
-import { setPageIdOrTitleParam } from './utils';
+import { setPageId, setPageIdOrTitleParam } from './utils';
 
 export class Page {
     pageid!: number;
@@ -141,12 +141,8 @@ export const summary = async (title: string): Promise<string> => {
         }
         summaryOptions = setPageIdOrTitleParam(summaryOptions, title);
         const response = await request(summaryOptions);
-        if (summaryOptions.pageIds) {
-            return response.query.pages[title].extract;
-        } else {
-            const pageId = Object.keys(response.query.pages)[0];
-            return response.query.pages[pageId].extract;
-        }
+        const pageId = setPageId(summaryOptions, response);
+        return response.query.pages[pageId].extract;
     } catch (error) {
         throw new summaryError(error);
     }
@@ -162,12 +158,8 @@ export const html = async (title: string): Promise<string> => {
         }
         htmlOptions = setPageIdOrTitleParam(htmlOptions, title);
         const response = await request(htmlOptions);
-        if (htmlOptions.pageIds) {
-            return response.query.pages[title].revisions[0]['*'];
-        } else {
-            const pageId = Object.keys(response.query.pages)[0];
-            return response.query.pages[pageId].revisions[0]['*'];
-        }
+        const pageId = setPageId(htmlOptions, response);
+        return response.query.pages[pageId].revisions[0]['*'];
     } catch (error) {
         throw new htmlError(error);
     }
@@ -182,12 +174,7 @@ export const content = async (title: string): Promise<any> => {
         }
         contentOptions = setPageIdOrTitleParam(contentOptions, title);
         const response = await request(contentOptions);
-        let pageId;
-        if (contentOptions.pageIds) {
-            pageId = title;
-        } else {
-            pageId = Object.keys(response.query.pages)[0];
-        }
+        const pageId = setPageId(contentOptions, response);
         const result = response['query']['pages'][pageId]['extract'];
         const ids = {
             revisionId: response['query']['pages'][pageId]['revisions'][0]['revid'],
@@ -210,12 +197,7 @@ export const categories = async (title: string, limit = 100): Promise<Array<stri
         }
         categoryOptions = setPageIdOrTitleParam(categoryOptions, title);
         const response = await request(categoryOptions);
-        let pageId;
-        if (categoryOptions.pageIds) {
-            pageId = title;
-        } else {
-            pageId = Object.keys(response.query.pages)[0];
-        }
+        const pageId = setPageId(categoryOptions, response);
         return response.query.pages[pageId].categories.map((category: any) => category.title)
     } catch (error) {
         throw new sectionsError(error);
@@ -231,12 +213,7 @@ export const links = async (title: string, limit = 100): Promise<Array<string>> 
         }
         linksOptions = setPageIdOrTitleParam(linksOptions, title);
         const response = await request(linksOptions);
-        let pageId;
-        if (linksOptions.pageIds) {
-            pageId = title;
-        } else {
-            pageId = Object.keys(response.query.pages)[0];
-        }
+        const pageId = setPageId(linksOptions, response);
         let result = response.query.pages[pageId].links.map((link: any) => link.title)
         return result;
     } catch (error) {
@@ -252,12 +229,7 @@ export const externalLinks = async (title: string): Promise<Array<string>> => {
         }
         extLinksOptions = setPageIdOrTitleParam(extLinksOptions, title);
         const response = await request(extLinksOptions);
-        let pageId;
-        if (extLinksOptions.pageIds) {
-            pageId = title;
-        } else {
-            pageId = Object.keys(response.query.pages)[0];
-        }
+        const pageId = setPageId(extLinksOptions, response);
         let result = response.query.pages[pageId].extlinks.map((link: any) => link['*'])
         return result;
     } catch (error) {
@@ -272,12 +244,7 @@ export const coordinates = async (title: string): Promise<coordinatesResult> => 
         }
         coordinatesOptions = setPageIdOrTitleParam(coordinatesOptions, title);
         const response = await request(coordinatesOptions);
-        let pageId;
-        if (coordinatesOptions.pageIds) {
-            pageId = title;
-        } else {
-            pageId = Object.keys(response.query.pages)[0];
-        }
+        const pageId = setPageId(coordinatesOptions, response);
         const coordinates = response.query.pages[pageId].coordinates;
         return coordinates ? coordinates[0]: null;
     } catch (error) {
