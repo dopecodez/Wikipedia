@@ -1,6 +1,6 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import Page, {summary, images, html, content, categories} from './page';
+import Page, {summary, images, html, content, categories, links} from './page';
 import { wikiSearchResult } from './resultTypes';
 import { contentError, htmlError, imageError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
@@ -113,6 +113,18 @@ wiki.categories = async (title: string, pageOptions?: pageOptions) : Promise<any
             title = await setTitleForPage(title);
         }
         const response = await categories(title);
+        return response;
+    } catch (error) {
+        throw new contentError(error);
+    }
+}
+
+wiki.links = async (title: string, pageOptions?: pageOptions) : Promise<any> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const response = await links(title);
         return response;
     } catch (error) {
         throw new contentError(error);

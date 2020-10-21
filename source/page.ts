@@ -1,4 +1,4 @@
-import { contentError, htmlError, imageError, sectionsError, summaryError } from './errors';
+import { contentError, htmlError, imageError, linksError, sectionsError, summaryError } from './errors';
 import request from './request';
 import { pageResult } from './resultTypes';
 import { setPageIdOrTitleParam } from './utils';
@@ -80,6 +80,15 @@ export class Page {
             throw new sectionsError(error);
         }
     }
+
+    public links = async (): Promise<any> => {
+        try {
+            const result = await links(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new sectionsError(error);
+        }
+    } 
 }
 
 export const images = async (title: string): Promise<any> => {
@@ -191,7 +200,29 @@ export const categories = async (title: string, limit = 100): Promise<any> => {
         }
         return response.query.pages[pageId].categories.map((category : any)=> category.title)
     } catch (error) {
-        throw new contentError(error);
+        throw new sectionsError(error);
+    }
+}
+
+export const links = async (title: string, limit = 100) => {
+    try{
+        let linksOptions: any = {
+            prop: 'links',
+            plnamespace: 0,
+            pllimit: limit,
+        }
+        linksOptions = setPageIdOrTitleParam(linksOptions, title);
+        const response = await request(linksOptions);
+        let pageId;
+        if (linksOptions.pageIds) {
+            pageId = title;
+        } else {
+            pageId = Object.keys(response.query.pages)[0];
+        }
+        let result = response.query.pages[pageId].links.map((link: any) => link.title)
+        return result;
+    } catch (error) {
+        throw new linksError(error);
     }
 }
 

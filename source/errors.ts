@@ -52,6 +52,14 @@ export class contentError extends wikiError {
 export class sectionsError extends wikiError {
     constructor(message: string) {
         super(message);
-        this.name = 'sectionError';
+        this.name = 'sectionsError';
     }
 }
+
+export class linksError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'linksError';
+    }
+}
+
