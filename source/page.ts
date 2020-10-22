@@ -1,6 +1,6 @@
-import { contentError, coordinatesError, htmlError, imageError, linksError, sectionsError, summaryError } from './errors';
+import { contentError, coordinatesError, htmlError, imageError, linksError, sectionsError, summaryError, wikiError } from './errors';
 import request from './request';
-import { coordinatesResult, imageResult, pageResult } from './resultTypes';
+import { coordinatesResult, imageResult, langLinksResult, pageResult } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
 
 export class Page {
@@ -102,6 +102,15 @@ export class Page {
     public coordinates = async (): Promise<coordinatesResult> => {
         try {
             const result = await coordinates(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new coordinatesError(error);
+        }
+    }
+
+    public langLinks = async (): Promise<Array<langLinksResult>> => {
+        try {
+            const result = await langLinks(this.pageid.toString());
             return result;
         } catch (error) {
             throw new coordinatesError(error);
@@ -230,7 +239,7 @@ export const externalLinks = async (title: string): Promise<Array<string>> => {
         extLinksOptions = setPageIdOrTitleParam(extLinksOptions, title);
         const response = await request(extLinksOptions);
         const pageId = setPageId(extLinksOptions, response);
-        let result = response.query.pages[pageId].extlinks.map((link: any) => link['*'])
+        const result = response.query.pages[pageId].extlinks.map((link: any) => link['*'])
         return result;
     } catch (error) {
         throw new linksError(error);
@@ -249,6 +258,27 @@ export const coordinates = async (title: string): Promise<coordinatesResult> => 
         return coordinates ? coordinates[0]: null;
     } catch (error) {
         throw new coordinatesError(error);
+    }
+}
+
+export const langLinks = async (title: string): Promise<Array<langLinksResult>> => {
+    try {
+        let languageOptions: any = {
+            prop: 'langlinks',
+            lllimit: 'max'
+        }
+        languageOptions = setPageIdOrTitleParam(languageOptions, title);
+        const response = await request(languageOptions);
+        const pageId = setPageId(languageOptions, response);
+        const result = response.query.pages[pageId].langlinks.map((link:any) => {
+            return {
+                lang: link.lang,
+                title: link['*']
+            };
+        })
+        return result;
+    } catch (error) {
+        throw new wikiError(error);
     }
 }
 

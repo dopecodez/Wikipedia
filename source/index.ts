@@ -1,7 +1,7 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import Page, {summary, images, html, content, categories, links, externalLinks, coordinates} from './page';
-import { coordinatesResult, geoSearchResult, imageResult, languageResult, wikiSearchResult } from './resultTypes';
+import Page, {summary, images, html, content, categories, links, externalLinks, coordinates, langLinks} from './page';
+import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, wikiSearchResult } from './resultTypes';
 import { contentError, coordinatesError, geoSearchError, htmlError, imageError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 import { isString, setTitleForPage } from './utils';
@@ -149,6 +149,18 @@ wiki.coordinates = async (title: string, pageOptions?: pageOptions) : Promise<co
             title = await setTitleForPage(title);
         }
         const response = await coordinates(title);
+        return response;
+    } catch (error) {
+        throw new coordinatesError(error);
+    }
+}
+
+wiki.langLinks = async (title: string, pageOptions?: pageOptions) : Promise<Array<langLinksResult>> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const response = await langLinks(title);
         return response;
     } catch (error) {
         throw new coordinatesError(error);

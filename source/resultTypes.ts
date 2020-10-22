@@ -49,3 +49,8 @@ export interface coordinatesResult {
     primary: string,
     globe: string
 }
+
+export interface langLinksResult {
+    lang: string,
+    title: string
+}
