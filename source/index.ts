@@ -1,8 +1,8 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import Page, {summary, images, html, content, categories, links, coordinates, langLinks, references, info} from './page';
+import Page, {summary, images, html, content, categories, links, coordinates, langLinks, references, info, tables} from './page';
 import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, wikiSearchResult } from './resultTypes';
-import { contentError, coordinatesError, geoSearchError, htmlError, imageError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
+import { contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 import { isString, setTitleForPage } from './utils';
 
@@ -175,7 +175,19 @@ wiki.infobox = async (title: string, pageOptions?: pageOptions) : Promise<any> =
         const response = await info(title);
         return response;
     } catch (error) {
-        throw new coordinatesError(error);
+        throw new infoboxError(error);
+    }
+}
+
+wiki.tables = async (title: string, pageOptions?: pageOptions) : Promise<Array<any>> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const response = await tables(title);
+        return response;
+    } catch (error) {
+        throw new infoboxError(error);
     }
 }
 

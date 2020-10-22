@@ -20,6 +20,8 @@ export class Page {
     canonicalurl!: string;
     revId!: number
     parentId!: number
+    _summary!: string
+    _images!: string
     constructor(response: pageResult) {
         this.pageid = response.pageid;
         this.ns = response.ns;
@@ -123,7 +125,16 @@ export class Page {
             const result = await info(this.pageid.toString());
             return result;
         } catch (error) {
-            throw new coordinatesError(error);
+            throw new infoboxError(error);
+        }
+    }
+
+    public tables = async (): Promise<any> => {
+        try {
+            const result = await tables(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new infoboxError(error);
         }
     }
 }
@@ -296,31 +307,53 @@ export const langLinks = async (title: string): Promise<Array<langLinksResult>> 
 
 export const info = async (title: string): Promise<any> => {
     try {
-        const fullInfo = await rawInfo(title);
-        let info = infoboxParser(fullInfo).general;
-        if (Object.keys(info).length === 0) {
-            // If empty, check to see if this page has a templated infobox
-            const wikiText = await rawInfo(`Template:Infobox ${title.toLowerCase()}`);
-            info = infoboxParser(wikiText || '').general
-        }
-        return info;
-    } catch (error) {
-        throw new infoboxError(error);
-    }
-}
-
-export const rawInfo = async (title: string): Promise<any> => {
-    try {
-        let infoboxOptions = {
+        let infoboxOptions: any = {
             prop: 'revisions',
             rvprop: 'content',
             rvsection: 0
         }
-        infoboxOptions = setPageIdOrTitleParam(infoboxOptions, title);
-        const response = await request(infoboxOptions);
-        const pageId = setPageId(infoboxOptions, response);
-        const fullInfo = response.query.pages[pageId]['revisions'][0]['*'];
-        return fullInfo;
+        const fullInfo = await rawInfo(title, infoboxOptions);
+        let info = infoboxParser(fullInfo|| '').general;
+        if (Object.keys(info).length === 0) {
+            // If empty, check to see if this page has a templated infobox
+            const wikiText = await rawInfo(`Template:Infobox ${title.toLowerCase()}`, infoboxOptions);
+            info = infoboxParser(wikiText || '').general;
+        }
+        return info;
+    } catch (error) {
+        console.log(error);
+        throw new infoboxError(error);
+    }
+}
+
+export const tables = async (title: string): Promise<any[]> => {
+    try {
+        let tableOptions: any = {
+            prop: 'revisions',
+            rvprop: 'content',
+        }
+        const fullInfo = await rawInfo(title, tableOptions);
+        let info = infoboxParser(fullInfo|| '').tables;
+        if (Object.keys(info).length === 0) {
+            // If empty, check to see if this page has a templated infobox
+            const wikiText = await rawInfo(`Template:Infobox ${title.toLowerCase()}`, tableOptions);
+            info = infoboxParser(wikiText || '').tables;
+        }
+        return info;
+    } catch (error) {
+        console.log(error);
+        throw new infoboxError(error);
+    }
+}
+
+export const rawInfo = async (title: string, options: any): Promise<any> => {
+    try {
+        options = setPageIdOrTitleParam(options, title);
+        const response = await request(options);
+        const pageId = setPageId(options, response);
+        const data = response.query.pages[pageId]['revisions'][0];
+        console.log(data);
+        return data ? data['*']: [];
     } catch (error) {
         throw new infoboxError(error);
     }
