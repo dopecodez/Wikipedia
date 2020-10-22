@@ -9,6 +9,12 @@ export interface pageOptions {
     preload?: boolean
 }
 
+export interface listOptions {
+    autoSuggest?: boolean
+    redirect?: boolean
+    limit?: number
+}
+
 export interface geoOptions {
     results?: number
     radius?: number

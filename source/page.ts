@@ -3,6 +3,7 @@ import request from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
 import infoboxParser from 'infobox-parser';
+import { listOptions, pageOptions } from './optionTypes';
 
 export class Page {
     pageid!: number;
@@ -37,36 +38,36 @@ export class Page {
         this.canonicalurl = response.canonicalurl;
     }
 
-    public summary = async (): Promise<string> => {
+    public summary = async (pageOptions?: pageOptions): Promise<string> => {
         try {
-            const response = await summary(this.pageid.toString());
+            const response = await summary(this.pageid.toString(), pageOptions?.redirect);
             return response;
         } catch (error) {
             throw new summaryError(error);
         }
     }
 
-    public images = async (): Promise<Array<imageResult>> => {
+    public images = async ( listOptions?: listOptions ): Promise<Array<imageResult>> => {
         try {
-            const result = await images(this.pageid.toString());
+            const result = await images(this.pageid.toString(), listOptions);
             return result;
         } catch (error) {
             throw new imageError(error);
         }
     }
 
-    public html = async (): Promise<string> => {
+    public html = async (pageOptions?: pageOptions): Promise<string> => {
         try {
-            const result = await html(this.pageid.toString());
+            const result = await html(this.pageid.toString(), pageOptions?.redirect);
             return result;
         } catch (error) {
             throw new htmlError(error);
         }
     }
 
-    public content = async (): Promise<string> => {
+    public content = async (pageOptions?: pageOptions): Promise<string> => {
         try {
-            const result = await content(this.pageid.toString());
+            const result = await content(this.pageid.toString(), pageOptions?.redirect);
             this.parentId = result.ids.parentId;
             this.revId = result.ids.revId;
             return result.result;
@@ -75,63 +76,63 @@ export class Page {
         }
     }
 
-    public categories = async (): Promise<Array<string>> => {
+    public categories = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
-            const result = await categories(this.pageid.toString());
+            const result = await categories(this.pageid.toString(), listOptions);
             return result;
         } catch (error) {
             throw new sectionsError(error);
         }
     }
 
-    public links = async (): Promise<Array<string>> => {
+    public links = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
-            const result = await links(this.pageid.toString());
+            const result = await links(this.pageid.toString(), listOptions);
             return result;
         } catch (error) {
             throw new linksError(error);
         }
     }
 
-    public externalLinks = async (): Promise<Array<string>> => {
+    public externalLinks = async (pageOptions?: pageOptions): Promise<Array<string>> => {
         try {
-            const result = await references(this.pageid.toString());
+            const result = await references(this.pageid.toString(), pageOptions?.redirect);
             return result;
         } catch (error) {
             throw new linksError(error);
         }
     }
 
-    public coordinates = async (): Promise<coordinatesResult> => {
+    public coordinates = async (pageOptions?: pageOptions): Promise<coordinatesResult> => {
         try {
-            const result = await coordinates(this.pageid.toString());
+            const result = await coordinates(this.pageid.toString(), pageOptions?.redirect);
             return result;
         } catch (error) {
             throw new coordinatesError(error);
         }
     }
 
-    public langLinks = async (): Promise<Array<langLinksResult>> => {
+    public langLinks = async (pageOptions?: pageOptions): Promise<Array<langLinksResult>> => {
         try {
-            const result = await langLinks(this.pageid.toString());
+            const result = await langLinks(this.pageid.toString(), pageOptions?.redirect);
             return result;
         } catch (error) {
             throw new coordinatesError(error);
         }
     }
 
-    public info = async (): Promise<any> => {
+    public info = async (pageOptions?: pageOptions): Promise<any> => {
         try {
-            const result = await info(this.pageid.toString());
+            const result = await info(this.pageid.toString(), pageOptions?.redirect);
             return result;
         } catch (error) {
             throw new infoboxError(error);
         }
     }
 
-    public tables = async (): Promise<any> => {
+    public tables = async (pageOptions?: pageOptions): Promise<any> => {
         try {
-            const result = await tables(this.pageid.toString());
+            const result = await tables(this.pageid.toString(), pageOptions?.redirect);
             return result;
         } catch (error) {
             throw new infoboxError(error);
@@ -139,16 +140,16 @@ export class Page {
     }
 }
 
-export const images = async (title: string): Promise<Array<imageResult>> => {
+export const images = async (title: string, listOptions?: listOptions): Promise<Array<imageResult>> => {
     try {
         let imageOptions: any = {
             generator: 'images',
-            gimlimit: 5,
+            gimlimit: listOptions?.limit || 5,
             prop: 'imageinfo',
             iiprop: 'url'
         }
         imageOptions = setPageIdOrTitleParam(imageOptions, title);
-        const response = await request(imageOptions);
+        const response = await request(imageOptions, listOptions?.redirect);
         const images = [];
         const imageKeys = Object.keys(response.query.pages);
         for (const image of imageKeys) {
@@ -162,7 +163,7 @@ export const images = async (title: string): Promise<Array<imageResult>> => {
     }
 }
 
-export const summary = async (title: string): Promise<string> => {
+export const summary = async (title: string, redirect = true): Promise<string> => {
     try {
         let summaryOptions: any = {
             prop: 'extracts',
@@ -170,7 +171,7 @@ export const summary = async (title: string): Promise<string> => {
             exintro: '',
         }
         summaryOptions = setPageIdOrTitleParam(summaryOptions, title);
-        const response = await request(summaryOptions);
+        const response = await request(summaryOptions, redirect);
         const pageId = setPageId(summaryOptions, response);
         return response.query.pages[pageId].extract;
     } catch (error) {
@@ -178,7 +179,7 @@ export const summary = async (title: string): Promise<string> => {
     }
 }
 
-export const html = async (title: string): Promise<string> => {
+export const html = async (title: string, redirect = true): Promise<string> => {
     try {
         let htmlOptions: any = {
             'prop': 'revisions',
@@ -187,7 +188,7 @@ export const html = async (title: string): Promise<string> => {
             'rvparse': ''
         }
         htmlOptions = setPageIdOrTitleParam(htmlOptions, title);
-        const response = await request(htmlOptions);
+        const response = await request(htmlOptions, redirect);
         const pageId = setPageId(htmlOptions, response);
         return response.query.pages[pageId].revisions[0]['*'];
     } catch (error) {
@@ -195,7 +196,7 @@ export const html = async (title: string): Promise<string> => {
     }
 }
 
-export const content = async (title: string): Promise<any> => {
+export const content = async (title: string, redirect = true): Promise<any> => {
     try {
         let contentOptions: any = {
             'prop': 'extracts|revisions',
@@ -203,7 +204,7 @@ export const content = async (title: string): Promise<any> => {
             'rvprop': 'ids'
         }
         contentOptions = setPageIdOrTitleParam(contentOptions, title);
-        const response = await request(contentOptions);
+        const response = await request(contentOptions, redirect);
         const pageId = setPageId(contentOptions, response);
         const result = response['query']['pages'][pageId]['extract'];
         const ids = {
@@ -219,14 +220,14 @@ export const content = async (title: string): Promise<any> => {
     }
 }
 
-export const categories = async (title: string, limit = 100): Promise<Array<string>> => {
+export const categories = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let categoryOptions: any = {
             prop: 'categories',
-            pllimit: limit,
+            pllimit: listOptions?.limit,
         }
         categoryOptions = setPageIdOrTitleParam(categoryOptions, title);
-        const response = await request(categoryOptions);
+        const response = await request(categoryOptions, listOptions?.redirect);
         const pageId = setPageId(categoryOptions, response);
         return response.query.pages[pageId].categories.map((category: any) => category.title)
     } catch (error) {
@@ -234,15 +235,15 @@ export const categories = async (title: string, limit = 100): Promise<Array<stri
     }
 }
 
-export const links = async (title: string, limit = 100): Promise<Array<string>> => {
+export const links = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let linksOptions: any = {
             prop: 'links',
             plnamespace: 0,
-            pllimit: limit,
+            pllimit: listOptions?.limit,
         }
         linksOptions = setPageIdOrTitleParam(linksOptions, title);
-        const response = await request(linksOptions);
+        const response = await request(linksOptions, listOptions?.redirect);
         const pageId = setPageId(linksOptions, response);
         let result = response.query.pages[pageId].links.map((link: any) => link.title)
         return result;
@@ -251,14 +252,14 @@ export const links = async (title: string, limit = 100): Promise<Array<string>> 
     }
 }
 
-export const references = async (title: string): Promise<Array<string>> => {
+export const references = async (title: string, redirect = true): Promise<Array<string>> => {
     try {
         let extLinksOptions: any = {
             prop: 'extlinks',
             ellimit: 'max',
         }
         extLinksOptions = setPageIdOrTitleParam(extLinksOptions, title);
-        const response = await request(extLinksOptions);
+        const response = await request(extLinksOptions, redirect);
         const pageId = setPageId(extLinksOptions, response);
         const result = response.query.pages[pageId].extlinks.map((link: any) => link['*'])
         return result;
@@ -267,13 +268,13 @@ export const references = async (title: string): Promise<Array<string>> => {
     }
 }
 
-export const coordinates = async (title: string): Promise<coordinatesResult> => {
+export const coordinates = async (title: string, redirect = true): Promise<coordinatesResult> => {
     try {
         let coordinatesOptions: any = {
             prop: 'coordinates',
         }
         coordinatesOptions = setPageIdOrTitleParam(coordinatesOptions, title);
-        const response = await request(coordinatesOptions);
+        const response = await request(coordinatesOptions, redirect);
         const pageId = setPageId(coordinatesOptions, response);
         const coordinates = response.query.pages[pageId].coordinates;
         return coordinates ? coordinates[0]: null;
@@ -282,7 +283,7 @@ export const coordinates = async (title: string): Promise<coordinatesResult> => 
     }
 }
 
-export const langLinks = async (title: string): Promise<Array<langLinksResult>> => {
+export const langLinks = async (title: string, redirect = true): Promise<Array<langLinksResult>> => {
     try {
         let languageOptions: any = {
             prop: 'langlinks',
@@ -290,7 +291,7 @@ export const langLinks = async (title: string): Promise<Array<langLinksResult>> 
             llprop: 'url'
         }
         languageOptions = setPageIdOrTitleParam(languageOptions, title);
-        const response = await request(languageOptions);
+        const response = await request(languageOptions, redirect);
         const pageId = setPageId(languageOptions, response);
         const result = response.query.pages[pageId].langlinks.map((link:any) => {
             return {
@@ -305,14 +306,14 @@ export const langLinks = async (title: string): Promise<Array<langLinksResult>> 
     }
 }
 
-export const info = async (title: string): Promise<any> => {
+export const info = async (title: string, redirect = true): Promise<any> => {
     try {
         let infoboxOptions: any = {
             prop: 'revisions',
             rvprop: 'content',
             rvsection: 0
         }
-        const fullInfo = await rawInfo(title, infoboxOptions);
+        const fullInfo = await rawInfo(title, infoboxOptions, redirect);
         let info = infoboxParser(fullInfo|| '').general;
         if (Object.keys(info).length === 0) {
             // If empty, check to see if this page has a templated infobox
@@ -326,13 +327,13 @@ export const info = async (title: string): Promise<any> => {
     }
 }
 
-export const tables = async (title: string): Promise<any[]> => {
+export const tables = async (title: string, redirect = true): Promise<any[]> => {
     try {
         let tableOptions: any = {
             prop: 'revisions',
             rvprop: 'content',
         }
-        const fullInfo = await rawInfo(title, tableOptions);
+        const fullInfo = await rawInfo(title, tableOptions, redirect);
         let info = infoboxParser(fullInfo|| '').tables;
         if (Object.keys(info).length === 0) {
             // If empty, check to see if this page has a templated infobox
@@ -346,10 +347,10 @@ export const tables = async (title: string): Promise<any[]> => {
     }
 }
 
-export const rawInfo = async (title: string, options: any): Promise<any> => {
+export const rawInfo = async (title: string, options: any, redirect = true): Promise<any> => {
     try {
         options = setPageIdOrTitleParam(options, title);
-        const response = await request(options);
+        const response = await request(options, redirect);
         const pageId = setPageId(options, response);
         const data = response.query.pages[pageId]['revisions'][0];
         console.log(data);

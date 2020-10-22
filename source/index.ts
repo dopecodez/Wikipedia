@@ -1,10 +1,10 @@
 import request, { setAPIUrl } from './request'
-import { pageOptions, searchOptions, geoOptions } from './optionTypes';
+import { pageOptions, searchOptions, geoOptions, listOptions } from './optionTypes';
 import Page, {summary, images, html, content, categories, links, coordinates, langLinks, references, info, tables} from './page';
 import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, wikiSearchResult } from './resultTypes';
 import { contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
-import { isString, setTitleForPage } from './utils';
+import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
 //The intial wiki function
 //All APIs are based on https://www.mediawiki.org/wiki/API:Main_page
@@ -40,14 +40,10 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
             inprop: 'url',
             ppprop: 'disambiguation',
         }
-        if (isString(title)) {
-            pageParams.titles = title
-        } else {
-            pageParams.pageids = title
-        };
+        pageParams = setPageIdOrTitleParam(pageParams, title);
         const response = await request(pageParams);
         let pageInfo = response.query.pages;
-        const pageId = Object.keys(pageInfo)[0];
+        const pageId = setPageId(pageParams, response);
         pageInfo = pageInfo[pageId];
         if (pageInfo.missing == '') {
             throw new pageError(`${MSGS.PAGE_NOT_EXIST}${title}`)
@@ -64,19 +60,19 @@ wiki.summary = async (title: string, pageOptions?: pageOptions) : Promise<string
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const result = await summary(title);
+        const result = await summary(title, pageOptions?.redirect);
         return result;
     } catch (error) {
         throw new summaryError(error);
     }
 }
 
-wiki.images = async (title: string, pageOptions?: pageOptions) : Promise<Array<imageResult>> => {
+wiki.images = async (title: string, listOptions?: listOptions) : Promise<Array<imageResult>> => {
     try {
-        if (pageOptions?.autoSuggest) {
+        if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const result = await images(title);
+        const result = await images(title, listOptions);
         return result;
     } catch (error) {
         throw new imageError(error);
@@ -88,7 +84,7 @@ wiki.html = async (title: string, pageOptions?: pageOptions) : Promise<string> =
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const result = await html(title);
+        const result = await html(title, pageOptions?.redirect);
         return result;
     } catch (error) {
         throw new htmlError(error);
@@ -100,31 +96,31 @@ wiki.content = async (title: string, pageOptions?: pageOptions) : Promise<string
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await content(title);
+        const response = await content(title, pageOptions?.redirect);
         return response.result;
     } catch (error) {
         throw new contentError(error);
     }
 }
 
-wiki.categories = async (title: string, pageOptions?: pageOptions) : Promise<Array<string>> => {
+wiki.categories = async (title: string, listOptions?: listOptions) : Promise<Array<string>> => {
     try {
-        if (pageOptions?.autoSuggest) {
+        if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await categories(title);
+        const response = await categories(title, listOptions);
         return response;
     } catch (error) {
         throw new contentError(error);
     }
 }
 
-wiki.links = async (title: string, pageOptions?: pageOptions) : Promise<Array<string>> => {
+wiki.links = async (title: string, listOptions?: listOptions) : Promise<Array<string>> => {
     try {
-        if (pageOptions?.autoSuggest) {
+        if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await links(title);
+        const response = await links(title, listOptions);
         return response;
     } catch (error) {
         throw new linksError(error);
@@ -136,7 +132,7 @@ wiki.externalLinks = async (title: string, pageOptions?: pageOptions) : Promise<
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await references(title);
+        const response = await references(title, pageOptions?.redirect);
         return response;
     } catch (error) {
         throw new linksError(error);
@@ -148,7 +144,7 @@ wiki.coordinates = async (title: string, pageOptions?: pageOptions) : Promise<co
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await coordinates(title);
+        const response = await coordinates(title, pageOptions?.redirect);
         return response;
     } catch (error) {
         throw new coordinatesError(error);
@@ -160,7 +156,7 @@ wiki.langLinks = async (title: string, pageOptions?: pageOptions) : Promise<Arra
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await langLinks(title);
+        const response = await langLinks(title, pageOptions?.redirect);
         return response;
     } catch (error) {
         throw new coordinatesError(error);
@@ -172,7 +168,7 @@ wiki.infobox = async (title: string, pageOptions?: pageOptions) : Promise<any> =
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await info(title);
+        const response = await info(title, pageOptions?.redirect);
         return response;
     } catch (error) {
         throw new infoboxError(error);
@@ -184,7 +180,7 @@ wiki.tables = async (title: string, pageOptions?: pageOptions) : Promise<Array<a
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await tables(title);
+        const response = await tables(title, pageOptions?.redirect);
         return response;
     } catch (error) {
         throw new infoboxError(error);

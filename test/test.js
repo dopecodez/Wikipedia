@@ -2,9 +2,9 @@ const wiki = require('../dist/index');
 
 (async () => {
 	// const page = await wiki.geoSearch(8.530240, 76.929100);
-	const page = await wiki.images('Grand Prix motorcycle racing#MotoGP class');
+	const page = await wiki.tables('Pocket Monsters');
 	console.log(page);
-	// const result = await page.info();
+	// const result = await page.summary();
 	// console.log(result);
 })().catch(error => {
 	console.log(`${error.message}`);

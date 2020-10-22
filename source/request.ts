@@ -8,10 +8,13 @@ let API_URL = 'http://en.wikipedia.org/w/api.php?',
     // RATE_LIMIT_LAST_CALL = undefined,
     USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 
-async function makeRequest(params: any): Promise<any> {
+async function makeRequest(params: any, redirect = true): Promise<any> {
     try {
         let search = new URLSearchParams({ ...params })
         search.set('format', 'json');
+        if (redirect) {
+            search.set('redirects', '');
+        }
         if (!params.action)
             search.set('action', "query")
         const options: RequestInit = {
