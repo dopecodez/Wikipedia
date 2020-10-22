@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@ava/typescript": "^1.1.1",
+    "@types/infobox-parser": "^3.3.0",
     "@types/node": "^13.13.5",
     "@types/node-fetch": "^2.5.7",
     "ava": "^3.8.2",
@@ -44,6 +45,7 @@
     }
   },
   "dependencies": {
+    "infobox-parser": "^3.4.1",
     "node-fetch": "^2.6.1"
   },
   "keywords": []

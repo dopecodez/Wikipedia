@@ -1,6 +1,6 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions } from './optionTypes';
-import Page, {summary, images, html, content, categories, links, externalLinks, coordinates, langLinks} from './page';
+import Page, {summary, images, html, content, categories, links, coordinates, langLinks, references, info} from './page';
 import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, wikiSearchResult } from './resultTypes';
 import { contentError, coordinatesError, geoSearchError, htmlError, imageError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
@@ -136,7 +136,7 @@ wiki.externalLinks = async (title: string, pageOptions?: pageOptions) : Promise<
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await externalLinks(title);
+        const response = await references(title);
         return response;
     } catch (error) {
         throw new linksError(error);
@@ -161,6 +161,18 @@ wiki.langLinks = async (title: string, pageOptions?: pageOptions) : Promise<Arra
             title = await setTitleForPage(title);
         }
         const response = await langLinks(title);
+        return response;
+    } catch (error) {
+        throw new coordinatesError(error);
+    }
+}
+
+wiki.infobox = async (title: string, pageOptions?: pageOptions) : Promise<any> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const response = await info(title);
         return response;
     } catch (error) {
         throw new coordinatesError(error);

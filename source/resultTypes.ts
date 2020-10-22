@@ -52,5 +52,6 @@ export interface coordinatesResult {
 
 export interface langLinksResult {
     lang: string,
-    title: string
+    title: string,
+    url: string
 }

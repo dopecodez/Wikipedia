@@ -76,3 +76,10 @@ export class coordinatesError extends wikiError {
         this.name = 'coordinatesError';
     }
 }
+
+export class infoboxError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'infoboxError';
+    }
+}

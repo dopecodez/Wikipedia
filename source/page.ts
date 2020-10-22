@@ -1,7 +1,8 @@
-import { contentError, coordinatesError, htmlError, imageError, linksError, sectionsError, summaryError, wikiError } from './errors';
+import { contentError, coordinatesError, htmlError, imageError, infoboxError, linksError, sectionsError, summaryError, wikiError } from './errors';
 import request from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
+import infoboxParser from 'infobox-parser';
 
 export class Page {
     pageid!: number;
@@ -92,7 +93,7 @@ export class Page {
 
     public externalLinks = async (): Promise<Array<string>> => {
         try {
-            const result = await externalLinks(this.pageid.toString());
+            const result = await references(this.pageid.toString());
             return result;
         } catch (error) {
             throw new linksError(error);
@@ -111,6 +112,15 @@ export class Page {
     public langLinks = async (): Promise<Array<langLinksResult>> => {
         try {
             const result = await langLinks(this.pageid.toString());
+            return result;
+        } catch (error) {
+            throw new coordinatesError(error);
+        }
+    }
+
+    public info = async (): Promise<any> => {
+        try {
+            const result = await info(this.pageid.toString());
             return result;
         } catch (error) {
             throw new coordinatesError(error);
@@ -230,7 +240,7 @@ export const links = async (title: string, limit = 100): Promise<Array<string>> 
     }
 }
 
-export const externalLinks = async (title: string): Promise<Array<string>> => {
+export const references = async (title: string): Promise<Array<string>> => {
     try {
         let extLinksOptions: any = {
             prop: 'extlinks',
@@ -265,7 +275,8 @@ export const langLinks = async (title: string): Promise<Array<langLinksResult>> 
     try {
         let languageOptions: any = {
             prop: 'langlinks',
-            lllimit: 'max'
+            lllimit: 'max',
+            llprop: 'url'
         }
         languageOptions = setPageIdOrTitleParam(languageOptions, title);
         const response = await request(languageOptions);
@@ -273,12 +284,45 @@ export const langLinks = async (title: string): Promise<Array<langLinksResult>> 
         const result = response.query.pages[pageId].langlinks.map((link:any) => {
             return {
                 lang: link.lang,
-                title: link['*']
+                title: link['*'],
+                url: link.url
             };
         })
         return result;
     } catch (error) {
         throw new wikiError(error);
+    }
+}
+
+export const info = async (title: string): Promise<any> => {
+    try {
+        const fullInfo = await rawInfo(title);
+        let info = infoboxParser(fullInfo).general;
+        if (Object.keys(info).length === 0) {
+            // If empty, check to see if this page has a templated infobox
+            const wikiText = await rawInfo(`Template:Infobox ${title.toLowerCase()}`);
+            info = infoboxParser(wikiText || '').general
+        }
+        return info;
+    } catch (error) {
+        throw new infoboxError(error);
+    }
+}
+
+export const rawInfo = async (title: string): Promise<any> => {
+    try {
+        let infoboxOptions = {
+            prop: 'revisions',
+            rvprop: 'content',
+            rvsection: 0
+        }
+        infoboxOptions = setPageIdOrTitleParam(infoboxOptions, title);
+        const response = await request(infoboxOptions);
+        const pageId = setPageId(infoboxOptions, response);
+        const fullInfo = response.query.pages[pageId]['revisions'][0]['*'];
+        return fullInfo;
+    } catch (error) {
+        throw new infoboxError(error);
     }
 }
 
