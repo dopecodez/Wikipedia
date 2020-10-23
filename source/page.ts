@@ -50,6 +50,16 @@ export class Page {
         this.canonicalurl = response.canonicalurl;
     }
 
+    /**
+     * Returns the intro present in a wiki page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The intro string
+     */
     public intro = async (pageOptions?: pageOptions): Promise<string> => {
         try {
             if (!this._intro) {
@@ -62,6 +72,16 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the images present in a wiki page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param listOptions - {@link listOptions | listOptions }
+     * @returns an array of imageResult {@link imageResult | imageResult }
+     */
     public images = async (listOptions?: listOptions): Promise<Array<imageResult>> => {
         try {
             if (!this._images) {
@@ -74,6 +94,17 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the summary of the page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The summary of the page as {@link wikiSummary | wikiSummary}
+     * 
+     */
     public summary = async (pageOptions?: pageOptions): Promise<wikiSummary> => {
         try {
             if (!this._summary) {
@@ -86,6 +117,18 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the html content of a page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The html content as string
+     * 
+     * @beta
+     */
     public html = async (pageOptions?: pageOptions): Promise<string> => {
         try {
             if (!this._html) {
@@ -97,7 +140,16 @@ export class Page {
             throw new htmlError(error);
         }
     }
-
+    /**
+     * Returns the plain text content of a page as well as parent id and revision id
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The plain text as string and the parent and revision ids
+     */
     public content = async (pageOptions?: pageOptions): Promise<string> => {
         try {
             if (!this._content) {
@@ -112,6 +164,16 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the cetegories present in page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param listOptions - {@link listOptions | listOptions }
+     * @returns The categories as an array of string
+     */
     public categories = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
             if (!this._categories) {
@@ -124,6 +186,16 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the links present in page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param listOptions - {@link listOptions | listOptions }
+     * @returns The links as an array of string
+     */
     public links = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
             if (!this._links) {
@@ -136,6 +208,16 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the references of external links present in page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param listOptions - {@link listOptions | listOptions }
+     * @returns The references as an array of string
+     */
     public references = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
             if (!this._references) {
@@ -148,6 +230,16 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the coordinates of a page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The coordinates as {@link coordinatesResult | coordinatesResult}
+     */
     public coordinates = async (pageOptions?: pageOptions): Promise<coordinatesResult> => {
         try {
             if (!this._coordinates) {
@@ -160,6 +252,16 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the language links present in the page
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param listOptions - {@link listOptions | listOptions }
+     * @returns The links as an array of {@link langLinksResult | langLinksResult }
+     */
     public langLinks = async (listOptions?: listOptions): Promise<Array<langLinksResult>> => {
         try {
             if (!this._langLinks) {
@@ -172,6 +274,16 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the infobox content of page if present
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The info as JSON object
+     */
     public info = async (pageOptions?: pageOptions): Promise<JSON> => {
         try {
             if (!this._info) {
@@ -184,6 +296,16 @@ export class Page {
         }
     }
 
+    /**
+     * Returns the table content of page if present
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The tables as arrays of JSON objects
+     */
     public tables = async (pageOptions?: pageOptions): Promise<Array<JSON>> => {
         try {
             if (!this._tables) {
@@ -196,6 +318,19 @@ export class Page {
         }
     }
 
+    /**
+     * Returns summaries for 20 pages related to the given page. Summaries include page title, namespace 
+     * and id along with short text description of the page and a thumbnail.
+     *
+     * @remarks
+     * This method is part of the {@link Page | Page Class}.
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The related pages and summary as an array of {@link wikiSummary | wikiSummary}
+     * 
+     * @experimental
+     */
     public related = async (pageOptions?: pageOptions): Promise<Array<wikiSummary>> => {
         try {
             if (!this._related) {
@@ -222,13 +357,11 @@ export class Page {
  * Returns the images present in a wiki page
  *
  * @remarks
- * This method is part of the {@link Page | Page Class}.
+ * Called in page object and also through index
  *
  * @param title - The title or page Id of the page
- * @param listOptions - The list options object @type listOptions
- * @returns The arithmetic mean of `x` and `y`
- *
- * @beta
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns an array of imageResult {@link imageResult | imageResult }
  */
 export const images = async (title: string, listOptions?: listOptions): Promise<Array<imageResult>> => {
     try {
@@ -253,6 +386,16 @@ export const images = async (title: string, listOptions?: listOptions): Promise<
     }
 }
 
+/**
+ * Returns the intro present in a wiki page
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The intro string
+ */
 export const intro = async (title: string, redirect = true): Promise<string> => {
     try {
         let introOptions: any = {
@@ -269,6 +412,18 @@ export const intro = async (title: string, redirect = true): Promise<string> => 
     }
 }
 
+/**
+ * Returns the html content of a page
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The html content as string
+ * 
+ * @beta
+ */
 export const html = async (title: string, redirect = true): Promise<string> => {
     try {
         let htmlOptions: any = {
@@ -286,6 +441,16 @@ export const html = async (title: string, redirect = true): Promise<string> => {
     }
 }
 
+/**
+ * Returns the plain text content of a page as well as parent id and revision id
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The plain text as string and the parent and revision ids
+ */
 export const content = async (title: string, redirect = true): Promise<any> => {
     try {
         let contentOptions: any = {
@@ -310,6 +475,16 @@ export const content = async (title: string, redirect = true): Promise<any> => {
     }
 }
 
+/**
+ * Returns the cetegories present in page
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns The categories as an array of string
+ */
 export const categories = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let categoryOptions: any = {
@@ -325,6 +500,16 @@ export const categories = async (title: string, listOptions?: listOptions): Prom
     }
 }
 
+/**
+ * Returns the links present in page
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns The links as an array of string
+ */
 export const links = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let linksOptions: any = {
@@ -342,6 +527,16 @@ export const links = async (title: string, listOptions?: listOptions): Promise<A
     }
 }
 
+/**
+ * Returns the references of external links present in page
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns The references as an array of string
+ */
 export const references = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let extLinksOptions: any = {
@@ -358,6 +553,16 @@ export const references = async (title: string, listOptions?: listOptions): Prom
     }
 }
 
+/**
+ * Returns the coordinates of a page
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The coordinates as {@link coordinatesResult | coordinatesResult}
+ */
 export const coordinates = async (title: string, redirect = true): Promise<coordinatesResult> => {
     try {
         let coordinatesOptions: any = {
@@ -373,6 +578,16 @@ export const coordinates = async (title: string, redirect = true): Promise<coord
     }
 }
 
+/**
+ * Returns the language links present in the page
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns The links as an array of {@link langLinksResult | langLinksResult }
+ */
 export const langLinks = async (title: string, listOptions?: listOptions): Promise<Array<langLinksResult>> => {
     try {
         let languageOptions: any = {
@@ -396,7 +611,17 @@ export const langLinks = async (title: string, listOptions?: listOptions): Promi
     }
 }
 
-export const info = async (title: string, redirect = true): Promise<JSON> => {
+/**
+ * Returns the infobox content of page if present
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The info as JSON object
+ */
+export const info = async (title: string, redirect = true): Promise<any> => {
     try {
         const infoboxOptions: any = {
             prop: 'revisions',
@@ -416,7 +641,17 @@ export const info = async (title: string, redirect = true): Promise<JSON> => {
     }
 }
 
-export const tables = async (title: string, redirect = true): Promise<Array<JSON>> => {
+/**
+ * Returns the table content of page if present
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The tables as arrays of JSON objects
+ */
+export const tables = async (title: string, redirect = true): Promise<Array<any>> => {
     try {
         const tableOptions: any = {
             prop: 'revisions',
@@ -435,7 +670,18 @@ export const tables = async (title: string, redirect = true): Promise<Array<JSON
     }
 }
 
-export const rawInfo = async (title: string, options: any, redirect = true): Promise<any> => {
+/**
+ * Returns the raw info of the page
+ *
+ * @remarks
+ * This is not exported and used internally
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The rawInfo of the page 
+ * 
+ */
+const rawInfo = async (title: string, options: any, redirect = true): Promise<any> => {
     try {
         options = setPageIdOrTitleParam(options, title);
         const response = await request(options, redirect);
@@ -447,11 +693,20 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
     }
 }
 
-/* 
-    REST-API Requests based on https://en.wikipedia.org/api/rest_v1/#/
-    APIs seems to support only title parameters which is a drawback
-*/
+//REST-API Requests based on https://en.wikipedia.org/api/rest_v1/#/
+//APIs seems to support only title parameters which is a drawback
 
+/**
+ * Returns the summary of the page
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The summary of the page as {@link wikiSummary | wikiSummary}
+ * 
+ */
 export const summary = async (title: string, redirect = true): Promise<wikiSummary> => {
     try {
         const path = 'page/summary/' + title.replace(" ", "_");
@@ -462,12 +717,19 @@ export const summary = async (title: string, redirect = true): Promise<wikiSumma
     }
 }
 
-/*
-    Returns summaries for 20 pages related to the given page. Summaries include page title, namespace 
-    and id along with short text description of the page and a thumbnail.
-    @stability experimental
-
-*/
+/**
+ * Returns summaries for 20 pages related to the given page. Summaries include page title, namespace 
+ * and id along with short text description of the page and a thumbnail.
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The related pages and summary as an array of {@link wikiSummary | wikiSummary}
+ * 
+ * @experimental
+ */
 export const related = async (title: string, redirect = true): Promise<Array<wikiSummary>> => {
     try {
         const path = 'page/related/' + title.replace(" ", "_");

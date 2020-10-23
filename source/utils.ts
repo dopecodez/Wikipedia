@@ -22,7 +22,7 @@ export function setPageIdOrTitleParam(params: any, title: string) {
         params.titles = title
     } else {
         params.pageids = title
-    };
+    }
     return params;
 }
 

@@ -9,10 +9,10 @@
   "scripts": {
     "prepublishOnly": "tsc --build --clean && tsc",
     "test": "tsc --noEmit && ava",
-    "build": "tsc --build --clean && tsc",
+    "build": "yarn lint && tsc --build --clean && tsc",
     "postbuild": "copyfiles -u 1 test/parser/samples/*.txt dist/test",
-    "prepare": "npm run build",
-    "lint": "eslint src/**/*.ts",
+    "prepare": "yarn build",
+    "lint": "eslint source/*.ts",
     "release": "np"
   },
   "author": "Govind S",
@@ -27,11 +27,12 @@
     "@types/infobox-parser": "^3.3.0",
     "@types/node": "^13.13.5",
     "@types/node-fetch": "^2.5.7",
-    "ava": "^3.8.2",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
-    "typescript": "^3.8.3",
-    "eslint": "^7.11.0"
+    "ava": "^3.8.2",
+    "eslint": "^7.11.0",
+    "eslint-plugin-tsdoc": "^0.2.7",
+    "typescript": "^3.8.3"
   },
   "files": [
     "dist/source"
