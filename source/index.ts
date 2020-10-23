@@ -1,8 +1,8 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions, listOptions } from './optionTypes';
-import Page, {summary, images, html, content, categories, links, coordinates, langLinks, references, info, tables} from './page';
+import Page, {intro, images, html, content, categories, links, coordinates, langLinks, references, info, tables, summary } from './page';
 import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, wikiSearchResult } from './resultTypes';
-import { contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
+import { contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError, introError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
 import { MSGS } from './messages';
 import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
@@ -63,15 +63,15 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
     }
 }
 
-wiki.summary = async (title: string, pageOptions?: pageOptions) : Promise<string> => {
+wiki.intro = async (title: string, pageOptions?: pageOptions) : Promise<string> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const result = await summary(title, pageOptions?.redirect);
+        const result = await intro(title, pageOptions?.redirect);
         return result;
     } catch (error) {
-        throw new summaryError(error);
+        throw new introError(error);
     }
 }
 
@@ -84,6 +84,18 @@ wiki.images = async (title: string, listOptions?: listOptions) : Promise<Array<i
         return result;
     } catch (error) {
         throw new imageError(error);
+    }
+}
+
+wiki.summary = async (title: string, pageOptions?: pageOptions) : Promise<JSON> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const result = await summary(title, pageOptions?.redirect);
+        return result;
+    } catch (error) {
+        throw new summaryError(error);
     }
 }
 

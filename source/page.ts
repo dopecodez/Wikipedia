@@ -1,5 +1,6 @@
-import { contentError, coordinatesError, htmlError, imageError, infoboxError, linksError, preloadError, sectionsError, summaryError } from './errors';
-import request from './request';
+import { contentError, coordinatesError, htmlError, imageError, 
+    infoboxError, introError, linksError, preloadError, sectionsError, summaryError } from './errors';
+import request, { makeRestRequest } from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
 import infoboxParser from 'infobox-parser';
@@ -21,7 +22,7 @@ export class Page {
     canonicalurl!: string;
     revId!: number;
     parentId!: number;
-    _summary!: string;
+    _summary!: JSON;
     _images!: Array<imageResult>;
     _content!: string;
     _html!: string;
@@ -32,6 +33,7 @@ export class Page {
     _langLinks!: Array<langLinksResult>;
     _info!: JSON;
     _tables!: Array<JSON>;
+    _intro!: string;
     constructor(response: pageResult) {
         this.pageid = response.pageid;
         this.ns = response.ns;
@@ -47,15 +49,15 @@ export class Page {
         this.canonicalurl = response.canonicalurl;
     }
 
-    public summary = async (pageOptions?: pageOptions): Promise<string> => {
+    public intro = async (pageOptions?: pageOptions): Promise<string> => {
         try {
-            if (!this._summary) {
-                const response = await summary(this.pageid.toString(), pageOptions?.redirect);
-                this._summary = response;
+            if (!this._intro) {
+                const response = await intro(this.pageid.toString(), pageOptions?.redirect);
+                this._intro = response;
             }
-            return this._summary;
+            return this._intro;
         } catch (error) {
-            throw new summaryError(error);
+            throw new introError(error);
         }
     }
 
@@ -66,6 +68,18 @@ export class Page {
                 this._images = result;
             }
             return this._images;
+        } catch (error) {
+            throw new imageError(error);
+        }
+    }
+
+    public summary = async (pageOptions?: pageOptions): Promise<JSON> => {
+        try {
+            if (!this._summary) {
+                const result = await summary(this.title, pageOptions?.redirect);
+                this._summary = result;
+            }
+            return this._summary;
         } catch (error) {
             throw new imageError(error);
         }
@@ -214,19 +228,19 @@ export const images = async (title: string, listOptions?: listOptions): Promise<
     }
 }
 
-export const summary = async (title: string, redirect = true): Promise<string> => {
+export const intro = async (title: string, redirect = true): Promise<string> => {
     try {
-        let summaryOptions: any = {
+        let introOptions: any = {
             prop: 'extracts',
             explaintext: '',
             exintro: '',
         }
-        summaryOptions = setPageIdOrTitleParam(summaryOptions, title);
-        const response = await request(summaryOptions, redirect);
-        const pageId = setPageId(summaryOptions, response);
+        introOptions = setPageIdOrTitleParam(introOptions, title);
+        const response = await request(introOptions, redirect);
+        const pageId = setPageId(introOptions, response);
         return response.query.pages[pageId].extract;
     } catch (error) {
-        throw new summaryError(error);
+        throw new introError(error);
     }
 }
 
@@ -405,6 +419,21 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
         return data ? data['*'] : [];
     } catch (error) {
         throw new infoboxError(error);
+    }
+}
+
+/* 
+    REST-API Requests based on https://en.wikipedia.org/api/rest_v1/#/
+    APIs seems to support only title parameters which is a drawback
+*/
+
+export const summary = async (title: string, redirect = true): Promise<JSON> => {
+    try {
+        const path = 'page/summary/' + title;
+        const response = await makeRestRequest(path, redirect);
+        return response;
+    } catch (error) {
+        throw new summaryError(error);
     }
 }
 
