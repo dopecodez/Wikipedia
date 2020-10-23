@@ -1,4 +1,4 @@
-import { contentError, coordinatesError, htmlError, imageError, infoboxError, linksError, sectionsError, summaryError, wikiError } from './errors';
+import { contentError, coordinatesError, htmlError, imageError, infoboxError, linksError, sectionsError, summaryError } from './errors';
 import request from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
@@ -19,10 +19,19 @@ export class Page {
     fullurl!: string;
     editurl!: string;
     canonicalurl!: string;
-    revId!: number
-    parentId!: number
-    _summary!: string
-    _images!: string
+    revId!: number;
+    parentId!: number;
+    _summary!: string;
+    _images!: Array<imageResult>;
+    _content!: string;
+    _html!: string;
+    _categories!: Array<string>;
+    _references!: Array<string>;
+    _links!: Array<string>;
+    _coordinates!: coordinatesResult;
+    _langLinks!: Array<langLinksResult>;
+    _info!: JSON;
+    _tables!: Array<JSON>;
     constructor(response: pageResult) {
         this.pageid = response.pageid;
         this.ns = response.ns;
@@ -37,10 +46,11 @@ export class Page {
         this.editurl = response.editurl;
         this.canonicalurl = response.canonicalurl;
     }
-
+    
     public summary = async (pageOptions?: pageOptions): Promise<string> => {
         try {
             const response = await summary(this.pageid.toString(), pageOptions?.redirect);
+            this._summary = response;
             return response;
         } catch (error) {
             throw new summaryError(error);
@@ -50,6 +60,7 @@ export class Page {
     public images = async ( listOptions?: listOptions ): Promise<Array<imageResult>> => {
         try {
             const result = await images(this.pageid.toString(), listOptions);
+            this._images = result;
             return result;
         } catch (error) {
             throw new imageError(error);
@@ -59,6 +70,7 @@ export class Page {
     public html = async (pageOptions?: pageOptions): Promise<string> => {
         try {
             const result = await html(this.pageid.toString(), pageOptions?.redirect);
+            this._html = result;
             return result;
         } catch (error) {
             throw new htmlError(error);
@@ -70,6 +82,7 @@ export class Page {
             const result = await content(this.pageid.toString(), pageOptions?.redirect);
             this.parentId = result.ids.parentId;
             this.revId = result.ids.revId;
+            this._content = result.result;
             return result.result;
         } catch (error) {
             throw new contentError(error);
@@ -79,6 +92,7 @@ export class Page {
     public categories = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
             const result = await categories(this.pageid.toString(), listOptions);
+            this._categories = result;
             return result;
         } catch (error) {
             throw new sectionsError(error);
@@ -88,15 +102,17 @@ export class Page {
     public links = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
             const result = await links(this.pageid.toString(), listOptions);
+            this._links = result;
             return result;
         } catch (error) {
             throw new linksError(error);
         }
     }
 
-    public externalLinks = async (listOptions?: listOptions): Promise<Array<string>> => {
+    public references = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
             const result = await references(this.pageid.toString(), listOptions);
+            this._references = result;
             return result;
         } catch (error) {
             throw new linksError(error);
@@ -106,6 +122,7 @@ export class Page {
     public coordinates = async (pageOptions?: pageOptions): Promise<coordinatesResult> => {
         try {
             const result = await coordinates(this.pageid.toString(), pageOptions?.redirect);
+            this._coordinates = result;
             return result;
         } catch (error) {
             throw new coordinatesError(error);
@@ -115,24 +132,27 @@ export class Page {
     public langLinks = async (listOptions?: listOptions): Promise<Array<langLinksResult>> => {
         try {
             const result = await langLinks(this.pageid.toString(), listOptions);
+            this._langLinks = result;
             return result;
         } catch (error) {
             throw new linksError(error);
         }
     }
 
-    public info = async (pageOptions?: pageOptions): Promise<any> => {
+    public info = async (pageOptions?: pageOptions): Promise<JSON> => {
         try {
             const result = await info(this.pageid.toString(), pageOptions?.redirect);
+            this._info = result;
             return result;
         } catch (error) {
             throw new infoboxError(error);
         }
     }
 
-    public tables = async (pageOptions?: pageOptions): Promise<any> => {
+    public tables = async (pageOptions?: pageOptions): Promise<Array<JSON>> => {
         try {
             const result = await tables(this.pageid.toString(), pageOptions?.redirect);
+            this._tables = result;
             return result;
         } catch (error) {
             throw new infoboxError(error);
@@ -302,11 +322,11 @@ export const langLinks = async (title: string, listOptions?: listOptions): Promi
         })
         return result;
     } catch (error) {
-        throw new wikiError(error);
+        throw new linksError(error);
     }
 }
 
-export const info = async (title: string, redirect = true): Promise<any> => {
+export const info = async (title: string, redirect = true): Promise<JSON> => {
     try {
         let infoboxOptions: any = {
             prop: 'revisions',
@@ -327,7 +347,7 @@ export const info = async (title: string, redirect = true): Promise<any> => {
     }
 }
 
-export const tables = async (title: string, redirect = true): Promise<any[]> => {
+export const tables = async (title: string, redirect = true): Promise<Array<JSON>> => {
     try {
         let tableOptions: any = {
             prop: 'revisions',

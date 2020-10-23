@@ -8,7 +8,7 @@ import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
 //The intial wiki function
 //All APIs are based on https://www.mediawiki.org/wiki/API:Main_page
-const wiki = async () => { }
+const wiki = async () => {}
 
 wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wikiSearchResult> => {
     try {
@@ -159,7 +159,7 @@ wiki.langLinks = async (title: string, listOptions?: listOptions) : Promise<Arra
         const response = await langLinks(title, listOptions);
         return response;
     } catch (error) {
-        throw new coordinatesError(error);
+        throw new linksError(error);
     }
 }
 
