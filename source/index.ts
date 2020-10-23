@@ -4,7 +4,8 @@ import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
     references, info, tables, summary, related
 } from './page';
-import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, wikiSearchResult } from './resultTypes';
+import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
+    wikiSearchResult, wikiSummary } from './resultTypes';
 import {
     contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError,
     introError, linksError, pageError, relatedError, searchError, summaryError, wikiError
@@ -93,7 +94,7 @@ wiki.images = async (title: string, listOptions?: listOptions): Promise<Array<im
     }
 }
 
-wiki.summary = async (title: string, pageOptions?: pageOptions): Promise<JSON> => {
+wiki.summary = async (title: string, pageOptions?: pageOptions): Promise<wikiSummary> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -141,7 +142,7 @@ wiki.categories = async (title: string, listOptions?: listOptions): Promise<Arra
     }
 }
 
-wiki.related = async (title: string, pageOptions?: pageOptions): Promise<Array<JSON>> => {
+wiki.related = async (title: string, pageOptions?: pageOptions): Promise<Array<wikiSummary>> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);

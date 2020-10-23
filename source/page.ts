@@ -1,7 +1,7 @@
 import { contentError, coordinatesError, htmlError, imageError, 
     infoboxError, introError, linksError, preloadError, relatedError, sectionsError, summaryError } from './errors';
 import request, { makeRestRequest } from './request';
-import { coordinatesResult, imageResult, langLinksResult, pageResult } from './resultTypes';
+import { coordinatesResult, imageResult, langLinksResult, pageResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
 import infoboxParser from 'infobox-parser';
 import { listOptions, pageOptions } from './optionTypes';
@@ -22,7 +22,7 @@ export class Page {
     canonicalurl!: string;
     revId!: number;
     parentId!: number;
-    _summary!: JSON;
+    _summary!: wikiSummary;
     _images!: Array<imageResult>;
     _content!: string;
     _html!: string;
@@ -34,7 +34,7 @@ export class Page {
     _info!: JSON;
     _tables!: Array<JSON>;
     _intro!: string;
-    _related!: Array<JSON>;
+    _related!: Array<wikiSummary>;
     constructor(response: pageResult) {
         this.pageid = response.pageid;
         this.ns = response.ns;
@@ -74,7 +74,7 @@ export class Page {
         }
     }
 
-    public summary = async (pageOptions?: pageOptions): Promise<JSON> => {
+    public summary = async (pageOptions?: pageOptions): Promise<wikiSummary> => {
         try {
             if (!this._summary) {
                 const result = await summary(this.title, pageOptions?.redirect);
@@ -196,7 +196,7 @@ export class Page {
         }
     }
 
-    public related = async (pageOptions?: pageOptions): Promise<Array<JSON>> => {
+    public related = async (pageOptions?: pageOptions): Promise<Array<wikiSummary>> => {
         try {
             if (!this._related) {
                 const result = await related(this.title, pageOptions?.redirect);
@@ -440,7 +440,7 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
     APIs seems to support only title parameters which is a drawback
 */
 
-export const summary = async (title: string, redirect = true): Promise<JSON> => {
+export const summary = async (title: string, redirect = true): Promise<wikiSummary> => {
     try {
         const path = 'page/summary/' + title.replace(" ", "_");;
         const response = await makeRestRequest(path, redirect);
@@ -456,7 +456,7 @@ export const summary = async (title: string, redirect = true): Promise<JSON> => 
     @stability experimental
 
 */
-export const related = async (title: string, redirect = true): Promise<Array<JSON>> => {
+export const related = async (title: string, redirect = true): Promise<Array<wikiSummary>> => {
     try {
         const path = 'page/related/' + title.replace(" ", "_");
         const response = await makeRestRequest(path, redirect);
