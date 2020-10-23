@@ -94,9 +94,9 @@ export class Page {
         }
     }
 
-    public externalLinks = async (pageOptions?: pageOptions): Promise<Array<string>> => {
+    public externalLinks = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
-            const result = await references(this.pageid.toString(), pageOptions?.redirect);
+            const result = await references(this.pageid.toString(), listOptions);
             return result;
         } catch (error) {
             throw new linksError(error);
@@ -112,12 +112,12 @@ export class Page {
         }
     }
 
-    public langLinks = async (pageOptions?: pageOptions): Promise<Array<langLinksResult>> => {
+    public langLinks = async (listOptions?: listOptions): Promise<Array<langLinksResult>> => {
         try {
-            const result = await langLinks(this.pageid.toString(), pageOptions?.redirect);
+            const result = await langLinks(this.pageid.toString(), listOptions);
             return result;
         } catch (error) {
-            throw new coordinatesError(error);
+            throw new linksError(error);
         }
     }
 
@@ -252,14 +252,14 @@ export const links = async (title: string, listOptions?: listOptions): Promise<A
     }
 }
 
-export const references = async (title: string, redirect = true): Promise<Array<string>> => {
+export const references = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let extLinksOptions: any = {
             prop: 'extlinks',
-            ellimit: 'max',
+            ellimit: listOptions?.limit || 'max',
         }
         extLinksOptions = setPageIdOrTitleParam(extLinksOptions, title);
-        const response = await request(extLinksOptions, redirect);
+        const response = await request(extLinksOptions, listOptions?.redirect);
         const pageId = setPageId(extLinksOptions, response);
         const result = response.query.pages[pageId].extlinks.map((link: any) => link['*'])
         return result;
@@ -283,15 +283,15 @@ export const coordinates = async (title: string, redirect = true): Promise<coord
     }
 }
 
-export const langLinks = async (title: string, redirect = true): Promise<Array<langLinksResult>> => {
+export const langLinks = async (title: string, listOptions?: listOptions): Promise<Array<langLinksResult>> => {
     try {
         let languageOptions: any = {
             prop: 'langlinks',
-            lllimit: 'max',
+            lllimit: listOptions?.limit || 'max',
             llprop: 'url'
         }
         languageOptions = setPageIdOrTitleParam(languageOptions, title);
-        const response = await request(languageOptions, redirect);
+        const response = await request(languageOptions, listOptions?.redirect);
         const pageId = setPageId(languageOptions, response);
         const result = response.query.pages[pageId].langlinks.map((link:any) => {
             return {

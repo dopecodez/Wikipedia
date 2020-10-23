@@ -15,7 +15,7 @@ wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wiki
         const searchParams: any = {
             'list': 'search',
             'srprop': '',
-            'srlimit': searchOptions?.results || 10,
+            'srlimit': searchOptions?.limit || 10,
             'srsearch': query
         }
         searchOptions?.suggestion ? searchParams['srinfo'] = 'suggestion' : null;
@@ -127,12 +127,12 @@ wiki.links = async (title: string, listOptions?: listOptions) : Promise<Array<st
     }
 }
 
-wiki.externalLinks = async (title: string, pageOptions?: pageOptions) : Promise<Array<string>> => {
+wiki.externalLinks = async (title: string, listOptions?: listOptions) : Promise<Array<string>> => {
     try {
-        if (pageOptions?.autoSuggest) {
+        if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await references(title, pageOptions?.redirect);
+        const response = await references(title, listOptions);
         return response;
     } catch (error) {
         throw new linksError(error);
@@ -151,12 +151,12 @@ wiki.coordinates = async (title: string, pageOptions?: pageOptions) : Promise<co
     }
 }
 
-wiki.langLinks = async (title: string, pageOptions?: pageOptions) : Promise<Array<langLinksResult>> => {
+wiki.langLinks = async (title: string, listOptions?: listOptions) : Promise<Array<langLinksResult>> => {
     try {
-        if (pageOptions?.autoSuggest) {
+        if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await langLinks(title, pageOptions?.redirect);
+        const response = await langLinks(title, listOptions);
         return response;
     } catch (error) {
         throw new coordinatesError(error);
@@ -219,7 +219,7 @@ wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOpt
             'list': 'geosearch',
             'gsradius': geoOptions?.radius || 1000,
             'gscoord': `${latitude}|${longitude}`,
-            'gslimit': geoOptions?.results || 10,
+            'gslimit': geoOptions?.limit || 10,
             'gsprop': 'type'
         }
         const results = await request(geoSearchParams);

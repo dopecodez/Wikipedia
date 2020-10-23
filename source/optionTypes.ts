@@ -1,5 +1,5 @@
 export interface searchOptions {
-    results?: number
+    limit?: number
     suggestion?: boolean
 }
 
@@ -16,6 +16,6 @@ export interface listOptions {
 }
 
 export interface geoOptions {
-    results?: number
+    limit?: number
     radius?: number
 }
