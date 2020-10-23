@@ -1,14 +1,20 @@
 import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions, listOptions } from './optionTypes';
-import Page, {intro, images, html, content, categories, links, coordinates, langLinks, references, info, tables, summary } from './page';
+import Page, {
+    intro, images, html, content, categories, links, coordinates, langLinks,
+    references, info, tables, summary, related
+} from './page';
 import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, wikiSearchResult } from './resultTypes';
-import { contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError, introError, linksError, pageError, searchError, summaryError, wikiError } from './errors';
+import {
+    contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError,
+    introError, linksError, pageError, relatedError, searchError, summaryError, wikiError
+} from './errors';
 import { MSGS } from './messages';
 import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
 //The intial wiki function
 //All APIs are based on https://www.mediawiki.org/wiki/API:Main_page
-const wiki = async () => {}
+const wiki = async () => { }
 
 wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wikiSearchResult> => {
     try {
@@ -63,7 +69,7 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
     }
 }
 
-wiki.intro = async (title: string, pageOptions?: pageOptions) : Promise<string> => {
+wiki.intro = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -75,7 +81,7 @@ wiki.intro = async (title: string, pageOptions?: pageOptions) : Promise<string> 
     }
 }
 
-wiki.images = async (title: string, listOptions?: listOptions) : Promise<Array<imageResult>> => {
+wiki.images = async (title: string, listOptions?: listOptions): Promise<Array<imageResult>> => {
     try {
         if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -87,7 +93,7 @@ wiki.images = async (title: string, listOptions?: listOptions) : Promise<Array<i
     }
 }
 
-wiki.summary = async (title: string, pageOptions?: pageOptions) : Promise<JSON> => {
+wiki.summary = async (title: string, pageOptions?: pageOptions): Promise<JSON> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -99,7 +105,7 @@ wiki.summary = async (title: string, pageOptions?: pageOptions) : Promise<JSON> 
     }
 }
 
-wiki.html = async (title: string, pageOptions?: pageOptions) : Promise<string> => {
+wiki.html = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -111,7 +117,7 @@ wiki.html = async (title: string, pageOptions?: pageOptions) : Promise<string> =
     }
 }
 
-wiki.content = async (title: string, pageOptions?: pageOptions) : Promise<string> => {
+wiki.content = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -123,7 +129,7 @@ wiki.content = async (title: string, pageOptions?: pageOptions) : Promise<string
     }
 }
 
-wiki.categories = async (title: string, listOptions?: listOptions) : Promise<Array<string>> => {
+wiki.categories = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -135,7 +141,19 @@ wiki.categories = async (title: string, listOptions?: listOptions) : Promise<Arr
     }
 }
 
-wiki.links = async (title: string, listOptions?: listOptions) : Promise<Array<string>> => {
+wiki.related = async (title: string, pageOptions?: pageOptions): Promise<Array<JSON>> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const response = await related(title, pageOptions?.redirect);
+        return response;
+    } catch (error) {
+        throw new relatedError(error);
+    }
+}
+
+wiki.links = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -147,7 +165,7 @@ wiki.links = async (title: string, listOptions?: listOptions) : Promise<Array<st
     }
 }
 
-wiki.references = async (title: string, listOptions?: listOptions) : Promise<Array<string>> => {
+wiki.references = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -159,7 +177,7 @@ wiki.references = async (title: string, listOptions?: listOptions) : Promise<Arr
     }
 }
 
-wiki.coordinates = async (title: string, pageOptions?: pageOptions) : Promise<coordinatesResult | null> => {
+wiki.coordinates = async (title: string, pageOptions?: pageOptions): Promise<coordinatesResult | null> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -171,7 +189,7 @@ wiki.coordinates = async (title: string, pageOptions?: pageOptions) : Promise<co
     }
 }
 
-wiki.langLinks = async (title: string, listOptions?: listOptions) : Promise<Array<langLinksResult>> => {
+wiki.langLinks = async (title: string, listOptions?: listOptions): Promise<Array<langLinksResult>> => {
     try {
         if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -183,7 +201,7 @@ wiki.langLinks = async (title: string, listOptions?: listOptions) : Promise<Arra
     }
 }
 
-wiki.infobox = async (title: string, pageOptions?: pageOptions) : Promise<any> => {
+wiki.infobox = async (title: string, pageOptions?: pageOptions): Promise<any> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -195,7 +213,7 @@ wiki.infobox = async (title: string, pageOptions?: pageOptions) : Promise<any> =
     }
 }
 
-wiki.tables = async (title: string, pageOptions?: pageOptions) : Promise<Array<any>> => {
+wiki.tables = async (title: string, pageOptions?: pageOptions): Promise<Array<any>> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -207,7 +225,7 @@ wiki.tables = async (title: string, pageOptions?: pageOptions) : Promise<Array<a
     }
 }
 
-wiki.languages = async () : Promise<Array<languageResult>> => {
+wiki.languages = async (): Promise<Array<languageResult>> => {
     try {
         const langParams = {
             'meta': 'siteinfo',
@@ -224,7 +242,7 @@ wiki.languages = async () : Promise<Array<languageResult>> => {
     }
 }
 
-wiki.setLang = (language: string) : string => {
+wiki.setLang = (language: string): string => {
     try {
         const apiUrl = setAPIUrl(language);
         return apiUrl;
@@ -233,7 +251,7 @@ wiki.setLang = (language: string) : string => {
     }
 }
 
-wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOptions) : Promise<Array<geoSearchResult>> => {
+wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOptions): Promise<Array<geoSearchResult>> => {
     try {
         let geoSearchParams: any = {
             'list': 'geosearch',
@@ -250,8 +268,8 @@ wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOpt
     }
 }
 
-wiki.suggest = async (query: string) : Promise<string | null> => {
-    try{
+wiki.suggest = async (query: string): Promise<string | null> => {
+    try {
         const suggestParams = {
             'list': 'search',
             'srinfo': 'suggestion',

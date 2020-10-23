@@ -97,3 +97,10 @@ export class introError extends wikiError {
         this.name = 'introError';
     }
 }
+
+export class relatedError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'relatedError';
+    }
+}

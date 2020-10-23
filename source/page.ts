@@ -1,5 +1,5 @@
 import { contentError, coordinatesError, htmlError, imageError, 
-    infoboxError, introError, linksError, preloadError, sectionsError, summaryError } from './errors';
+    infoboxError, introError, linksError, preloadError, relatedError, sectionsError, summaryError } from './errors';
 import request, { makeRestRequest } from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
@@ -34,6 +34,7 @@ export class Page {
     _info!: JSON;
     _tables!: Array<JSON>;
     _intro!: string;
+    _related!: Array<JSON>;
     constructor(response: pageResult) {
         this.pageid = response.pageid;
         this.ns = response.ns;
@@ -192,6 +193,18 @@ export class Page {
             return this._tables;
         } catch (error) {
             throw new infoboxError(error);
+        }
+    }
+
+    public related = async (pageOptions?: pageOptions): Promise<Array<JSON>> => {
+        try {
+            if (!this._related) {
+                const result = await related(this.title, pageOptions?.redirect);
+                this._related = result;
+            }
+            return this._related;
+        } catch (error) {
+            throw new relatedError(error);
         }
     }
 
@@ -429,11 +442,27 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
 
 export const summary = async (title: string, redirect = true): Promise<JSON> => {
     try {
-        const path = 'page/summary/' + title;
+        const path = 'page/summary/' + title.replace(" ", "_");;
         const response = await makeRestRequest(path, redirect);
         return response;
     } catch (error) {
         throw new summaryError(error);
+    }
+}
+
+/*
+    Returns summaries for 20 pages related to the given page. Summaries include page title, namespace 
+    and id along with short text description of the page and a thumbnail.
+    @stability experimental
+
+*/
+export const related = async (title: string, redirect = true): Promise<Array<JSON>> => {
+    try {
+        const path = 'page/related/' + title.replace(" ", "_");
+        const response = await makeRestRequest(path, redirect);
+        return response;
+    } catch (error) {
+        throw new relatedError(error);
     }
 }
 
