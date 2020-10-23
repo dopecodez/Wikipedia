@@ -218,6 +218,18 @@ export class Page {
     }
 }
 
+/**
+ * Returns the images present in a wiki page
+ *
+ * @remarks
+ * This method is part of the {@link Page | Page Class}.
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - The list options object @type listOptions
+ * @returns The arithmetic mean of `x` and `y`
+ *
+ * @beta
+ */
 export const images = async (title: string, listOptions?: listOptions): Promise<Array<imageResult>> => {
     try {
         let imageOptions: any = {
@@ -251,7 +263,7 @@ export const intro = async (title: string, redirect = true): Promise<string> => 
         introOptions = setPageIdOrTitleParam(introOptions, title);
         const response = await request(introOptions, redirect);
         const pageId = setPageId(introOptions, response);
-        return response.query.pages[pageId].extract;
+        return response?.query?.pages[pageId].extract;
     } catch (error) {
         throw new introError(error);
     }
@@ -323,7 +335,7 @@ export const links = async (title: string, listOptions?: listOptions): Promise<A
         linksOptions = setPageIdOrTitleParam(linksOptions, title);
         const response = await request(linksOptions, listOptions?.redirect);
         const pageId = setPageId(linksOptions, response);
-        let result = response.query.pages[pageId].links.map((link: any) => link.title)
+        const result = response.query.pages[pageId].links.map((link: any) => link.title)
         return result;
     } catch (error) {
         throw new linksError(error);
@@ -386,7 +398,7 @@ export const langLinks = async (title: string, listOptions?: listOptions): Promi
 
 export const info = async (title: string, redirect = true): Promise<JSON> => {
     try {
-        let infoboxOptions: any = {
+        const infoboxOptions: any = {
             prop: 'revisions',
             rvprop: 'content',
             rvsection: 0
@@ -406,7 +418,7 @@ export const info = async (title: string, redirect = true): Promise<JSON> => {
 
 export const tables = async (title: string, redirect = true): Promise<Array<JSON>> => {
     try {
-        let tableOptions: any = {
+        const tableOptions: any = {
             prop: 'revisions',
             rvprop: 'content',
         }
@@ -442,7 +454,7 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
 
 export const summary = async (title: string, redirect = true): Promise<wikiSummary> => {
     try {
-        const path = 'page/summary/' + title.replace(" ", "_");;
+        const path = 'page/summary/' + title.replace(" ", "_");
         const response = await makeRestRequest(path, redirect);
         return response;
     } catch (error) {

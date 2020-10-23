@@ -3,15 +3,15 @@ import { URLSearchParams } from 'url';
 import { wikiError } from './errors';
  
 let API_URL = 'http://en.wikipedia.org/w/api.php?',
-    REST_API_URL = 'http://en.wikipedia.org/api/rest_v1/',
+    REST_API_URL = 'http://en.wikipedia.org/api/rest_v1/';
     // RATE_LIMIT = false,
     // RATE_LIMIT_MIN_WAIT = undefined,
     // RATE_LIMIT_LAST_CALL = undefined,
-    USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
+    const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 
 async function makeRequest(params: any, redirect = true): Promise<any> {
     try {
-        let search = new URLSearchParams({ ...params })
+        const search = new URLSearchParams({ ...params })
         search.set('format', 'json');
         if (redirect) {
             search.set('redirects', '');
@@ -51,7 +51,7 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
     }
 }
 
-export function setAPIUrl(prefix: string) {
+export function setAPIUrl(prefix: string) : string {
     API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/w/api.php?';
     REST_API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/api/rest_v1/page/';
     return API_URL;

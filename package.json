@@ -12,6 +12,7 @@
     "build": "tsc --build --clean && tsc",
     "postbuild": "copyfiles -u 1 test/parser/samples/*.txt dist/test",
     "prepare": "npm run build",
+    "lint": "eslint src/**/*.ts",
     "release": "np"
   },
   "author": "Govind S",
@@ -27,7 +28,10 @@
     "@types/node": "^13.13.5",
     "@types/node-fetch": "^2.5.7",
     "ava": "^3.8.2",
-    "typescript": "^3.8.3"
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "typescript": "^3.8.3",
+    "eslint": "^7.11.0"
   },
   "files": [
     "dist/source"

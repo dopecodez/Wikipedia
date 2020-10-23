@@ -15,7 +15,9 @@ import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
 //The intial wiki function
 //All APIs are based on https://www.mediawiki.org/wiki/API:Main_page
-const wiki = async () => { }
+const wiki = async (title: string, pageOptions?: pageOptions) => {
+    wiki.page(title, pageOptions);
+ }
 
 wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wikiSearchResult> => {
     try {
@@ -254,7 +256,7 @@ wiki.setLang = (language: string): string => {
 
 wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOptions): Promise<Array<geoSearchResult>> => {
     try {
-        let geoSearchParams: any = {
+        const geoSearchParams: any = {
             'list': 'geosearch',
             'gsradius': geoOptions?.radius || 1000,
             'gscoord': `${latitude}|${longitude}`,
@@ -277,7 +279,7 @@ wiki.suggest = async (query: string): Promise<string | null> => {
             'srprop': '',
             'srsearch': query
         }
-        let result = await request(suggestParams);
+        const result = await request(suggestParams);
         return result.query?.searchinfo?.suggestion ? result.query?.searchinfo?.suggestion : null;
     } catch (error) {
         throw new searchError(error);

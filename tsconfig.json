@@ -13,8 +13,6 @@
         "allowSyntheticDefaultImports": true,
         "module": "commonjs",
         "moduleResolution": "node",
-        "resolveJsonModule": true,
-        "esModuleInterop": true,
         "declaration": true
     },
     "include": [
