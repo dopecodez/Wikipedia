@@ -49,6 +49,14 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
             throw new pageError(`${MSGS.PAGE_NOT_EXIST}${title}`)
         }
         const page = new Page(pageInfo);
+        if (pageOptions?.preload) {
+            if (!pageOptions?.fields) {
+                pageOptions.fields = ['summary', 'images'];
+            }
+            for (const field of pageOptions.fields) {
+                await page.runMethod(field);
+            }
+        }
         return page;
     } catch (error) {
         throw error;
@@ -127,7 +135,7 @@ wiki.links = async (title: string, listOptions?: listOptions) : Promise<Array<st
     }
 }
 
-wiki.externalLinks = async (title: string, listOptions?: listOptions) : Promise<Array<string>> => {
+wiki.references = async (title: string, listOptions?: listOptions) : Promise<Array<string>> => {
     try {
         if (listOptions?.autoSuggest) {
             title = await setTitleForPage(title);

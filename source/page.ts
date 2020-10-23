@@ -1,4 +1,4 @@
-import { contentError, coordinatesError, htmlError, imageError, infoboxError, linksError, sectionsError, summaryError } from './errors';
+import { contentError, coordinatesError, htmlError, imageError, infoboxError, linksError, preloadError, sectionsError, summaryError } from './errors';
 import request from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
@@ -46,22 +46,26 @@ export class Page {
         this.editurl = response.editurl;
         this.canonicalurl = response.canonicalurl;
     }
-    
+
     public summary = async (pageOptions?: pageOptions): Promise<string> => {
         try {
-            const response = await summary(this.pageid.toString(), pageOptions?.redirect);
-            this._summary = response;
-            return response;
+            if (!this._summary) {
+                const response = await summary(this.pageid.toString(), pageOptions?.redirect);
+                this._summary = response;
+            }
+            return this._summary;
         } catch (error) {
             throw new summaryError(error);
         }
     }
 
-    public images = async ( listOptions?: listOptions ): Promise<Array<imageResult>> => {
+    public images = async (listOptions?: listOptions): Promise<Array<imageResult>> => {
         try {
-            const result = await images(this.pageid.toString(), listOptions);
-            this._images = result;
-            return result;
+            if (!this._images) {
+                const result = await images(this.pageid.toString(), listOptions);
+                this._images = result;
+            }
+            return this._images;
         } catch (error) {
             throw new imageError(error);
         }
@@ -69,9 +73,11 @@ export class Page {
 
     public html = async (pageOptions?: pageOptions): Promise<string> => {
         try {
-            const result = await html(this.pageid.toString(), pageOptions?.redirect);
-            this._html = result;
-            return result;
+            if (!this._html) {
+                const result = await html(this.pageid.toString(), pageOptions?.redirect);
+                this._html = result;
+            }
+            return this._html;
         } catch (error) {
             throw new htmlError(error);
         }
@@ -79,11 +85,13 @@ export class Page {
 
     public content = async (pageOptions?: pageOptions): Promise<string> => {
         try {
-            const result = await content(this.pageid.toString(), pageOptions?.redirect);
-            this.parentId = result.ids.parentId;
-            this.revId = result.ids.revId;
-            this._content = result.result;
-            return result.result;
+            if (!this._content) {
+                const result = await content(this.pageid.toString(), pageOptions?.redirect);
+                this.parentId = result.ids.parentId;
+                this.revId = result.ids.revId;
+                this._content = result.result;
+            }
+            return this._content;
         } catch (error) {
             throw new contentError(error);
         }
@@ -91,9 +99,11 @@ export class Page {
 
     public categories = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
-            const result = await categories(this.pageid.toString(), listOptions);
-            this._categories = result;
-            return result;
+            if (!this._categories) {
+                const result = await categories(this.pageid.toString(), listOptions);
+                this._categories = result;
+            }
+            return this._categories;
         } catch (error) {
             throw new sectionsError(error);
         }
@@ -101,9 +111,11 @@ export class Page {
 
     public links = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
-            const result = await links(this.pageid.toString(), listOptions);
-            this._links = result;
-            return result;
+            if (!this._links) {
+                const result = await links(this.pageid.toString(), listOptions);
+                this._links = result;
+            }
+            return this._links;
         } catch (error) {
             throw new linksError(error);
         }
@@ -111,9 +123,11 @@ export class Page {
 
     public references = async (listOptions?: listOptions): Promise<Array<string>> => {
         try {
-            const result = await references(this.pageid.toString(), listOptions);
-            this._references = result;
-            return result;
+            if (!this._references) {
+                const result = await references(this.pageid.toString(), listOptions);
+                this._references = result;
+            }
+            return this._references;
         } catch (error) {
             throw new linksError(error);
         }
@@ -121,9 +135,11 @@ export class Page {
 
     public coordinates = async (pageOptions?: pageOptions): Promise<coordinatesResult> => {
         try {
-            const result = await coordinates(this.pageid.toString(), pageOptions?.redirect);
-            this._coordinates = result;
-            return result;
+            if (!this._coordinates) {
+                const result = await coordinates(this.pageid.toString(), pageOptions?.redirect);
+                this._coordinates = result;
+            }
+            return this._coordinates;
         } catch (error) {
             throw new coordinatesError(error);
         }
@@ -131,9 +147,11 @@ export class Page {
 
     public langLinks = async (listOptions?: listOptions): Promise<Array<langLinksResult>> => {
         try {
-            const result = await langLinks(this.pageid.toString(), listOptions);
-            this._langLinks = result;
-            return result;
+            if (!this._langLinks) {
+                const result = await langLinks(this.pageid.toString(), listOptions);
+                this._langLinks = result;
+            }
+            return this._langLinks;
         } catch (error) {
             throw new linksError(error);
         }
@@ -141,9 +159,11 @@ export class Page {
 
     public info = async (pageOptions?: pageOptions): Promise<JSON> => {
         try {
-            const result = await info(this.pageid.toString(), pageOptions?.redirect);
-            this._info = result;
-            return result;
+            if (!this._info) {
+                const result = await info(this.pageid.toString(), pageOptions?.redirect);
+                this._info = result;
+            }
+            return this._info;
         } catch (error) {
             throw new infoboxError(error);
         }
@@ -151,11 +171,22 @@ export class Page {
 
     public tables = async (pageOptions?: pageOptions): Promise<Array<JSON>> => {
         try {
-            const result = await tables(this.pageid.toString(), pageOptions?.redirect);
-            this._tables = result;
-            return result;
+            if (!this._tables) {
+                const result = await tables(this.pageid.toString(), pageOptions?.redirect);
+                this._tables = result;
+            }
+            return this._tables;
         } catch (error) {
             throw new infoboxError(error);
+        }
+    }
+
+    public async runMethod(functionName: string): Promise<any> {
+        try {
+            const result = await eval(`this.${functionName}()`);
+            return result;
+        } catch (error) {
+            throw new preloadError(error);
         }
     }
 }
@@ -260,7 +291,7 @@ export const links = async (title: string, listOptions?: listOptions): Promise<A
         let linksOptions: any = {
             prop: 'links',
             plnamespace: 0,
-            pllimit: listOptions?.limit,
+            pllimit: listOptions?.limit || 'max',
         }
         linksOptions = setPageIdOrTitleParam(linksOptions, title);
         const response = await request(linksOptions, listOptions?.redirect);
@@ -297,7 +328,7 @@ export const coordinates = async (title: string, redirect = true): Promise<coord
         const response = await request(coordinatesOptions, redirect);
         const pageId = setPageId(coordinatesOptions, response);
         const coordinates = response.query.pages[pageId].coordinates;
-        return coordinates ? coordinates[0]: null;
+        return coordinates ? coordinates[0] : null;
     } catch (error) {
         throw new coordinatesError(error);
     }
@@ -313,7 +344,7 @@ export const langLinks = async (title: string, listOptions?: listOptions): Promi
         languageOptions = setPageIdOrTitleParam(languageOptions, title);
         const response = await request(languageOptions, listOptions?.redirect);
         const pageId = setPageId(languageOptions, response);
-        const result = response.query.pages[pageId].langlinks.map((link:any) => {
+        const result = response.query.pages[pageId].langlinks.map((link: any) => {
             return {
                 lang: link.lang,
                 title: link['*'],
@@ -334,7 +365,7 @@ export const info = async (title: string, redirect = true): Promise<JSON> => {
             rvsection: 0
         }
         const fullInfo = await rawInfo(title, infoboxOptions, redirect);
-        let info = infoboxParser(fullInfo|| '').general;
+        let info = infoboxParser(fullInfo || '').general;
         if (Object.keys(info).length === 0) {
             // If empty, check to see if this page has a templated infobox
             const wikiText = await rawInfo(`Template:Infobox ${title.toLowerCase()}`, infoboxOptions);
@@ -342,7 +373,6 @@ export const info = async (title: string, redirect = true): Promise<JSON> => {
         }
         return info;
     } catch (error) {
-        console.log(error);
         throw new infoboxError(error);
     }
 }
@@ -354,7 +384,7 @@ export const tables = async (title: string, redirect = true): Promise<Array<JSON
             rvprop: 'content',
         }
         const fullInfo = await rawInfo(title, tableOptions, redirect);
-        let info = infoboxParser(fullInfo|| '').tables;
+        let info = infoboxParser(fullInfo || '').tables;
         if (Object.keys(info).length === 0) {
             // If empty, check to see if this page has a templated infobox
             const wikiText = await rawInfo(`Template:Infobox ${title.toLowerCase()}`, tableOptions);
@@ -362,7 +392,6 @@ export const tables = async (title: string, redirect = true): Promise<Array<JSON
         }
         return info;
     } catch (error) {
-        console.log(error);
         throw new infoboxError(error);
     }
 }
@@ -373,8 +402,7 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
         const response = await request(options, redirect);
         const pageId = setPageId(options, response);
         const data = response.query.pages[pageId]['revisions'][0];
-        console.log(data);
-        return data ? data['*']: [];
+        return data ? data['*'] : [];
     } catch (error) {
         throw new infoboxError(error);
     }

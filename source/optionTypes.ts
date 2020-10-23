@@ -7,6 +7,7 @@ export interface pageOptions {
     autoSuggest?: boolean
     redirect?: boolean
     preload?: boolean
+    fields?: Array<string>
 }
 
 export interface listOptions {

@@ -83,3 +83,9 @@ export class infoboxError extends wikiError {
         this.name = 'infoboxError';
     }
 }
+export class preloadError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'preloadError';
+    }
+}
