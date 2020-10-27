@@ -8,7 +8,7 @@
   },
   "scripts": {
     "prepublishOnly": "tsc --build --clean && tsc",
-    "test": "tsc --noEmit && ava",
+    "test": "jest --coverage",
     "build": "yarn lint && tsc --build --clean && tsc",
     "postbuild": "copyfiles -u 1 test/parser/samples/*.txt dist/test",
     "prepare": "yarn build",
@@ -23,32 +23,22 @@
     "url": "git://github.com/dopecodez/wikipedia.git"
   },
   "devDependencies": {
-    "@ava/typescript": "^1.1.1",
     "@types/infobox-parser": "^3.3.0",
+    "@types/jest": "^26.0.15",
     "@types/node": "^13.13.5",
     "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
-    "ava": "^3.8.2",
     "eslint": "^7.11.0",
     "eslint-plugin-tsdoc": "^0.2.7",
+    "jest": "^26.6.1",
+    "ts-jest": "^26.4.3",
     "typescript": "^3.8.3"
   },
   "files": [
     "dist/source"
   ],
   "types": "dist/source/",
-  "ava": {
-    "files": [
-      "test/*"
-    ],
-    "timeout": "1m",
-    "typescript": {
-      "rewritePaths": {
-        "test/": "dist/test/"
-      }
-    }
-  },
   "dependencies": {
     "infobox-parser": "^3.4.1",
     "node-fetch": "^2.6.1"
