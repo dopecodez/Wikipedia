@@ -2,10 +2,12 @@ import wiki from ".";
 import { pageError } from "./errors";
 import { MSGS } from "./messages";
 
+//check if input is string
 export function isString(title: any){
     return isNaN(title);
 }
 
+//set title for page in case autoSuggest is true
 export async function setTitleForPage(title: string) {
     {
         const searchResult = await wiki.search(title, { limit: 1, suggestion: true })
@@ -17,6 +19,7 @@ export async function setTitleForPage(title: string) {
     }
 }
 
+//Set page id or title param for legacy api queries
 export function setPageIdOrTitleParam(params: any, title: string) {
     if (isString(title)) {
         params.titles = title
@@ -26,6 +29,7 @@ export function setPageIdOrTitleParam(params: any, title: string) {
     return params;
 }
 
+//Get page id from params or from results
 export function setPageId(params: any, results: any): number {
     let pageId;
     if (params.pageIds) {

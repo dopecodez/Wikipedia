@@ -15,10 +15,21 @@ import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
 //The intial wiki function
 //All APIs are based on https://www.mediawiki.org/wiki/API:Main_page
+//Internally calls wiki.page() method
 const wiki = async (title: string, pageOptions?: pageOptions) => {
     wiki.page(title, pageOptions);
- }
+}
 
+/**
+ * Returns the search results for a given query
+ *
+ * @remarks
+ * Limits results by default to 10
+ *
+ * @param query - The string to search for
+ * @param searchOptions - The number of results and if suggestion needed {@link searchOptions | searchOptions }
+ * @returns an array of {@link wikiSearchResult | wikiSearchResult }
+ */
 wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wikiSearchResult> => {
     try {
         const searchParams: any = {
@@ -39,6 +50,16 @@ wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wiki
     }
 }
 
+/**
+ * Returns the page for a given title or string
+ * 
+ * @remarks
+ * Call this method to get the basic info for page and also to preload any params you might use in future
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect, autoSuggest or preload any fields {@link pageOptions | pageOptions }
+ * @returns The intro string
+ */
 wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -72,6 +93,16 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
     }
 }
 
+/**
+ * Returns the intro present in a wiki page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns The intro string
+ */
 wiki.intro = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -84,6 +115,16 @@ wiki.intro = async (title: string, pageOptions?: pageOptions): Promise<string> =
     }
 }
 
+/**
+ * Returns the images present in a wiki page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns an array of imageResult {@link imageResult | imageResult }
+ */
 wiki.images = async (title: string, listOptions?: listOptions): Promise<Array<imageResult>> => {
     try {
         if (listOptions?.autoSuggest) {
@@ -96,6 +137,16 @@ wiki.images = async (title: string, listOptions?: listOptions): Promise<Array<im
     }
 }
 
+/**
+ * Returns the summary of the page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns The summary of the page as {@link wikiSummary | wikiSummary}
+ */
 wiki.summary = async (title: string, pageOptions?: pageOptions): Promise<wikiSummary> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -108,6 +159,18 @@ wiki.summary = async (title: string, pageOptions?: pageOptions): Promise<wikiSum
     }
 }
 
+/**
+ * Returns the html content of a page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns The html content as string
+ * 
+ * @beta
+ */
 wiki.html = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -120,6 +183,16 @@ wiki.html = async (title: string, pageOptions?: pageOptions): Promise<string> =>
     }
 }
 
+/**
+ * Returns the plain text content of a page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns The plain text as string and the parent and revision ids
+ */
 wiki.content = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -132,6 +205,16 @@ wiki.content = async (title: string, pageOptions?: pageOptions): Promise<string>
     }
 }
 
+/**
+ * Returns the cetegories present in page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns The categories as an array of string
+ */
 wiki.categories = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         if (listOptions?.autoSuggest) {
@@ -144,6 +227,19 @@ wiki.categories = async (title: string, listOptions?: listOptions): Promise<Arra
     }
 }
 
+/**
+ * Returns summaries for 20 pages related to the given page. Summaries include page title, namespace 
+ * and id along with short text description of the page and a thumbnail.
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns The related pages and summary as an array of {@link wikiSummary | wikiSummary}
+ * 
+ * @experimental
+ */
 wiki.related = async (title: string, pageOptions?: pageOptions): Promise<Array<wikiSummary>> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -156,6 +252,16 @@ wiki.related = async (title: string, pageOptions?: pageOptions): Promise<Array<w
     }
 }
 
+/**
+ * Returns the links present in page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns The links as an array of string
+ */
 wiki.links = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         if (listOptions?.autoSuggest) {
@@ -168,6 +274,16 @@ wiki.links = async (title: string, listOptions?: listOptions): Promise<Array<str
     }
 }
 
+/**
+ * Returns the references of external links present in page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns The references as an array of string
+ */
 wiki.references = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         if (listOptions?.autoSuggest) {
@@ -180,6 +296,16 @@ wiki.references = async (title: string, listOptions?: listOptions): Promise<Arra
     }
 }
 
+/**
+ * Returns the coordinates of a page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns The coordinates as {@link coordinatesResult | coordinatesResult}
+ */
 wiki.coordinates = async (title: string, pageOptions?: pageOptions): Promise<coordinatesResult | null> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -192,6 +318,16 @@ wiki.coordinates = async (title: string, pageOptions?: pageOptions): Promise<coo
     }
 }
 
+/**
+ * Returns the language links present in the page
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param listOptions - {@link listOptions | listOptions }
+ * @returns The links as an array of {@link langLinksResult | langLinksResult }
+ */
 wiki.langLinks = async (title: string, listOptions?: listOptions): Promise<Array<langLinksResult>> => {
     try {
         if (listOptions?.autoSuggest) {
@@ -204,6 +340,16 @@ wiki.langLinks = async (title: string, listOptions?: listOptions): Promise<Array
     }
 }
 
+/**
+ * Returns the infobox content of page if present
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns The info as JSON object
+ */
 wiki.infobox = async (title: string, pageOptions?: pageOptions): Promise<any> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -216,6 +362,16 @@ wiki.infobox = async (title: string, pageOptions?: pageOptions): Promise<any> =>
     }
 }
 
+/**
+ * Returns the table content of page if present
+ *
+ * @remarks
+ * Called in page object and also through wiki default object
+ *
+ * @param title - The title or page Id of the page
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns The tables as arrays of JSON objects
+ */
 wiki.tables = async (title: string, pageOptions?: pageOptions): Promise<Array<any>> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -228,6 +384,14 @@ wiki.tables = async (title: string, pageOptions?: pageOptions): Promise<Array<an
     }
 }
 
+/**
+ * Returns the languages available in wiki
+ *
+ * @remarks
+ * Use this if you want to check if a lanuage exists before actually setting it
+ *
+ * @returns The languages an array of {@link languageResult | languageResult}
+ */
 wiki.languages = async (): Promise<Array<languageResult>> => {
     try {
         const langParams = {
@@ -245,6 +409,14 @@ wiki.languages = async (): Promise<Array<languageResult>> => {
     }
 }
 
+/**
+ * sets the languages to given string - verify your input using languages method
+ *
+ * @remarks
+ * Use this to set your language for future api calls
+ *
+ * @returns The new api endpoint as string
+ */
 wiki.setLang = (language: string): string => {
     try {
         const apiUrl = setAPIUrl(language);
@@ -254,6 +426,17 @@ wiki.setLang = (language: string): string => {
     }
 }
 
+/**
+ * Returns the pages with coordinates near the geo search coordinates 
+ *
+ * @remarks
+ * Latitude and longitude should be valid values
+ *
+ * @param latitude - The latitude to search
+ * @param longitude - The longitude to search
+ * @param geoOptions - The number of results and the search radius {@link geoOptions | geoOptions}
+ * @returns The results as an array of {@link geoSearchResult | geoSearchResult}
+ */
 wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOptions): Promise<Array<geoSearchResult>> => {
     try {
         const geoSearchParams: any = {
@@ -271,6 +454,15 @@ wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOpt
     }
 }
 
+/**
+ * Returns the suggestion for a given query
+ *
+ * @remarks
+ * Use this if you want your user to approve the suggestion before using it
+ *
+ * @param query - The string to query
+ * @returns Returns a string or null based on if suggestion is present or not
+ */
 wiki.suggest = async (query: string): Promise<string | null> => {
     try {
         const suggestParams = {

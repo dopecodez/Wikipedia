@@ -9,6 +9,7 @@ let API_URL = 'http://en.wikipedia.org/w/api.php?',
     // RATE_LIMIT_LAST_CALL = undefined,
     const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 
+// Makes a request to legacy php endpoint
 async function makeRequest(params: any, redirect = true): Promise<any> {
     try {
         const search = new URLSearchParams({ ...params })
@@ -32,6 +33,7 @@ async function makeRequest(params: any, redirect = true): Promise<any> {
     }
 }
 
+// Makes a request to rest api endpoint
 export async function makeRestRequest(path: string, redirect = true): Promise<any> {
     try {
         if (!redirect) {
@@ -51,6 +53,7 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
     }
 }
 
+//change language of both urls
 export function setAPIUrl(prefix: string) : string {
     API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/w/api.php?';
     REST_API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/api/rest_v1/page/';

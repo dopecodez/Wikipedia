@@ -31,8 +31,8 @@ export class Page {
     _links!: Array<string>;
     _coordinates!: coordinatesResult;
     _langLinks!: Array<langLinksResult>;
-    _info!: JSON;
-    _tables!: Array<JSON>;
+    _info!: any;
+    _tables!: Array<any>;
     _intro!: string;
     _related!: Array<wikiSummary>;
     constructor(response: pageResult) {
@@ -140,8 +140,9 @@ export class Page {
             throw new htmlError(error);
         }
     }
+
     /**
-     * Returns the plain text content of a page as well as parent id and revision id
+     * Returns the plain text content of a page and sets parent Id and rev Id
      *
      * @remarks
      * This method is part of the {@link Page | Page Class}.
@@ -284,7 +285,7 @@ export class Page {
      * @param redirect - Whether to redirect in case of 302
      * @returns The info as JSON object
      */
-    public info = async (pageOptions?: pageOptions): Promise<JSON> => {
+    public info = async (pageOptions?: pageOptions): Promise<any> => {
         try {
             if (!this._info) {
                 const result = await info(this.pageid.toString(), pageOptions?.redirect);
@@ -306,7 +307,7 @@ export class Page {
      * @param redirect - Whether to redirect in case of 302
      * @returns The tables as arrays of JSON objects
      */
-    public tables = async (pageOptions?: pageOptions): Promise<Array<JSON>> => {
+    public tables = async (pageOptions?: pageOptions): Promise<Array<any>> => {
         try {
             if (!this._tables) {
                 const result = await tables(this.pageid.toString(), pageOptions?.redirect);
@@ -357,7 +358,7 @@ export class Page {
  * Returns the images present in a wiki page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param listOptions - {@link listOptions | listOptions }
@@ -390,7 +391,7 @@ export const images = async (title: string, listOptions?: listOptions): Promise<
  * Returns the intro present in a wiki page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param redirect - Whether to redirect in case of 302
@@ -416,7 +417,7 @@ export const intro = async (title: string, redirect = true): Promise<string> => 
  * Returns the html content of a page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param redirect - Whether to redirect in case of 302
@@ -445,7 +446,7 @@ export const html = async (title: string, redirect = true): Promise<string> => {
  * Returns the plain text content of a page as well as parent id and revision id
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param redirect - Whether to redirect in case of 302
@@ -479,7 +480,7 @@ export const content = async (title: string, redirect = true): Promise<any> => {
  * Returns the cetegories present in page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param listOptions - {@link listOptions | listOptions }
@@ -504,7 +505,7 @@ export const categories = async (title: string, listOptions?: listOptions): Prom
  * Returns the links present in page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param listOptions - {@link listOptions | listOptions }
@@ -531,7 +532,7 @@ export const links = async (title: string, listOptions?: listOptions): Promise<A
  * Returns the references of external links present in page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param listOptions - {@link listOptions | listOptions }
@@ -557,7 +558,7 @@ export const references = async (title: string, listOptions?: listOptions): Prom
  * Returns the coordinates of a page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param redirect - Whether to redirect in case of 302
@@ -582,7 +583,7 @@ export const coordinates = async (title: string, redirect = true): Promise<coord
  * Returns the language links present in the page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param listOptions - {@link listOptions | listOptions }
@@ -615,7 +616,7 @@ export const langLinks = async (title: string, listOptions?: listOptions): Promi
  * Returns the infobox content of page if present
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param redirect - Whether to redirect in case of 302
@@ -645,7 +646,7 @@ export const info = async (title: string, redirect = true): Promise<any> => {
  * Returns the table content of page if present
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param redirect - Whether to redirect in case of 302
@@ -700,12 +701,11 @@ const rawInfo = async (title: string, options: any, redirect = true): Promise<an
  * Returns the summary of the page
  *
  * @remarks
- * Called in page object and also through index
+ * Called in page object and also through wiki default object
  *
  * @param title - The title or page Id of the page
  * @param redirect - Whether to redirect in case of 302
  * @returns The summary of the page as {@link wikiSummary | wikiSummary}
- * 
  */
 export const summary = async (title: string, redirect = true): Promise<wikiSummary> => {
     try {
