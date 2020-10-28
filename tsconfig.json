@@ -5,7 +5,7 @@
         "lib": [
             "es2018"
         ],
-        "types" : [ "node" ],
+        "types" : [ "node", "jest" ],
         "strict": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
@@ -16,7 +16,6 @@
         "declaration": true
     },
     "include": [
-        "source",
-        "test"
+        "source"
 	]
 }
