@@ -2,7 +2,7 @@ import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions, listOptions } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
-    references, info, tables, summary, related
+    references, infobox, tables, summary, related
 } from './page';
 import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     wikiSearchResult, wikiSummary } from './resultTypes';
@@ -356,7 +356,7 @@ wiki.infobox = async (title: string, pageOptions?: pageOptions): Promise<any> =>
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
         }
-        const response = await info(title, pageOptions?.redirect);
+        const response = await infobox(title, pageOptions?.redirect);
         return response;
     } catch (error) {
         throw new infoboxError(error);

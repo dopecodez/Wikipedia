@@ -56,3 +56,15 @@ export const summaryJson = {
     extract: "",
     extract_html: ""
 }
+
+export const rawJson = {
+    contentformat: 'text/x-wiki',
+    contentmodel: 'wikitext',
+    '*': '{{pp-move-indef}}\n' +
+      '{{short description|Creator and lead developer of Linux kernel}}\n' +
+      '{{Use dmy dates|date=July 2020}}\n' +
+      '{{Infobox person\n' +
+      '| name               = Linus Torvalds\n' +
+      '| image              = LinuxCon Europe Linus Torvalds 03 (cropped).jpg\n' +
+      '| caption           = Torvalds at LinuxCon Europe 2014\n'
+}

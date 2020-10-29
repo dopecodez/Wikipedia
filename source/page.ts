@@ -3,8 +3,12 @@ import { categoriesError, contentError, coordinatesError, htmlError, imageError,
 import request, { makeRestRequest } from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
-import infoboxParser from 'infobox-parser';
 import { listOptions, pageOptions } from './optionTypes';
+import { MSGS } from './messages';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const infoboxParser = require('infobox-parser');
+
 
 export class Page {
     pageid!: number;
@@ -31,7 +35,7 @@ export class Page {
     _links!: Array<string>;
     _coordinates!: coordinatesResult;
     _langLinks!: Array<langLinksResult>;
-    _info!: any;
+    _infobox!: any;
     _tables!: Array<any>;
     _intro!: string;
     _related!: Array<wikiSummary>;
@@ -285,13 +289,13 @@ export class Page {
      * @param redirect - Whether to redirect in case of 302
      * @returns The info as JSON object
      */
-    public info = async (pageOptions?: pageOptions): Promise<any> => {
+    public infobox = async (pageOptions?: pageOptions): Promise<any> => {
         try {
-            if (!this._info) {
-                const result = await info(this.pageid.toString(), pageOptions?.redirect);
-                this._info = result;
+            if (!this._infobox) {
+                const result = await infobox(this.pageid.toString(), pageOptions?.redirect);
+                this._infobox = result;
             }
-            return this._info;
+            return this._infobox;
         } catch (error) {
             throw new infoboxError(error);
         }
@@ -622,7 +626,7 @@ export const langLinks = async (title: string, listOptions?: listOptions): Promi
  * @param redirect - Whether to redirect in case of 302
  * @returns The info as JSON object
  */
-export const info = async (title: string, redirect = true): Promise<any> => {
+export const infobox = async (title: string, redirect = true): Promise<any> => {
     try {
         const infoboxOptions: any = {
             prop: 'revisions',
@@ -682,10 +686,13 @@ export const tables = async (title: string, redirect = true): Promise<Array<any>
  * @returns The rawInfo of the page 
  * 
  */
-const rawInfo = async (title: string, options: any, redirect = true): Promise<any> => {
+export const rawInfo = async (title: string, options: any, redirect = true): Promise<any> => {
     try {
         options = setPageIdOrTitleParam(options, title);
         const response = await request(options, redirect);
+        if (!(response.query?.pages)) {
+            throw new Error(MSGS.INFOBOX_NOT_EXIST);
+        }
         const pageId = setPageId(options, response);
         const data = response.query.pages[pageId]['revisions'][0];
         return data ? data['*'] : [];
