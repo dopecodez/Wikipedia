@@ -7,6 +7,7 @@ import Page, {
 import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     wikiSearchResult, wikiSummary } from './resultTypes';
 import {
+    categoriesError,
     contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError,
     introError, linksError, pageError, relatedError, searchError, summaryError, wikiError
 } from './errors';
@@ -223,7 +224,7 @@ wiki.categories = async (title: string, listOptions?: listOptions): Promise<Arra
         const response = await categories(title, listOptions);
         return response;
     } catch (error) {
-        throw new contentError(error);
+        throw new categoriesError(error);
     }
 }
 

@@ -1,5 +1,5 @@
-import { contentError, coordinatesError, htmlError, imageError, 
-    infoboxError, introError, linksError, preloadError, relatedError, sectionsError, summaryError } from './errors';
+import { categoriesError, contentError, coordinatesError, htmlError, imageError, 
+    infoboxError, introError, linksError, preloadError, relatedError, summaryError } from './errors';
 import request, { makeRestRequest } from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
@@ -183,7 +183,7 @@ export class Page {
             }
             return this._categories;
         } catch (error) {
-            throw new sectionsError(error);
+            throw new categoriesError(error);
         }
     }
 
@@ -497,7 +497,7 @@ export const categories = async (title: string, listOptions?: listOptions): Prom
         const pageId = setPageId(categoryOptions, response);
         return response.query.pages[pageId].categories.map((category: any) => category.title)
     } catch (error) {
-        throw new sectionsError(error);
+        throw new categoriesError(error);
     }
 }
 
