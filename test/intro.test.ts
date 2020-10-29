@@ -3,7 +3,7 @@ import Page, { intro } from '../dist/page.js';
 import * as request from '../dist/request';
 import wiki from "../dist/index";
 import * as utils from '../dist/utils'
-import { pageJson } from './pageResult';
+import { pageJson } from './pageExample';
 const requestMock = jest.spyOn(request, "default");
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
 
