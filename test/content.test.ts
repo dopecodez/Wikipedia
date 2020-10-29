@@ -44,7 +44,7 @@ test('content method on page object returns content', async () => {
     expect(result).toStrictEqual(contentResult);
 });
 
-test('Throws content error if response if empty', async () => {
+test('Throws content error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
         await content("Test")

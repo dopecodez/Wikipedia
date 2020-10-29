@@ -35,7 +35,7 @@ test('html method on page object returns html', async () => {
     expect(result).toStrictEqual(htmlResult);
 });
 
-test('Throws html error if response if empty', async () => {
+test('Throws html error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
         await html("Test")

@@ -35,7 +35,7 @@ test('References method on page object returns array of strings', async () => {
     expect(result).toStrictEqual(referenceResult);
 });
 
-test('Throws links error if response if empty', async () => {
+test('Throws links error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
         await references("Test")

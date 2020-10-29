@@ -37,7 +37,7 @@ test('Image method on page object returns array of images', async () => {
     expect(result).toStrictEqual(imageResult);
 });
 
-test('Throws image error if response if empty', async () => {
+test('Throws image error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
         await images("Test")

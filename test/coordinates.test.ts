@@ -35,7 +35,7 @@ test('Coordinates method on page object returns coordinates', async () => {
     expect(result).toStrictEqual(coordinatesResult);
 });
 
-test('Throws coordinates error if response if empty', async () => {
+test('Throws coordinates error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
         await coordinates("Test")

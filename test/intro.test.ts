@@ -35,7 +35,7 @@ test('Intro method on page object returns intro', async () => {
     expect(result).toStrictEqual(introResult);
 });
 
-test('Throws intro error if response if empty', async () => {
+test('Throws intro error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
         await intro("Test")

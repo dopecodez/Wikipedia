@@ -35,7 +35,7 @@ test('category method on page object returns array of strings', async () => {
     expect(result).toStrictEqual(categoryResult);
 });
 
-test('Throws category error if response if empty', async () => {
+test('Throws category error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
         await categories("Test")

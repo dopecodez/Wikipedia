@@ -35,7 +35,7 @@ test('lang links method on page object returns array of langLinksResult', async 
     expect(result).toStrictEqual(langLinksResult);
 });
 
-test('Throws links error if response if empty', async () => {
+test('Throws links error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
         await langLinks("Test")
