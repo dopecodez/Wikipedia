@@ -90,7 +90,7 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
         }
         return page;
     } catch (error) {
-        throw error;
+        throw new pageError(error);
     }
 }
 
