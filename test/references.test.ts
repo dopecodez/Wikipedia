@@ -1,8 +1,8 @@
-import { linksError } from '../dist/errors.js';
-import Page, { references } from '../dist/page.js';
-import * as request from '../dist/request';
-import wiki from "../dist/index";
-import * as utils from '../dist/utils'
+import { linksError } from '../source/errors';
+import Page, { references } from '../source/page';
+import * as request from '../source/request';
+import wiki from "../source/index";
+import * as utils from '../source/utils'
 import { pageJson } from './samples';
 const requestMock = jest.spyOn(request, "default");
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
@@ -35,6 +35,15 @@ test('References method on page object returns array of strings', async () => {
     expect(result).toStrictEqual(referenceResult);
 });
 
+test('References method on page throws links error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const page = new Page(pageJson);
+    const t = async () => {
+        await page.references()
+    };
+    expect(t).rejects.toThrowError(linksError);
+});
+
 test('Throws links error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
@@ -54,6 +63,15 @@ test('Returns with results an array of string', async () => {
     const result = await references("Test");
     expect(result).toStrictEqual(referenceResult);
 });
+
+test('references method on page throws links error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const t = async () => {
+        await wiki.references("Test")
+    };
+    expect(t).rejects.toThrowError(linksError);
+});
+
 
 test('references method on index returns array of strings', async () => {
     requestMock.mockImplementation(async () => { return { query: { pages: referenceMock } } });

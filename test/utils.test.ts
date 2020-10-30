@@ -1,6 +1,6 @@
-import { isString, setTitleForPage, setPageIdOrTitleParam, setPageId } from '../dist/utils.js';
-import wiki from "../dist/index";
-import { pageError } from '../dist/errors';
+import { isString, setTitleForPage, setPageIdOrTitleParam, setPageId } from '../source/utils';
+import wiki from "../source/index";
+import { pageError } from '../source/errors';
 const searchMock = jest.spyOn(wiki, "search");
 
 afterAll(() => {

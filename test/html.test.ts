@@ -1,8 +1,8 @@
-import { htmlError } from '../dist/errors.js';
-import Page, { html } from '../dist/page.js';
-import * as request from '../dist/request';
-import wiki from "../dist/index";
-import * as utils from '../dist/utils'
+import { htmlError } from '../source/errors';
+import Page, { html } from '../source/page';
+import * as request from '../source/request';
+import wiki from "../source/index";
+import * as utils from '../source/utils'
 import { pageJson } from './samples';
 const requestMock = jest.spyOn(request, "default");
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
@@ -30,9 +30,18 @@ test('html method on page object returns without calling request if _html field 
 test('html method on page object returns html', async () => {
     requestMock.mockImplementation(async () => { return { query: { pages: htmlMock } } });
     const page = new Page(pageJson);
-    const result = await page.html();
+    const result = await page.html({redirect: true});
     expect(requestMock).toHaveBeenCalledTimes(1);
     expect(result).toStrictEqual(htmlResult);
+});
+
+test('html method on page throws html error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const page = new Page(pageJson);
+    const t = async () => {
+        await page.html();
+    };
+    expect(t).rejects.toThrowError(htmlError);
 });
 
 test('Throws html error if response is empty', async () => {
@@ -47,6 +56,14 @@ test('Returns with results as string', async () => {
     requestMock.mockImplementation(async () => { return { query: { pages: htmlMock } } });
     const result = await html("Test");
     expect(result).toStrictEqual(htmlResult);
+});
+
+test('html method on index throws html error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const t = async () => {
+        await wiki.html("Test");
+    };
+    expect(t).rejects.toThrowError(htmlError);
 });
 
 test('html method on index returns a string', async () => {

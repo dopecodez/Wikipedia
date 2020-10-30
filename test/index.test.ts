@@ -1,8 +1,8 @@
-import { searchError, pageError, geoSearchError } from '../dist/errors.js';
-import * as request from '../dist/request';
-import wiki from "../dist/index";
-import Page from '../dist/page.js';
-import * as utils from '../dist/utils';
+import { searchError, pageError, geoSearchError, wikiError } from '../source/errors';
+import * as request from '../source/request';
+import wiki from "../source/index";
+import Page from '../source/page';
+import * as utils from '../source/utils';
 const requestMock = jest.spyOn(request, "default");
 const restRequestMock = jest.spyOn(request, "makeRestRequest");
 import { pageJson, summaryJson } from './samples';
@@ -34,6 +34,12 @@ afterAll(() => {
     restRequestMock.mockRestore();
 })
 
+test('Default wiki returns results as Page Class', async () => {
+    requestMock.mockImplementation(async () => { return { query: { pages: { 500: pageJson } } } });
+    const result = await wiki("Test");
+    expect(result.toString()).toStrictEqual(pageObject.toString());
+});
+
 test('Throws search error if some error occurs', async () => {
     requestMock.mockImplementation(async () => { return { searchMock } });
     const t = async () => {
@@ -44,7 +50,7 @@ test('Throws search error if some error occurs', async () => {
 
 test('Search returns results as wikiSearchResult', async () => {
     requestMock.mockImplementation(async () => { return { query: searchMock } });
-    const result = await wiki.search("Test");
+    const result = await wiki.search("Test", {suggestion: true});
     expect(result).toStrictEqual(searchResult);
 });
 
@@ -72,7 +78,7 @@ test('Throws page error if result doesnt have page', async () => {
 });
 
 test('Page throws error if missing attribute present in page', async () => {
-    requestMock.mockImplementation(async () => { return { 500: {missing: ""}} });
+    requestMock.mockImplementation(async () => { return { query: { pages: { 500: { missing: '' } } } } });
     const t = async () => {
         await wiki.page("Test")
     };
@@ -109,6 +115,23 @@ test('Page returns results as Page Class and loads fields present in fields when
     expect(result.toString()).toStrictEqual(pageObject.toString());
     expect(result._summary).toStrictEqual(summaryJson);
     expect(result._images).toBeFalsy();
+});
+
+test('Page returns results as Page Class and loads fields present in fields when preload set to true', async () => {
+    requestMock.mockImplementation(async () => { return { query: { pages: { 500: pageJson } } } });
+    restRequestMock.mockImplementation(async () => { return summaryJson });
+    const t = async () => {
+        await wiki.page("Test", { preload: true, fields: ["errorMethod"] })
+    };
+    expect(t).rejects.toThrowError(pageError);
+});
+
+test('Languages method throws wikiError if error', async () => {
+    requestMock.mockImplementation(async () => { throw new Error("error")});
+    const t = async () => {
+        await wiki.languages();
+    };
+    expect(t).rejects.toThrowError(wikiError);
 });
 
 test('Languages method returns array of languageResult', async () => {

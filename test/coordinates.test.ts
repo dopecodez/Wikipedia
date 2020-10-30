@@ -1,8 +1,8 @@
-import { coordinatesError } from '../dist/errors.js';
-import Page, { coordinates } from '../dist/page.js';
-import * as request from '../dist/request';
-import wiki from "../dist/index";
-import * as utils from '../dist/utils'
+import { coordinatesError } from '../source/errors';
+import Page, { coordinates } from '../source/page';
+import * as request from '../source/request';
+import wiki from "../source/index";
+import * as utils from '../source/utils'
 import { pageJson } from './samples';
 const requestMock = jest.spyOn(request, "default");
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
@@ -30,9 +30,18 @@ test('Coordinates method on page object returns without calling request if _coor
 test('Coordinates method on page object returns coordinates', async () => {
     requestMock.mockImplementation(async () => { return { query: { pages: coordinatesMock } } });
     const page = new Page(pageJson);
-    const result = await page.coordinates();
+    const result = await page.coordinates({redirect: true});
     expect(requestMock).toHaveBeenCalledTimes(1);
     expect(result).toStrictEqual(coordinatesResult);
+});
+
+test('coordinates method on page throws coordinates error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const page = new Page(pageJson);
+    const t = async () => {
+        await page.coordinates()
+    };
+    expect(t).rejects.toThrowError(coordinatesError);
 });
 
 test('Throws coordinates error if response is empty', async () => {
@@ -45,8 +54,23 @@ test('Throws coordinates error if response is empty', async () => {
 
 test('Returns with results as coordinatesResult', async () => {
     requestMock.mockImplementation(async () => { return { query: { pages: coordinatesMock } } });
-    const result = await coordinates("Test");
+    const result = await coordinates("Test", true);
     expect(result).toStrictEqual(coordinatesResult);
+});
+
+test('Returns with results as null if coordinates not present', async () => {
+    requestMock.mockImplementation(async () => { return { query: { pages: {500:{}} } } });
+    const result = await coordinates("Test", true);
+    expect(result).toStrictEqual(null);
+});
+
+
+test('coordinate method on index throws coordinates error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const t = async () => {
+        await wiki.coordinates("Test")
+    };
+    expect(t).rejects.toThrowError(coordinatesError);
 });
 
 test('coordinates method on index returns a coordinatesResult', async () => {

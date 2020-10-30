@@ -1,7 +1,7 @@
-import request, {makeRestRequest, setAPIUrl} from '../dist/request';
+import request, {makeRestRequest, setAPIUrl} from '../source/request';
 import * as fetch from 'node-fetch';
 import { Response } from 'node-fetch';
-import { wikiError } from '../dist/errors';
+import { wikiError } from '../source/errors';
 const fetchMock = jest.spyOn(fetch, "default");
 
 const response1 : Response = new Response('{"test1": "test1"}');

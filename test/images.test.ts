@@ -1,8 +1,8 @@
-import { imageError } from '../dist/errors.js';
-import Page, { images } from '../dist/page.js';
-import * as request from '../dist/request';
-import wiki from "../dist/index";
-import * as utils from '../dist/utils'
+import { imageError } from '../source/errors';
+import Page, { images } from '../source/page';
+import * as request from '../source/request';
+import wiki from "../source/index";
+import * as utils from '../source/utils'
 import { pageJson } from './samples';
 const requestMock = jest.spyOn(request, "default");
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
@@ -37,6 +37,15 @@ test('Image method on page object returns array of images', async () => {
     expect(result).toStrictEqual(imageResult);
 });
 
+test('images method on page throws image error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const page = new Page(pageJson);
+    const t = async () => {
+        await page.images();
+    };
+    expect(t).rejects.toThrowError(imageError);
+});
+
 test('Throws image error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
@@ -56,6 +65,15 @@ test('Returns with results an array of imageResult object', async () => {
     const result = await images("Test");
     expect(result).toStrictEqual(imageResult);
 });
+
+test('image method on index throws image error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const t = async () => {
+        await wiki.images("Test")
+    };
+    expect(t).rejects.toThrowError(imageError);
+});
+
 
 test('Image method on index returns array of images', async () => {
     requestMock.mockImplementation(async () => { return { query: { pages: imageMock } } });

@@ -1,8 +1,8 @@
-import { relatedError } from '../dist/errors.js';
-import Page, { related } from '../dist/page.js';
-import * as request from '../dist/request';
-import wiki from "../dist/index";
-import * as utils from '../dist/utils'
+import { relatedError } from '../source/errors';
+import Page, { related } from '../source/page';
+import * as request from '../source/request';
+import wiki from "../source/index";
+import * as utils from '../source/utils'
 import { pageJson, summaryJson } from './samples';
 const requestMock = jest.spyOn(request, "makeRestRequest");
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
@@ -26,9 +26,18 @@ test('Related method on page object returns without calling request if _related 
 test('Related method on page object returns array of wikiSummary', async () => {
     requestMock.mockImplementation(async () => { return relatedMock });
     const page = new Page(pageJson);
-    const result = await page.related();
+    const result = await page.related({redirect: true});
     expect(requestMock).toHaveBeenCalledTimes(1);
     expect(result).toStrictEqual(relatedMock);
+});
+
+test('Related method on page throws related error if response is error', async () => {
+    requestMock.mockImplementation(async () => { throw new Error("This is an error") });
+    const page = new Page(pageJson);
+    const t = async () => {
+        await page.related()
+    };
+    expect(t).rejects.toThrowError(relatedError);
 });
 
 test('Throws related error if response is error', async () => {
@@ -43,6 +52,14 @@ test('Returns with results as array of wikiSummary', async () => {
     requestMock.mockImplementation(async () => { return relatedMock });
     const result = await related("Test");
     expect(result).toStrictEqual(relatedMock);
+});
+
+test('related method on index throws related error if response is error', async () => {
+    requestMock.mockImplementation(async () => { throw new Error("This is an error") });
+    const t = async () => {
+        await wiki.related("Test")
+    };
+    expect(t).rejects.toThrowError(relatedError);
 });
 
 test('related method on index returns array of wikiSummary', async () => {

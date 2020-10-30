@@ -1,8 +1,8 @@
-import { categoriesError } from '../dist/errors.js';
-import Page, { categories } from '../dist/page.js';
-import * as request from '../dist/request';
-import wiki from "../dist/index";
-import * as utils from '../dist/utils'
+import { categoriesError } from '../source/errors';
+import Page, { categories } from '../source/page';
+import * as request from '../source/request';
+import wiki from "../source/index";
+import * as utils from '../source/utils'
 import { pageJson } from './samples';
 const requestMock = jest.spyOn(request, "default");
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
@@ -35,6 +35,15 @@ test('category method on page object returns array of strings', async () => {
     expect(result).toStrictEqual(categoryResult);
 });
 
+test('category method on page throws category error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const page = new Page(pageJson);
+    const t = async () => {
+        await page.categories()
+    };
+    expect(t).rejects.toThrowError(categoriesError);
+});
+
 test('Throws category error if response is empty', async () => {
     requestMock.mockImplementation(async () => { return [] });
     const t = async () => {
@@ -53,6 +62,14 @@ test('Returns with results an array of string', async () => {
     requestMock.mockImplementation(async () => { return { query: { pages: categoryMock } } });
     const result = await categories("Test");
     expect(result).toStrictEqual(categoryResult);
+});
+
+test('category method on index throws category error if response is empty', async () => {
+    requestMock.mockImplementation(async () => { return [] });
+    const t = async () => {
+        await wiki.categories("Test");
+    };
+    expect(t).rejects.toThrowError(categoriesError);
 });
 
 test('categories method on index returns array of strings', async () => {

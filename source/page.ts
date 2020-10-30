@@ -117,7 +117,7 @@ export class Page {
             }
             return this._summary;
         } catch (error) {
-            throw new imageError(error);
+            throw new summaryError(error);
         }
     }
 
@@ -634,12 +634,7 @@ export const infobox = async (title: string, redirect = true): Promise<any> => {
             rvsection: 0
         }
         const fullInfo = await rawInfo(title, infoboxOptions, redirect);
-        let info = infoboxParser(fullInfo || '').general;
-        if (Object.keys(info).length === 0) {
-            // If empty, check to see if this page has a templated infobox
-            const wikiText = await rawInfo(`Template:Infobox ${title.toLowerCase()}`, infoboxOptions);
-            info = infoboxParser(wikiText || '').general;
-        }
+        const info = infoboxParser(fullInfo).general;
         return info;
     } catch (error) {
         throw new infoboxError(error);
@@ -663,12 +658,7 @@ export const tables = async (title: string, redirect = true): Promise<Array<any>
             rvprop: 'content',
         }
         const fullInfo = await rawInfo(title, tableOptions, redirect);
-        let info = infoboxParser(fullInfo || '').tables;
-        if (Object.keys(info).length === 0) {
-            // If empty, check to see if this page has a templated infobox
-            const wikiText = await rawInfo(`Template:Infobox ${title.toLowerCase()}`, tableOptions);
-            info = infoboxParser(wikiText || '').tables;
-        }
+        const info = infoboxParser(fullInfo).tables;
         return info;
     } catch (error) {
         throw new infoboxError(error);
@@ -695,7 +685,7 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
         }
         const pageId = setPageId(options, response);
         const data = response.query.pages[pageId]['revisions'][0];
-        return data ? data['*'] : [];
+        return data ? data['*'] : '';
     } catch (error) {
         throw new infoboxError(error);
     }
