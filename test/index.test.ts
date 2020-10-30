@@ -1,4 +1,4 @@
-import { searchError, pageError } from '../dist/errors.js';
+import { searchError, pageError, geoSearchError } from '../dist/errors.js';
 import * as request from '../dist/request';
 import wiki from "../dist/index";
 import Page from '../dist/page.js';
@@ -35,7 +35,7 @@ afterAll(() => {
 })
 
 test('Throws search error if some error occurs', async () => {
-    requestMock.mockImplementationOnce(async () => { return { searchMock } });
+    requestMock.mockImplementation(async () => { return { searchMock } });
     const t = async () => {
         await wiki.search("Test")
     };
@@ -43,13 +43,13 @@ test('Throws search error if some error occurs', async () => {
 });
 
 test('Search returns results as wikiSearchResult', async () => {
-    requestMock.mockImplementationOnce(async () => { return { query: searchMock } });
+    requestMock.mockImplementation(async () => { return { query: searchMock } });
     const result = await wiki.search("Test");
     expect(result).toStrictEqual(searchResult);
 });
 
 test('Search returns results as wikiSearchResult with suggestions as null', async () => {
-    requestMock.mockImplementationOnce(async () => {
+    requestMock.mockImplementation(async () => {
         return {
             query: {
                 search: ["search1", "search2"]
@@ -64,7 +64,7 @@ test('Search returns results as wikiSearchResult with suggestions as null', asyn
 });
 
 test('Throws page error if result doesnt have page', async () => {
-    requestMock.mockImplementationOnce(async () => { return { } });
+    requestMock.mockImplementation(async () => { return { } });
     const t = async () => {
         await wiki.page("Test")
     };
@@ -72,7 +72,7 @@ test('Throws page error if result doesnt have page', async () => {
 });
 
 test('Page throws error if missing attribute present in page', async () => {
-    requestMock.mockImplementationOnce(async () => { return { 500: {missing: ""}} });
+    requestMock.mockImplementation(async () => { return { 500: {missing: ""}} });
     const t = async () => {
         await wiki.page("Test")
     };
@@ -80,14 +80,14 @@ test('Page throws error if missing attribute present in page', async () => {
 });
 
 test('Page returns results as Page Class', async () => {
-    requestMock.mockImplementationOnce(async () => { return { query: { pages: { 500: pageJson } } } });
+    requestMock.mockImplementation(async () => { return { query: { pages: { 500: pageJson } } } });
     const result = await wiki.page("Test");
     expect(result.toString()).toStrictEqual(pageObject.toString());
 });
 
 test('Page returns results as Page Class with auto suggest set to true', async () => {
-    requestMock.mockImplementationOnce(async () => { return { query: { pages: { 500: pageJson } } } });
-    setTitleMock.mockImplementationOnce(async () => { return "test" });
+    requestMock.mockImplementation(async () => { return { query: { pages: { 500: pageJson } } } });
+    setTitleMock.mockImplementation(async () => { return "test" });
     const result = await wiki.page("Test", {autoSuggest: true});
     expect(result.toString()).toStrictEqual(pageObject.toString());
 });
@@ -112,12 +112,61 @@ test('Page returns results as Page Class and loads fields present in fields when
 });
 
 test('Languages method returns array of languageResult', async () => {
-    requestMock.mockImplementationOnce(async () => { return { query: { languages: [{ code: "test1", "*": "" }, { code: "test2", "*": "" }] } } });
+    requestMock.mockImplementation(async () => { return { query: { languages: [{ code: "test1", "*": "" }, { code: "test2", "*": "" }] } } });
     const result = await wiki.languages();
     expect(result).toStrictEqual([{ "test1": "" }, { "test2": "" }]);
 });
 
-test('Set language returns api url with language set', async () => {
-    const result = await wiki.setLang("mal");
-    expect(result).toStrictEqual("http://mal.wikipedia.org/api/rest_v1/");
+test('Set language returns api url with language set', () => {
+    const result = wiki.setLang("mal");
+    expect(result).toStrictEqual("http://mal.wikipedia.org/w/api.php?");
+});
+
+test('Geo search error is thrown in case of error', async () => {
+    requestMock.mockImplementation(async () => { return {} });
+    const t = async () => {
+        await wiki.geoSearch(2.088, 4.023)
+    };
+    expect(t).rejects.toThrowError(geoSearchError);
+});
+
+test('geoSearch returns results as geoSearchResult', async () => {
+    requestMock.mockImplementation(async () => { return { query: { geosearch: [] } } });
+    const result = await wiki.geoSearch(2.088, 4.023);
+    expect(result).toStrictEqual([]);
+});
+
+test('geoSearch returns results as geoSearchResult with options', async () => {
+    requestMock.mockImplementation(async () => { return { query: { geosearch: [] } } });
+    const result = await wiki.geoSearch(2.088, 4.023, { radius: 5000, limit: 20 });
+    expect(requestMock).toHaveBeenCalledWith(
+        {
+            'list': 'geosearch',
+            'gsradius': 5000,
+            'gscoord': `${2.088}|${4.023}`,
+            'gslimit': 20,
+            'gsprop': 'type'
+        }
+    );
+    expect(result).toStrictEqual([]);
+});
+
+test('Search error is thrown in case of error in suggest', async () => {
+    requestMock.mockImplementation(async () => { throw new Error("Error") });
+    const t = async () => {
+        await wiki.suggest("Test")
+    };
+    expect(t).rejects.toThrowError(searchError);
+});
+
+test('Suggest returns null if suggestion not present', async () => {
+    requestMock.mockImplementation(async () => { return { query: { searchinfo: {} } } });
+    const result = await wiki.suggest("test");
+    expect(result).toStrictEqual(null);
+});
+
+test('Suggest returns string', async () => {
+    requestMock.mockImplementation(async () => { return { query: { searchinfo: {suggestion: "suggest"} } } });
+    const result = await wiki.suggest("test");
+    expect(result).toStrictEqual("suggest");
 });

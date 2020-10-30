@@ -438,7 +438,7 @@ wiki.setLang = (language: string): string => {
  * @param geoOptions - The number of results and the search radius {@link geoOptions | geoOptions}
  * @returns The results as an array of {@link geoSearchResult | geoSearchResult}
  */
-wiki.geoSearch = async (latitude: bigint, longitude: bigint, geoOptions?: geoOptions): Promise<Array<geoSearchResult>> => {
+wiki.geoSearch = async (latitude: number, longitude: number, geoOptions?: geoOptions): Promise<Array<geoSearchResult>> => {
     try {
         const geoSearchParams: any = {
             'list': 'geosearch',
