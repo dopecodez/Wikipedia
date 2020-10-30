@@ -5,7 +5,7 @@ import Page from '../dist/page.js';
 import * as utils from '../dist/utils';
 const requestMock = jest.spyOn(request, "default");
 const restRequestMock = jest.spyOn(request, "makeRestRequest");
-import { pageJson, summaryJson } from './pageExample';
+import { pageJson, summaryJson } from './samples';
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
 
 const searchMock = {
@@ -31,6 +31,7 @@ const pageObject = new Page(pageJson);
 afterAll(() => {
     requestMock.mockRestore();
     setTitleMock.mockRestore();
+    restRequestMock.mockRestore();
 })
 
 test('Throws search error if some error occurs', async () => {
@@ -108,4 +109,15 @@ test('Page returns results as Page Class and loads fields present in fields when
     expect(result.toString()).toStrictEqual(pageObject.toString());
     expect(result._summary).toStrictEqual(summaryJson);
     expect(result._images).toBeFalsy();
+});
+
+test('Languages method returns array of languageResult', async () => {
+    requestMock.mockImplementationOnce(async () => { return { query: { languages: [{ code: "test1", "*": "" }, { code: "test2", "*": "" }] } } });
+    const result = await wiki.languages();
+    expect(result).toStrictEqual([{ "test1": "" }, { "test2": "" }]);
+});
+
+test('Set language returns api url with language set', async () => {
+    const result = await wiki.setLang("mal");
+    expect(result).toStrictEqual("http://mal.wikipedia.org/api/rest_v1/");
 });
