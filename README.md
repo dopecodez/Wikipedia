@@ -1,4 +1,4 @@
-# WIKIPEDIA  [![Build Status](https://travis-ci.org/dopecodez/pingman.svg?branch=master)](https://travis-ci.org/dopecodez/pingman)
+# WIKIPEDIA  [![Build Status](https://travis-ci.org/dopecodez/Wikipedia.svg?branch=master)](https://travis-ci.org/dopecodez/Wikipedia)
 
 Wikipedia for node.
 
