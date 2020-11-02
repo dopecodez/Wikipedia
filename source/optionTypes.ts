@@ -7,7 +7,7 @@ export interface pageOptions {
     autoSuggest?: boolean
     redirect?: boolean
     preload?: boolean
-    fields?: Array<string>
+    fields?: Array<pageFunctions>
 }
 
 export interface listOptions {
@@ -20,3 +20,7 @@ export interface geoOptions {
     limit?: number
     radius?: number
 }
+
+export type pageFunctions =
+    'summary' | 'images' | 'intro' | 'html' | 'content' | 'categories' | 'links' | 'references' | 'coordinates'
+    | 'langLinks' | 'infobox' | 'tables' | 'related'

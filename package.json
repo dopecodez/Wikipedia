@@ -10,14 +10,13 @@
     "prepublishOnly": "tsc --build --clean && tsc",
     "test": "jest --coverage",
     "build": "yarn lint && tsc --build --clean && tsc",
-    "postbuild": "copyfiles -u 1 test/parser/samples/*.txt dist/test",
     "prepare": "yarn build",
     "lint": "eslint source/*.ts",
     "release": "np"
   },
   "author": "Govind S",
   "license": "MIT",
-  "homepage": "https://github.com/dopecodez/wikipedia",
+  "homepage": "https://github.com/dopecodez/wikipedia#README",
   "repository": {
     "type": "git",
     "url": "git://github.com/dopecodez/wikipedia.git"
@@ -36,12 +35,19 @@
     "typescript": "^3.8.3"
   },
   "files": [
-    "dist/source"
+    "dist"
   ],
-  "types": "dist/source/",
+  "types": "dist/",
   "dependencies": {
     "infobox-parser": "^3.4.1",
     "node-fetch": "^2.6.1"
   },
-  "keywords": []
+  "keywords": [
+    "wiki",
+    "wikipedia",
+    "encyclopedia",
+    "jest",
+    "node-wiki",
+    "wiki-node"
+  ]
 }
