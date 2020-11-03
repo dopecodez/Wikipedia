@@ -17,5 +17,10 @@
     },
     "include": [
         "source"
-	]
+    ],
+    "typedocOptions": {
+        "exclude": ["**/node_modules/**"],
+        "mode": "modules",
+        "out": "docs"
+    }
 }

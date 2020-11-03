@@ -24,8 +24,8 @@ export class Page {
     fullurl!: string;
     editurl!: string;
     canonicalurl!: string;
-    revId!: number;
-    parentId!: number;
+    revid!: number;
+    parentid!: number;
     _summary!: wikiSummary;
     _images!: Array<imageResult>;
     _content!: string;
@@ -58,7 +58,7 @@ export class Page {
      * Returns the intro present in a wiki page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param redirect - Whether to redirect in case of 302
@@ -80,7 +80,7 @@ export class Page {
      * Returns the images present in a wiki page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param listOptions - {@link listOptions | listOptions }
@@ -102,7 +102,7 @@ export class Page {
      * Returns the summary of the page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param redirect - Whether to redirect in case of 302
@@ -125,7 +125,7 @@ export class Page {
      * Returns the html content of a page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param redirect - Whether to redirect in case of 302
@@ -149,7 +149,7 @@ export class Page {
      * Returns the plain text content of a page and sets parent Id and rev Id
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param redirect - Whether to redirect in case of 302
@@ -159,8 +159,8 @@ export class Page {
         try {
             if (!this._content) {
                 const result = await content(this.pageid.toString(), pageOptions?.redirect);
-                this.parentId = result.ids.parentId;
-                this.revId = result.ids.revId;
+                this.parentid = result.ids.parentId;
+                this.revid = result.ids.revId;
                 this._content = result.result;
             }
             return this._content;
@@ -173,7 +173,7 @@ export class Page {
      * Returns the cetegories present in page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param listOptions - {@link listOptions | listOptions }
@@ -195,7 +195,7 @@ export class Page {
      * Returns the links present in page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param listOptions - {@link listOptions | listOptions }
@@ -217,7 +217,7 @@ export class Page {
      * Returns the references of external links present in page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param listOptions - {@link listOptions | listOptions }
@@ -239,7 +239,7 @@ export class Page {
      * Returns the coordinates of a page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param redirect - Whether to redirect in case of 302
@@ -261,7 +261,7 @@ export class Page {
      * Returns the language links present in the page
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param listOptions - {@link listOptions | listOptions }
@@ -283,7 +283,7 @@ export class Page {
      * Returns the infobox content of page if present
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param redirect - Whether to redirect in case of 302
@@ -305,7 +305,7 @@ export class Page {
      * Returns the table content of page if present
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param redirect - Whether to redirect in case of 302
@@ -328,7 +328,7 @@ export class Page {
      * and id along with short text description of the page and a thumbnail.
      *
      * @remarks
-     * This method is part of the {@link Page | Page Class}.
+     * This method is part of the {@link Page | Page }.
      *
      * @param title - The title or page Id of the page
      * @param redirect - Whether to redirect in case of 302

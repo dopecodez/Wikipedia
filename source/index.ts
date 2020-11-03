@@ -14,9 +14,13 @@ import {
 import { MSGS } from './messages';
 import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
-//The intial wiki function
-//All APIs are based on https://www.mediawiki.org/wiki/API:Main_page
-//Internally calls wiki.page() method
+/**
+ * The default wiki export
+ *
+ * @remarks
+ * Internally calls wiki.page
+ *
+ */
 const wiki = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
     return wiki.page(title, pageOptions);
 }
