@@ -54,11 +54,11 @@ const wiki = require('wikipedia');
 	}
 })();
 ```
-The page method returns a [Page]([2]) class object which has fields like `pageid`, `title`, `parentid`, `revisionid` and methods like `summary()`, `intro()`, `images()`, `html()` and more.
+The page method returns a [Page][2] class object which has fields like `pageid`, `title`, `parentid`, `revisionid` and methods like `summary()`, `intro()`, `images()`, `html()` and more.
 
-All the page methods can take a title parameter or a pageId. Read up on the [Page documentation]([2]) here to see a detailed overview of the methods available in page.
+All the page methods can take a title parameter or a pageId. Read up on the [Page documentation][2] here to see a detailed overview of the methods available in page.
 
-You can also call methods like `summary()` on the `wiki` object directly. [Read up here]([3]) to see when you should use the `page` object and when you should call `summary()` directly. There's a performance difference! Long story short, use the method directly if you are using only the `summary` of the page and are not expecting to use any of the other `page` attributes.
+You can also call methods like `summary()` on the `wiki` object directly. [Read up here][3] to see when you should use the `page` object and when you should call `summary()` directly. There's a performance difference! Long story short, use the method directly if you are using only the `summary` of the page and are not expecting to use any of the other `page` attributes.
 
 ```js
 const wiki = require('wikipedia');
@@ -74,7 +74,7 @@ const wiki = require('wikipedia');
 	}
 })();
 ```
-There are other methods like `search()`, `geoSearch()`, `suggest()`, `setLang()` which should be called on the wiki object directly. Read up on the [index documentation]([4]) to see a list of methods available.
+There are other methods like `search()`, `geoSearch()`, `suggest()`, `setLang()` which should be called on the wiki object directly. Read up on the [index documentation][4] to see a list of methods available.
 
 ```js
 const wiki = require('wikipedia');
