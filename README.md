@@ -45,9 +45,9 @@ const wiki = require('wikipedia');
 		const page = await wiki.page('Batman');
 		console.log(response);
 		//Response of type @Page object
-    	const summary = await page.summary();
-    	console.log(summary);
-    	//Response of type @wikiSummary - contains the intro and the main image
+		const summary = await page.summary();
+		console.log(summary);
+		//Response of type @wikiSummary - contains the intro and the main image
 	} catch (error) {
 		console.log(error);
 		//=> Typeof wikiError
@@ -67,7 +67,7 @@ const wiki = require('wikipedia');
 	try {
 		const summary = await wiki.summary('Batman');
 		console.log(summary);
-    	//Response of type @wikiSummary - contains the intro and the main image
+		//Response of type @wikiSummary - contains the intro and the main image
 	} catch (error) {
 		console.log(error);
 		//=> Typeof wikiError
@@ -104,4 +104,5 @@ Before opening a pull request please make sure your changes follow the
 [contribution guidelines][1].
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/CONTRIBUTING.md
-[2]: https://github.com/dopecodez/wikipedia/blob/master/docs/classes/_page_.page.html
+[2]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
+[3]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
