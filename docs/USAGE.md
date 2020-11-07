@@ -19,8 +19,8 @@ const wiki = require('wikipedia');
 		const summaryThroughPage = await page.summary();
 		console.log(summary);
 		const summaryWithoutPage = await wiki.summary('Batman');
-        console.log(summary);
-        // summaryThroughPage = summaryWithoutPage
+		console.log(summary);
+		// summaryThroughPage = summaryWithoutPage
 		//Response of type @wikiSummary - contains the intro and the main image
 	} catch (error) {
 		console.log(error);
