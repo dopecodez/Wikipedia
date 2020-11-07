@@ -51,7 +51,12 @@ The `Page` class has the following properties:
 The page object has the following methods available on it : 
 
 #### summary()
-    - summary(pageOptions: [pageOptions][1] | undefined): Promise<wikiSummary> : Returns the summary
 
+Returns the summary for the page.
+
+```js
+summary(pageOptions: [pageOptions][1] | undefined): Promise<wikiSummary>
+```
+- @param [pageOptions][1] - the options for the page
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions
