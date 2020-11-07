@@ -3,7 +3,7 @@
 ## Highlights
 
 - [Class Members](#class-members)
-- <details>
+<details>
     <summary>[Functions](#functions)<summary>
 
         - [summary()](#summary())
@@ -51,7 +51,7 @@ The `Page` class has the following properties:
 The page object has the following methods available on it : 
 
 #### summary()
-    - summary(pageOptions: [pageOptions]([1]) | undefined): Promise<wikiSummary> : Returns the summary
+    - summary(pageOptions: [pageOptions][1] | undefined): Promise<wikiSummary> : Returns the summary
 
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions

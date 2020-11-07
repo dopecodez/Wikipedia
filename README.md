@@ -104,5 +104,5 @@ Before opening a pull request please make sure your changes follow the
 [contribution guidelines][1].
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/CONTRIBUTING.md
-[2]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
+[2]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md
 [3]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
