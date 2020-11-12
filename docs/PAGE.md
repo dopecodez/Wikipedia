@@ -3,12 +3,10 @@
 ## Highlights
 
 - [Class Members](#class-members)
-<details>
-    <summary>[Functions](#functions)<summary>
-
-        - [summary()](#summary())
-</details>
-
+- [Functions](#functions)
+    - [summary()](#summary())
+    - [intro()](#intro())
+    - [images()](#images())
 - [Misc](#miscellanious)
 
 ## Class Members
@@ -52,11 +50,36 @@ The page object has the following methods available on it :
 
 #### summary()
 
-Returns the summary for the page.
+Returns the summary for the page as [wikiSummary][2] object. Summary contains the title, page Id, introduction, main image and content urls for the page.
 
 ```js
 summary(pageOptions: [pageOptions][1] | undefined): Promise<wikiSummary>
 ```
 - @param [pageOptions][1] - the options for the page
+- @result[wikiSummary][2] - the summary object for the wiki page
+
+#### intro()
+
+Returns the introduction of the page as string
+
+```js
+intro(pageOptions: [pageOptions][1] | undefined): Promise<string>
+```
+- @param [pageOptions][1] - the options for the page
+
+#### images()
+
+Returns the images present in the page. 
+
+** For a main image, use the summary endpoint **
+
+```js
+images(listOptions: [listOptions][3] | undefined): Promise<Array<imageResult>>
+```
+- @param [pageOptions][1] - the options for the page
+- @result [imageResult][4] - the image results for the page
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions
+[2]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#wikiSummary
+[3]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#listOptions
+[4]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#imageResult
