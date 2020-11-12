@@ -4,6 +4,8 @@
 
 - [wikiSummary](#wikiSummary)
 - [imageResult](#imageResult)
+- [coordinatesResult](#coordinatesResult)
+- [langLinksResult](#langLinksResult)
 
 ### wikiSummary
 
@@ -66,5 +68,29 @@ interface imageResult {
   imagerepository: string,
   imageinfo: any,
   url: string // This will contain the image url
+}
+```
+
+### coordinatesResult
+
+The coordinates result.
+```js
+interface coordinatesResult {
+  lat: number //latitude
+  lon: number, //longitude
+  primary: string,
+  globe: string // The globe ie Earth!
+}
+```
+
+### langLinksResult
+
+The lang links result
+
+```js
+interface langLinksResult {
+  lang: string, //language code
+  title: string, // The title of the page
+  url: string // url of the page
 }
 ```

@@ -7,7 +7,14 @@
     - [summary()](#summary)
     - [intro()](#intro)
     - [images()](#images)
-- [Misc](#miscellanious)
+    - [html()](#html)
+    - [related()](#related)
+    - [content()](#content)
+    - [categories()](#categories)
+    - [links()](#links)
+    - [coordinates](#coordinates)
+    - [references](#references)
+    - [langLinks](#langLinks)
 
 ## Class Members
 
@@ -76,10 +83,104 @@ Returns the images present in the page.
 ```js
 images(listOptions: listOptions | undefined): Promise<Array<imageResult>>
 ```
-- @param [pageOptions][1] - the options for the page
+- @param [listOptions][3] - the options for the page
 - @result [imageResult][4] - the image results for the page
+
+#### html()
+
+Returns the html content of the page as a string
+
+```js
+html = async (pageOptions?: pageOptions): Promise<string>
+```
+- @param [pageOptions][1] - the options for the page
+
+#### related()
+
+Returns the related pages given for a a page.
+
+```js
+related = async (pageOptions?: pageOptions): Promise<Array<wikiSummary>>
+```
+- @param [pageOptions][1] - the options for the page
+- @result[wikiSummary][2] - the summary object for the wiki page
+
+#### content()
+
+Returns the plain text content of a page.
+
+```js
+content = async (pageOptions?: pageOptions): Promise<string>
+```
+- @param [pageOptions][1] - the options for the page
+
+#### categories
+
+Returns the categories as an array of string
+
+```js
+categories = async (listOptions?: listOptions): Promise<Array<string>>
+```
+- @param [listOptions][3] - the options for the page
+
+#### links
+
+Returns the links present in the page
+
+```js
+links = async (listOptions?: listOptions): Promise<Array<string>>
+```
+- @param [listOptions][3] - the options for the page
+
+#### references
+
+Returns the references and external links in a page.
+
+```js
+references = async (listOptions?: listOptions): Promise<Array<string>>
+```
+- @param [listOptions][3] - the options for the page
+
+#### coordinates
+
+Returns the coordinates of a page
+
+```js
+coordinates = async (pageOptions?: pageOptions): Promise<coordinatesResult>
+```
+- @param [pageOptions][1] - the options for the page
+- @result[coordinatesResult][5] - the coordinates result object for the wiki page
+
+#### langLinks
+
+Returns the language links present in the page
+
+```js
+langLinks = async (listOptions?: listOptions): Promise<Array<langLinksResult>>
+```
+- @param [listOptions][3] - the options for the page
+- @result[langLinksResult][6] - the langLinks result object
+
+#### infobox
+
+The infobox data(if present), as a JSON object.
+
+```js
+infobox = async (pageOptions?: pageOptions): Promise<any>
+```
+- @param [pageOptions][1] - the options for the page
+
+#### tables
+
+The tables data in the page, if present as an array of json objects.
+```js
+tables = async (pageOptions?: pageOptions): Promise<Array<any>>
+```
+- @param [pageOptions][1] - the options for the page
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions
 [2]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#wikiSummary
 [3]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#listOptions
 [4]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#imageResult
+[5]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#coordinatesResult
+[5]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#langLinksResult
