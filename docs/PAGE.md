@@ -12,9 +12,9 @@
     - [content()](#content)
     - [categories()](#categories)
     - [links()](#links)
-    - [coordinates](#coordinates)
-    - [references](#references)
-    - [langLinks](#langLinks)
+    - [coordinates()](#coordinates)
+    - [references()](#references)
+    - [langLinks()](#langLinks)
 
 ## Class Members
 
@@ -65,6 +65,12 @@ summary(pageOptions: pageOptions | undefined): Promise<wikiSummary>
 - @param [pageOptions][1] - the options for the page
 - @result[wikiSummary][2] - the summary object for the wiki page
 
+```js
+//example
+const page = await wiki.page('Batman');
+const summary = await page.summary({redirect: false});
+```
+
 #### intro()
 
 Returns the introduction of the page as string
@@ -74,17 +80,29 @@ intro(pageOptions: pageOptions | undefined): Promise<string>
 ```
 - @param [pageOptions][1] - the options for the page
 
+```js
+//example
+const page = await wiki.page('Batman');
+const intro = await page.intro({redirect: false});
+```
+
 #### images()
 
 Returns the images present in the page. 
 
-** For a main image, use the summary endpoint **
+**For a main image, use the summary endpoint**
 
 ```js
 images(listOptions: listOptions | undefined): Promise<Array<imageResult>>
 ```
 - @param [listOptions][3] - the options for the page
 - @result [imageResult][4] - the image results for the page
+
+```js
+//example
+const page = await wiki.page('Batman');
+const images = await page.images({redirect: true, limit: 5});
+```
 
 #### html()
 
@@ -94,6 +112,12 @@ Returns the html content of the page as a string
 html = async (pageOptions?: pageOptions): Promise<string>
 ```
 - @param [pageOptions][1] - the options for the page
+
+```js
+//example
+const page = await wiki.page('Batman');
+const html = await page.intro({redirect: false});
+```
 
 #### related()
 
@@ -105,6 +129,12 @@ related = async (pageOptions?: pageOptions): Promise<Array<wikiSummary>>
 - @param [pageOptions][1] - the options for the page
 - @result[wikiSummary][2] - the summary object for the wiki page
 
+```js
+//example
+const page = await wiki.page('Batman');
+const related = await page.intro({redirect: false});
+```
+
 #### content()
 
 Returns the plain text content of a page.
@@ -114,7 +144,13 @@ content = async (pageOptions?: pageOptions): Promise<string>
 ```
 - @param [pageOptions][1] - the options for the page
 
-#### categories
+```js
+//example
+const page = await wiki.page('Batman');
+const content = await page.intro({redirect: false});
+```
+
+#### categories()
 
 Returns the categories as an array of string
 
@@ -123,7 +159,13 @@ categories = async (listOptions?: listOptions): Promise<Array<string>>
 ```
 - @param [listOptions][3] - the options for the page
 
-#### links
+```js
+//example
+const page = await wiki.page('Batman');
+const categories = await page.categories({redirect: false, , limit: 5});
+```
+
+#### links()
 
 Returns the links present in the page
 
@@ -132,7 +174,13 @@ links = async (listOptions?: listOptions): Promise<Array<string>>
 ```
 - @param [listOptions][3] - the options for the page
 
-#### references
+```js
+//example
+const page = await wiki.page('Batman');
+const links = await page.links({redirect: false, , limit: 5});
+```
+
+#### references()
 
 Returns the references and external links in a page.
 
@@ -141,7 +189,13 @@ references = async (listOptions?: listOptions): Promise<Array<string>>
 ```
 - @param [listOptions][3] - the options for the page
 
-#### coordinates
+```js
+//example
+const page = await wiki.page('Batman');
+const references = await page.references({redirect: false, , limit: 5});
+```
+
+#### coordinates()
 
 Returns the coordinates of a page
 
@@ -151,7 +205,13 @@ coordinates = async (pageOptions?: pageOptions): Promise<coordinatesResult>
 - @param [pageOptions][1] - the options for the page
 - @result[coordinatesResult][5] - the coordinates result object for the wiki page
 
-#### langLinks
+```js
+//example
+const page = await wiki.page('Batman');
+const coordinates = await page.coordinates({redirect: false});
+```
+
+#### langLinks()
 
 Returns the language links present in the page
 
@@ -161,7 +221,13 @@ langLinks = async (listOptions?: listOptions): Promise<Array<langLinksResult>>
 - @param [listOptions][3] - the options for the page
 - @result[langLinksResult][6] - the langLinks result object
 
-#### infobox
+```js
+//example
+const page = await wiki.page('Batman');
+const langLinks = await page.langLinks({redirect: false, , limit: 5});
+```
+
+#### infobox()
 
 The infobox data(if present), as a JSON object.
 
@@ -170,13 +236,25 @@ infobox = async (pageOptions?: pageOptions): Promise<any>
 ```
 - @param [pageOptions][1] - the options for the page
 
-#### tables
+```js
+//example
+const page = await wiki.page('Batman');
+const info = await page.infobox({redirect: false});
+```
+
+#### tables()
 
 The tables data in the page, if present as an array of json objects.
 ```js
 tables = async (pageOptions?: pageOptions): Promise<Array<any>>
 ```
 - @param [pageOptions][1] - the options for the page
+
+```js
+//example
+const page = await wiki.page('Batman');
+const tables = await page.tables({redirect: false});
+```
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions
 [2]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#wikiSummary
