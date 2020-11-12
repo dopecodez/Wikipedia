@@ -4,9 +4,9 @@
 
 - [Class Members](#class-members)
 - [Functions](#functions)
-    - [summary()](#summary())
-    - [intro()](#intro())
-    - [images()](#images())
+    - [summary()](#summary)
+    - [intro()](#intro)
+    - [images()](#images)
 - [Misc](#miscellanious)
 
 ## Class Members
@@ -53,7 +53,7 @@ The page object has the following methods available on it :
 Returns the summary for the page as [wikiSummary][2] object. Summary contains the title, page Id, introduction, main image and content urls for the page.
 
 ```js
-summary(pageOptions: [pageOptions][1] | undefined): Promise<wikiSummary>
+summary(pageOptions: pageOptions | undefined): Promise<wikiSummary>
 ```
 - @param [pageOptions][1] - the options for the page
 - @result[wikiSummary][2] - the summary object for the wiki page
@@ -63,7 +63,7 @@ summary(pageOptions: [pageOptions][1] | undefined): Promise<wikiSummary>
 Returns the introduction of the page as string
 
 ```js
-intro(pageOptions: [pageOptions][1] | undefined): Promise<string>
+intro(pageOptions: pageOptions | undefined): Promise<string>
 ```
 - @param [pageOptions][1] - the options for the page
 
@@ -74,7 +74,7 @@ Returns the images present in the page.
 ** For a main image, use the summary endpoint **
 
 ```js
-images(listOptions: [listOptions][3] | undefined): Promise<Array<imageResult>>
+images(listOptions: listOptions | undefined): Promise<Array<imageResult>>
 ```
 - @param [pageOptions][1] - the options for the page
 - @result [imageResult][4] - the image results for the page

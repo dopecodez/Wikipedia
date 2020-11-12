@@ -3,6 +3,7 @@
 ## Highlights
 
 - [wikiSummary](#wikiSummary)
+- [imageResult](#imageResult)
 
 ### wikiSummary
 
@@ -53,7 +54,7 @@ interface wikiSummary {
 }
 ```
 
-### images
+### imageResult
 
 The image result for the page.
 
