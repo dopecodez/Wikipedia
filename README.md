@@ -74,7 +74,7 @@ const wiki = require('wikipedia');
 	}
 })();
 ```
-There are other methods like `search()`, `geoSearch()`, `suggest()`, `setLang()` which should be called on the wiki object directly. Read up on the [index documentation][4] to see a list of methods available.
+There are other methods like `search()`, `geoSearch()`, `suggest()`, `setLang()` which should be called on the wiki object directly. Read up on the [wiki documentation][4] to see a complete list of methods available.
 
 ```js
 const wiki = require('wikipedia');
@@ -106,3 +106,4 @@ Before opening a pull request please make sure your changes follow the
 [1]: https://github.com/dopecodez/wikipedia/blob/master/CONTRIBUTING.md
 [2]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md
 [3]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
+[4]: https://github.com/dopecodez/wikipedia/blob/master/docs/wiki.md
