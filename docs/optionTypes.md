@@ -23,7 +23,7 @@ The options for page methods on `Page` or `wiki`. Generally, can be used for all
 
 The other two fields are only applicable if added on the `wiki.page('title')` method, otherwise its ignored.
 
-- `preload : boolean`(default = false) - When used with fields, it can preload any fields for the page(Loads summary by default if used without `fields` argument).
+- `preload : boolean`(default = false) - When used with fields, it can preload any fields for the page(Loads summary by default if used without `fields` argument). This is helpful in case you want the whole loading to take place in one single step instead of calling each field when required.
 - `fields : string[]` - Accepts a array of string which should a combination the functions available on page(Accepted values are combinations of: 'summary','images','intro','html,'content','categories','links','references','coordinates','langLinks','infobox','tables','related').
 
 ### listOptions
