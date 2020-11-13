@@ -6,6 +6,7 @@
 - [imageResult](#imageResult)
 - [coordinatesResult](#coordinatesResult)
 - [langLinksResult](#langLinksResult)
+- [wikiSearchResult](#wikiSearchResult)
 
 ### wikiSummary
 
@@ -92,5 +93,16 @@ interface langLinksResult {
   lang: string, //language code
   title: string, // The title of the page
   url: string // url of the page
+}
+```
+
+### wikiSearchResult
+
+The search result. The autosuggest will be populated or null based on input params.
+
+```js
+interface wikiSearchResult {
+  results: any[], // the search results as an array
+  suggestion: string // the suggestion string if suggestion option is set to true
 }
 ```

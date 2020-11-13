@@ -16,7 +16,7 @@ test('Is String returns true for strings', () => {
 });
 
 test('Returns error if no suggestion or search results are present', async () => {
-    searchMock.mockImplementation(async () => { return { suggestion: null, search: [] } });
+    searchMock.mockImplementation(async () => { return { suggestion: null, results: [] } });
     const t = async () => {
         await setTitleForPage("Test")
     };
@@ -24,13 +24,13 @@ test('Returns error if no suggestion or search results are present', async () =>
 });
 
 test('Returns suggestion if suggestion is present', async () => {
-    searchMock.mockImplementation(async () => { return { suggestion: "Suggest", search: ['result'] } });
+    searchMock.mockImplementation(async () => { return { suggestion: "Suggest", results: ['result'] } });
     const result = await setTitleForPage("Test");
     expect(result).toBe("Suggest");
 });
 
 test('Returns title if no suggestion but search results are present', async () => {
-    searchMock.mockImplementation(async () => { return { suggestion: null, search: ['result'] } });
+    searchMock.mockImplementation(async () => { return { suggestion: null, results: ['result'] } });
     const result = await setTitleForPage("Test");
     expect(result).toBe("Test");
 });

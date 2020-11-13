@@ -46,7 +46,7 @@ wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wiki
         searchOptions?.suggestion ? searchParams['srinfo'] = 'suggestion' : null;
         const response = await request(searchParams);
         const result: wikiSearchResult = {
-            search: response.query.search,
+            results: response.query.search,
             suggestion: response.query.searchinfo ? response.query.searchinfo.suggestion : null
         }
         return result;
@@ -483,24 +483,3 @@ export default wiki;
 // For CommonJS default export support
 module.exports = wiki;
 module.exports.default = wiki;
-
-// Export option types
-export {
-    pageOptions, 
-    searchOptions, 
-    listOptions,
-    geoOptions,
-    pageFunctions
-} from './optionTypes';
-
-// Export result types
-export {
-    wikiSearchResult, 
-    pageResult, 
-    imageResult,
-    languageResult,
-    geoSearchResult,
-    coordinatesResult,
-    langLinksResult,
-    wikiSummary
-} from './resultTypes';

@@ -14,7 +14,7 @@ const searchMock = {
 }
 
 const searchResult = {
-    search: ["search1", "search2"],
+    results: ["search1", "search2"],
     suggestion: "suggest"
 }
 
@@ -64,7 +64,7 @@ test('Search returns results as wikiSearchResult with suggestions as null', asyn
     });
     const result = await wiki.search("Test", {suggestion: false});
     expect(result).toStrictEqual({
-        search: ["search1", "search2"],
+        results: ["search1", "search2"],
         suggestion: null
     });
 });
@@ -121,6 +121,8 @@ test('Page returns results as Page Class and loads fields present in fields when
     requestMock.mockImplementation(async () => { return { query: { pages: { 500: pageJson } } } });
     restRequestMock.mockImplementation(async () => { return summaryJson });
     const t = async () => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore: Type error
         await wiki.page("Test", { preload: true, fields: ["errorMethod"] })
     };
     expect(t).rejects.toThrowError(pageError);

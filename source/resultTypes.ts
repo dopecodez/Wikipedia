@@ -1,5 +1,5 @@
 export interface wikiSearchResult {
-  search: any[],
+  results: any[],
   suggestion: string
 }
 

@@ -11,7 +11,7 @@ export function isString(title: any){
 export async function setTitleForPage(title: string) {
     {
         const searchResult = await wiki.search(title, { limit: 1, suggestion: true })
-        if (!searchResult.suggestion && searchResult.search.length == 0) {
+        if (!searchResult.suggestion && searchResult.results.length == 0) {
             throw new pageError(`${MSGS.PAGE_NOT_SUGGEST}${title}`)
         }
         title = searchResult.suggestion || title;
