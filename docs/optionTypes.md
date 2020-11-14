@@ -5,6 +5,7 @@
 - [pageOptions](#pageOptions)
 - [listOptions](#listOptions)
 - [searchOptions](#searchOptions)
+- [geoOptions](#geoOptions)
 
 ### pageOptions
 
@@ -51,5 +52,15 @@ interface searchOptions {
 ```
 - `limit : number`(default = 10) - Use this to increase/decrease number of results in the returned search result array
 - `suggestion: boolean`(default=false) - If set to true, returns the auto suggested page along with search results
+
+### geoOptions
+```js
+interface geoOptions {
+    limit?: number
+    radius?: number
+}
+```
+- `limit : number`(default = 10) - Use this to increase/decrease number of results in the returned geo result array
+- `radius: number`(default = 1000) - Search radius in meters
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#functions

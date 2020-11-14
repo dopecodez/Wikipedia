@@ -7,6 +7,8 @@
 - [coordinatesResult](#coordinatesResult)
 - [langLinksResult](#langLinksResult)
 - [wikiSearchResult](#wikiSearchResult)
+- [geoSearchResult](#geoSearchResult)
+- [languageResult](#languageResult)
 
 ### wikiSummary
 
@@ -106,3 +108,27 @@ interface wikiSearchResult {
   suggestion: string // the suggestion string if suggestion option is set to true
 }
 ```
+### geoSearchResult
+
+The geosearch result.
+
+```js
+interface geoSearchResult {
+  pageid: number, // the page id. use this or title for further requests
+  ns: number,
+  title: string, // the title. use this or pageid for further requests
+  lat: number, // the page latitude
+  lon: number, // the page longitude
+  dist: number,
+  primary: string,
+  type: string // the type of the page eg: city, museum
+}
+```
+### languageResult
+
+```js
+interface languageResult {
+  [key: string]: string // key will be the language code to be used in setLang(key), and the value will be the full url
+}
+```
+
