@@ -1,4 +1,4 @@
-# WIKIPEDIA  [![Build Status](https://travis-ci.org/dopecodez/Wikipedia.svg?branch=master)](https://travis-ci.org/dopecodez/Wikipedia) [![Test Coverage](https://api.codeclimate.com/v1/badges/a44c826dbef8c7f5ea45/test_coverage)](https://codeclimate.com/github/dopecodez/Wikipedia/test_coverage)
+# WIKIPEDIA  [![Build Status](https://travis-ci.org/dopecodez/Wikipedia.svg?branch=master)](https://travis-ci.org/dopecodez/Wikipedia) [![Test Coverage](https://api.codeclimate.com/v1/badges/a44c826dbef8c7f5ea45/test_coverage)](https://codeclimate.com/github/dopecodez/Wikipedia/test_coverage) [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues)
 
 Wikipedia for node.
 
@@ -22,7 +22,12 @@ $ npm install wikipedia
 - [What can it do](#what-can-it-do)
 - [Usage](#Usage)
 - [Options](#Options)
+- [Result Types](#result-types)
 - [Contributing](#contributing)
+
+For detailed documentation of methods available on `wiki` and `page`,
+- [wiki][4]
+- [Page][2]
 
 ## What can it do?
 
@@ -96,14 +101,19 @@ const wiki = require('wikipedia');
 
 ## Options
 
-All methods have options you can pass them
+All methods have options you can pass them. You can find them in [optionTypes documentation][5].
+
+## Result Types
+
+All the returned result types are documentated as well. You can find them [here][6].
 
 ## Contributing
 
-Before opening a pull request please make sure your changes follow the
-[contribution guidelines][1].
+Before opening a pull request please make sure your changes follow the [contribution guidelines][1].
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/CONTRIBUTING.md
 [2]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md
 [3]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
 [4]: https://github.com/dopecodez/wikipedia/blob/master/docs/wiki.md
+[5]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md
+[6]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md

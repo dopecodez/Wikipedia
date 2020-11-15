@@ -7,6 +7,9 @@
     - [page()](#page)
     - [geoSearch()](#geoSearch)
     - [languages()](#languages)
+    - [setLang()](#setLang)
+    - [suggest()](#suggest)
+    - [Page Methods](#page-methods)
 
 ## Functions
 
@@ -77,6 +80,51 @@ languages = async (): Promise<Array<languageResult>>
 const languages = await wiki.languages();
 ```
 
+### setLang()
+
+Uses the input language code to set language for the wikimedia and the REST APIs. This is useful in case you want to switch languages while using wikipedia.
+
+```js
+setLang = (language: string): string
+```
+- @param language - The language code for the wiki.
+- @result Returns the new wikimedia url as string.
+
+```js
+//example
+const changedLang = await wiki.setLang('fr'); // sets language to french
+```
+
+### suggest()
+
+Returns the wiki suggestion for a given query string. This method returns null if no suggestion was returned.
+
+```js
+suggest = async (query: string): Promise<string | null>
+```
+- @param query - The query string.
+- @result the suggestion or null if no suggestion present.
+
+```js
+//example
+const suggestion = await wiki.suggest('Batma');
+console.log(suggestion); //Returns 'Batman'
+```
+
+### Page Methods
+
+All the methods defined in the [Page][4] documentation can be called directly from the wiki object as well. This includes [summary()][8], [images()][9], [intro()][10], [html()][11], [related()][12], [content()][13], [categories()][14], [links()][15], [references()][16], [coordinates()][17], [langLinks()][18], [infobox()][19], and [tables()][20].
+
+**Read up [here][21] to understand when you should use these methods directly and when you should use the page methods**.
+Also, note that if called directly from the wiki object, you can use the `autoSuggest` option present in the [pageOptions][3] object which will be ignored if called through page.
+```js
+//example
+const summary = await wiki.summary('Batma', {autoSuggest:true});
+console.log(summary); //Returns summary for 'Batman'
+const html = await wiki.summary('David Attenborough');
+console.log(html); //Returns html for the environmentalist
+```
+
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#searchOptions
 [2]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#wikiSearchResult
 [3]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions
@@ -84,4 +132,19 @@ const languages = await wiki.languages();
 [5]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#geoOptions
 [6]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#geoSearchResult
 [7]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#languageResult
+[8]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#summary
+[9]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#images
+[10]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#intro
+[11]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#html
+[12]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#related
+[13]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#content
+[14]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#categories
+[15]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#links
+[16]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#references
+[17]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#coordinates
+[18]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#langLinks
+[19]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#infobox
+[20]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#tables
+[21]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
+
 

@@ -20,7 +20,7 @@ interface pageOptions {
 The options for page methods on `Page` or `wiki`. Generally, can be used for all page methods which do not return a array.
 
 - `redirect : boolean`(default = true) - redirect in case wikipedia returns a 304. **This is the only field that is applicable to any method called on a [Page][1] object**.
-- `autoSuggest : boolean`(default = false) - suggest a page title which is reccomened by wikipedia for given string. Useful in case you are using user input to search for a page.
+- `autoSuggest : boolean`(default = false) - suggest a page title which is reccomened by wikipedia for given string. Useful in case you are using user input to get details for a page.
 
 The other two fields are only applicable if added on the `wiki.page('title')` method, otherwise its ignored.
 
