@@ -31,11 +31,10 @@ For detailed documentation of methods available on `wiki` and `page`,
 
 ## What can it do?
 
-- Get a summary for an page which contains the intro and main image optimized for web and mobile with the new wikipedia [REST APIs](https://en.wikipedia.org/api/rest_v1/#/)
-- Get article information 
+- Get a summary for a page which contains the intro and main image optimized for web and mobile with the new wikipedia [REST APIs](https://en.wikipedia.org/api/rest_v1/#/)
 - Fetch article content
 - Find all links/images/categories in a page
-- Find related articles given a article
+- Find related articles from the given article
 - Find articles by geographical location
 - Supports switching languages
 - Parses infoboxes using [infobox-parser](https://github.com/dijs/infobox-parser)
