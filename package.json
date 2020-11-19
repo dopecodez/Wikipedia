@@ -1,8 +1,8 @@
 {
   "name": "wikipedia",
-  "version": "1.0.9",
+  "version": "0.0.0",
   "description": "A JavaScript wrapper for the wikipedia apis",
-  "main": "dist/src",
+  "main": "dist",
   "engines": {
     "node": ">=10"
   },
