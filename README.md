@@ -1,4 +1,4 @@
-# WIKIPEDIA  [![Build Status](https://travis-ci.org/dopecodez/Wikipedia.svg?branch=master)](https://travis-ci.org/dopecodez/Wikipedia) [![Test Coverage](https://api.codeclimate.com/v1/badges/a44c826dbef8c7f5ea45/test_coverage)](https://codeclimate.com/github/dopecodez/Wikipedia/test_coverage) [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues)
+# WIKIPEDIA  [![Build Status](https://travis-ci.org/dopecodez/Wikipedia.svg?branch=master)](https://travis-ci.org/dopecodez/Wikipedia) [![Test Coverage](https://api.codeclimate.com/v1/badges/a44c826dbef8c7f5ea45/test_coverage)](https://codeclimate.com/github/dopecodez/Wikipedia/test_coverage) [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues) [![npm version](https://badge.fury.io/js/wikipedia.svg)](https://badge.fury.io/js/wikipedia)
 
 Wikipedia for node.
 
