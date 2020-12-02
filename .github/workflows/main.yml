@@ -1,0 +1,52 @@
+name: build
+on: 
+    push:
+        branches:
+        - master
+        tags:
+        - '!*' # Do not execute on tags
+        paths:
+        - src/*
+        - test/*
+        - '*.json'
+        - package.lock
+        - .github/workflows/*
+    pull_request:
+        paths:
+        - '!*.MD'
+
+jobs:
+    build:
+        name: Node.js ${{ matrix.node-version }}
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                node-version:
+                    - 14
+                    - 12
+                    - 10
+        steps:
+            - uses: actions/checkout@v2
+            - uses: actions/setup-node@v1
+              with:
+                node-version: ${{ matrix.node-version }}
+            - run: npm install
+            - run: npm test
+    coverage:
+        needs: [ build ]
+        name: coverage
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@master
+            - uses: actions/setup-node@master
+              with:
+                node-version: '12'
+            - run: npm install
+            - run: npm run test
+            - uses: paambaati/codeclimate-action@v2.7.2
+              env:
+                CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+              with:
+                coverageCommand: npm run coverage
+                debug: true
