@@ -1,17 +1,17 @@
 name: build
 on: 
-    push:
-        tags:
-        - '!*' # Do not execute on tags
-        paths:
-        - src/*
-        - test/*
-        - '*.json'
-        - package.lock
-        - .github/workflows/*
-    pull_request:
-        paths:
-        - '!*.MD'
+  push:
+    branches:
+      - master
+    tags:
+    - '!*' # Do not execute on tags
+    paths:
+    - src/*
+    - test/*
+    - '*.json'
+    - package.lock
+      - .github/workflows/*
+  pull_request:
 
 jobs:
     build:
