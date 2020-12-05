@@ -147,7 +147,7 @@ interface mediaResult {
   section_id: number, // section where image is present
   type: string, // type of media - can be image, video, or audio
   caption?: { // will be undefined for the infobox images
-    html: string // the html of the caption
+    html: string, // the html of the caption
     text: string // the text you probably want to use
   },
   showInGallery: boolean,

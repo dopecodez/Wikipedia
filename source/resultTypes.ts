@@ -110,7 +110,7 @@ export interface mediaResult {
   section_id: number,
   type: string,
   caption?: {
-    html: string
+    html: string,
     text: string
   },
   showInGallery: boolean,
