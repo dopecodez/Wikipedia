@@ -9,6 +9,7 @@
 - [wikiSearchResult](#wikiSearchResult)
 - [geoSearchResult](#geoSearchResult)
 - [languageResult](#languageResult)
+- [wikiMediaResult](#wikiMediaResult)
 
 ### wikiSummary
 
@@ -132,3 +133,29 @@ interface languageResult {
 }
 ```
 
+### wikiMediaResult
+
+```js
+interface wikiMediaResult {
+  revision: string, // the revision id of the page
+  tid: string,
+  items: Array<mediaResult> // contains an array of media results
+}
+
+interface mediaResult {
+  title: string, // title of image
+  section_id: number, // section where image is present
+  type: string, // type of media - can be image, video, or audio
+  caption?: { // will be undefined for the infobox images
+    html: string // the html of the caption
+    text: string // the text you probably want to use
+  },
+  showInGallery: boolean,
+  srcset: Array<srcResult> // this contains the url for the media
+}
+
+interface srcResult {
+  src: string, // the url for the media
+  scale: string
+}
+```

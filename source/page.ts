@@ -1,5 +1,5 @@
 import { categoriesError, contentError, coordinatesError, htmlError, imageError, 
-    infoboxError, introError, linksError, preloadError, relatedError, summaryError } from './errors';
+    infoboxError, introError, linksError, mediaError, preloadError, relatedError, summaryError } from './errors';
 import request, { makeRestRequest } from './request';
 import { coordinatesResult, imageResult, langLinksResult, pageResult, wikiMediaResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
@@ -39,6 +39,7 @@ export class Page {
     _tables!: Array<any>;
     _intro!: string;
     _related!: Array<wikiSummary>;
+    _media!: wikiMediaResult;
     constructor(response: pageResult) {
         this.pageid = response.pageid;
         this.ns = response.ns;
@@ -345,6 +346,31 @@ export class Page {
             return this._related;
         } catch (error) {
             throw new relatedError(error);
+        }
+    }
+
+    /**
+     * Gets the list of media items (images, audio, and video) in the 
+     * order in which they appear on a given wiki page.
+     *
+     * @remarks
+     * Called in page object and also through index
+     *
+     * @param title - The title or page Id of the page
+     * @param redirect - Whether to redirect in case of 302
+     * @returns The related pages and summary as an array of {@link wikiMediaResult | wikiMediaResult}
+     * 
+     * @experimental
+     */
+    public media = async (pageOptions?: pageOptions): Promise<wikiMediaResult> => {
+        try {
+            if (!this._media) {
+                const result = await media(this.title, pageOptions?.redirect);
+                this._media = result;
+            }
+            return this._media;
+        } catch (error) {
+            throw new mediaError(error);
         }
     }
 
@@ -756,7 +782,7 @@ export const media = async (title: string, redirect = true): Promise<wikiMediaRe
         const response = await makeRestRequest(path, redirect);
         return response;
     } catch (error) {
-        throw new relatedError(error);
+        throw new mediaError(error);
     }
 }
 

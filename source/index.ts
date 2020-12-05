@@ -2,14 +2,15 @@ import request, { setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions, listOptions } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
-    references, infobox, tables, summary, related
+    references, infobox, tables, summary, related, media
 } from './page';
 import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
+    wikiMediaResult, 
     wikiSearchResult, wikiSummary } from './resultTypes';
 import {
     categoriesError,
     contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError,
-    introError, linksError, pageError, relatedError, searchError, summaryError, wikiError
+    introError, linksError, mediaError, pageError, relatedError, searchError, summaryError, wikiError
 } from './errors';
 import { MSGS } from './messages';
 import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
@@ -254,6 +255,31 @@ wiki.related = async (title: string, pageOptions?: pageOptions): Promise<Array<w
         return response;
     } catch (error) {
         throw new relatedError(error);
+    }
+}
+
+/**
+ * Gets the list of media items (images, audio, and video) in the
+ * order in which they appear on a given wiki page.
+ *
+ * @remarks
+ * Called in page object and also through index
+ *
+ * @param title - The title or page Id of the page
+ * @param redirect - Whether to redirect in case of 302
+ * @returns The related pages and summary as an array of {@link wikiMediaResult | wikiMediaResult}
+ *
+ * @experimental
+ */
+wiki.media = async (title: string, pageOptions?: pageOptions): Promise<wikiMediaResult> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const response = await media(title, pageOptions?.redirect);
+        return response;
+    } catch (error) {
+        throw new mediaError(error);
     }
 }
 

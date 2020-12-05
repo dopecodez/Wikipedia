@@ -1,8 +1,6 @@
 name: build
 on: 
     push:
-        branches:
-        - master
         tags:
         - '!*' # Do not execute on tags
         paths:

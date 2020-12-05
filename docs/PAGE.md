@@ -9,6 +9,7 @@
     - [images()](#images)
     - [html()](#html)
     - [related()](#related)
+    - [media()](#media)
     - [content()](#content)
     - [categories()](#categories)
     - [links()](#links)
@@ -128,6 +129,22 @@ related = async (pageOptions?: pageOptions): Promise<Array<wikiSummary>>
 ```
 - @param [pageOptions][1] - the options for the page
 - @result[wikiSummary][2] - the summary object for the wiki page
+
+```js
+//example
+const page = await wiki.page('Batman');
+const related = await page.intro({redirect: false});
+```
+
+#### media()
+
+Gets the list of media items present in the page
+
+```js
+media = async (pageOptions?: pageOptions): Promise<wikiMediaResult>
+```
+- @param [pageOptions][1] - the options for the page
+- @result[wikiMediaResult][6] - the media result object for the wiki page
 
 ```js
 //example
@@ -262,3 +279,4 @@ const tables = await page.tables({redirect: false});
 [4]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#imageResult
 [5]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#coordinatesResult
 [5]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#langLinksResult
+[6]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#wikiMediaResult

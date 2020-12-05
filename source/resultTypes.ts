@@ -109,6 +109,10 @@ export interface mediaResult {
   title: string,
   section_id: number,
   type: string,
+  caption?: {
+    html: string
+    text: string
+  },
   showInGallery: boolean,
   srcset: Array<srcResult>
 }
