@@ -98,3 +98,26 @@ export interface wikiSummary {
   extract: string
   extract_html: string
 }
+
+export interface wikiMediaResult {
+  revision: string,
+  tid: string,
+  items: Array<mediaResult>
+}
+
+export interface mediaResult {
+  title: string,
+  section_id: number,
+  type: string,
+  caption?: {
+    html: string,
+    text: string
+  },
+  showInGallery: boolean,
+  srcset: Array<srcResult>
+}
+
+export interface srcResult {
+  src: string,
+  scale: string
+}

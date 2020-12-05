@@ -93,3 +93,22 @@ export const tableJson = {
         '== Media recognition ==\n' +
         "[[Time (magazine)|''Time'' magazine]] has recognized Torvalds multiple times:\n" 
 }
+
+export const mediaJson = {
+    revision: "111",
+    tid: "222",
+    items: [{
+        title: "sample",
+        section_id: 1,
+        type: "image",
+        caption: {
+            html: "dance with me",
+            text: "run baby"
+        },
+        showInGallery: true,
+        srcset: [{
+            src: "/something.jpg",
+            scale: "1"
+        }]
+    }]
+}
