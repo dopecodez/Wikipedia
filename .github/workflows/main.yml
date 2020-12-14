@@ -10,7 +10,7 @@ on:
     - test/*
     - '*.json'
     - package.lock
-      - .github/workflows/*
+    - .github/workflows/*
   pull_request:
 
 jobs:
