@@ -104,7 +104,7 @@ All methods have options you can pass them. You can find them in [optionTypes do
 
 ## Result Types
 
-All the returned result types are documentated as well. You can find them [here][6].
+All the returned result types are documented as well. You can find them [here][6].
 
 ## Contributing
 
