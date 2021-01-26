@@ -47,7 +47,7 @@ const wiki = require('wikipedia');
 (async () => {
 	try {
 		const page = await wiki.page('Batman');
-		console.log(response);
+		console.log(page);
 		//Response of type @Page object
 		const summary = await page.summary();
 		console.log(summary);
