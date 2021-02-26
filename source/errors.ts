@@ -111,3 +111,10 @@ export class mediaError extends wikiError {
         this.name = 'mediaError';
     }
 }
+
+export class eventsError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'eventsError';
+    }
+}
