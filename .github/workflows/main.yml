@@ -42,7 +42,7 @@ jobs:
                 node-version: '12'
             - run: npm install
             - run: npm run test
-            - uses: paambaati/codeclimate-action@v2.7.2
+            - uses: paambaati/codeclimate-action@v2.7.5
               env:
                 CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
               with:
