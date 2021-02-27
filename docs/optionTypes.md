@@ -6,6 +6,7 @@
 - [listOptions](#listOptions)
 - [searchOptions](#searchOptions)
 - [geoOptions](#geoOptions)
+- [eventOptions](#eventOptions)
 
 ### pageOptions
 
@@ -62,5 +63,19 @@ interface geoOptions {
 ```
 - `limit : number`(default = 10) - Use this to increase/decrease number of results in the returned geo result array
 - `radius: number`(default = 1000) - Search radius in meters
+
+### eventOptions
+```js
+interface eventOptions {
+    type?: eventTypes,
+    month?: string,
+    day?: string
+}
+```
+The options for the onThisDay function on wiki object.
+
+- `type : eventTypes`(default = all) - Accepts types of valid events on the wikipedia Rest API. Events can be one of `all`, `selected`, `births`, `deaths`, `events`, `holidays`.
+- `month : string`(default = date.getMonth()) - Use this to pass the month you want as a string. By default, it will take current month.
+- `day : string`(default = date.getDay()) - Use this to pass the day you want as a string. By default, it will take current day.
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#functions

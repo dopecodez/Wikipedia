@@ -132,18 +132,21 @@ export interface eventResult {
     {
       text: string,
       pages: Array<wikiSummary>
+      year?: number
     }
   ],
   deaths?: [
     {
       text: string,
-      pages: Array<wikiSummary>
+      pages: Array<wikiSummary>,
+      year?: number
     }
   ],
   events?: [
     {
       text: string,
-      pages: Array<wikiSummary>
+      pages: Array<wikiSummary>,
+      year?: number
     }
   ],
   holidays?: [
@@ -155,7 +158,8 @@ export interface eventResult {
   selected?: [
     {
       text: string,
-      pages: Array<wikiSummary>
+      pages: Array<wikiSummary>,
+      year?: number
     }
   ]
 }

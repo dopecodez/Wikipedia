@@ -10,6 +10,7 @@
 - [geoSearchResult](#geoSearchResult)
 - [languageResult](#languageResult)
 - [wikiMediaResult](#wikiMediaResult)
+- [eventResult](#eventResult)
 
 ### wikiSummary
 
@@ -55,8 +56,13 @@ interface wikiSummary {
       talk: string
     }
   },
-  extract: string
-  extract_html: string
+  extract: string,
+  extract_html: string,
+  normalizedtitle?: string,
+  coordinates?: {
+    lat: number,
+    lon: number
+  }
 }
 ```
 
@@ -157,5 +163,47 @@ interface mediaResult {
 interface srcResult {
   src: string, // the url for the media
   scale: string
+}
+```
+
+### eventResult
+
+The result for the `onThisDay` function call.
+```js
+interface eventResult {
+  births?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>,
+      year?: number
+    }
+  ],
+  deaths?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>,
+      year?: number
+    }
+  ],
+  events?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>,
+      year?: number
+    }
+  ],
+  holidays?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>
+    }
+  ],
+  selected?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>,
+      year?: number
+    }
+  ]
 }
 ```

@@ -514,7 +514,7 @@ wiki.suggest = async (query: string): Promise<string | null> => {
  * @param eventOptions - the event types, and the month and day {@link eventOptions | eventOptions}
  * @returns Returns the results as array of {@link eventResult | eventResult}
  */
-wiki.onThisDay = async (eventOptions: eventOptions): Promise<eventResult> => {
+wiki.onThisDay = async (eventOptions: eventOptions = {}): Promise<eventResult> => {
     try {
         const type = eventOptions.type || 'all';
         const mm = eventOptions.month ||  getCurrentMonth();
