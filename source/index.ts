@@ -1,19 +1,19 @@
-import request, { setAPIUrl } from './request'
-import { pageOptions, searchOptions, geoOptions, listOptions } from './optionTypes';
+import request, { makeRestRequest, setAPIUrl } from './request'
+import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
     references, infobox, tables, summary, related, media
 } from './page';
-import { coordinatesResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
+import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     wikiMediaResult, 
     wikiSearchResult, wikiSummary } from './resultTypes';
 import {
     categoriesError,
-    contentError, coordinatesError, geoSearchError, htmlError, imageError, infoboxError,
+    contentError, coordinatesError, eventsError, geoSearchError, htmlError, imageError, infoboxError,
     introError, linksError, mediaError, pageError, relatedError, searchError, summaryError, wikiError
 } from './errors';
 import { MSGS } from './messages';
-import { setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
+import { getCurrentDay, getCurrentMonth, setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
 /**
  * The default wiki export
@@ -502,6 +502,28 @@ wiki.suggest = async (query: string): Promise<string | null> => {
         return result.query?.searchinfo?.suggestion ? result.query?.searchinfo?.suggestion : null;
     } catch (error) {
         throw new searchError(error);
+    }
+}
+
+/**
+ * Returns the events for a given day
+ *
+ * @remarks
+ * The api returns the events that happened on a particular month and day
+ *
+ * @param eventOptions - the event types, and the month and day {@link eventOptions | eventOptions}
+ * @returns Returns the results as array of {@link eventResult | eventResult}
+ */
+wiki.onThisDay = async (eventOptions: eventOptions = {}): Promise<eventResult> => {
+    try {
+        const type = eventOptions.type || 'all';
+        const mm = eventOptions.month ||  getCurrentMonth();
+        const dd = eventOptions.day || getCurrentDay();
+        const path = `feed/onthisday/${type}/${mm}/${dd}`;
+        const result = await makeRestRequest(path, true);
+        return result;
+    } catch (error) {
+        throw new eventsError(error);
     }
 }
 

@@ -6,6 +6,7 @@
     - [search()](#search)
     - [page()](#page)
     - [geoSearch()](#geoSearch)
+    - [onThisDay()](#onThisDay)
     - [languages()](#languages)
     - [setLang()](#setLang)
     - [suggest()](#suggest)
@@ -46,6 +47,25 @@ page = async (title: string, pageOptions?: pageOptions): Promise<Page>
 //example
 const page = await wiki.page('Batman', {autoSuggest: true, preload:true, fields:["summary", "html"]});
 const summary = await page.summary(); // Does not call API, returns summary immediately as it is preloaded
+```
+### onThisDay()
+
+Returns the events that happened on a day depending on input `type`, `month`, `day` arguments. Type can be any one of the ones defined in [eventOptions][23]. By default, it will return all events that happened on the current day. All options are documented in the [eventOptions][23] object. Returns a array of [eventResult][24] object which internally has arrays of [wikiSummary][22].
+
+```js
+onThisDay = async ({type: string, month: string, day: string}): Promise<eventResult>
+```
+- @param type - Any one of the valid event types. By default, `all`.
+- @param month - The month to search for. Takes current month by default.
+- @param day - The day to search for. Takes current day by default.
+- @result[eventResult][24] - a eventResult object.
+
+```js
+//example
+const events = await wiki.onThisDay();
+const deaths = await wiki.onThisDay({type:'deaths', month:'2', day:'28'});
+console.log(events); // returns all the events which happened today
+console.log(deaths); // returns all deaths which happened on Feb 28
 ```
 
 ### geoSearch()
@@ -146,5 +166,8 @@ console.log(html); //Returns html for the environmentalist
 [19]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#infobox
 [20]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#tables
 [21]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
+[22]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#wikiSummary
+[23]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#eventOptions
+[24]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#eventResult
 
 

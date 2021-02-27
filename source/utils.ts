@@ -39,3 +39,17 @@ export function setPageId(params: any, results: any): number {
     }
     return pageId;
 }
+
+//Get current month
+export function getCurrentMonth(): string {
+    const date = new Date();
+    const month = date.getMonth();
+    return month.toString();
+}
+
+//Get current day
+export function getCurrentDay(): string {
+    const date = new Date();
+    const day = date.getDay();
+    return day.toString();
+}

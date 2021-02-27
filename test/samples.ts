@@ -57,6 +57,39 @@ export const summaryJson = {
     extract_html: ""
 }
 
+export const eventsJson = {
+    births: [
+        {
+            text: "test",
+            pages: [summaryJson]
+        }
+    ],
+    deaths: [
+        {
+            text: "test",
+            pages: [summaryJson]
+        }
+    ],
+    events: [
+        {
+            text: "test",
+            pages: [summaryJson]
+        }
+    ],
+    holidays: [
+        {
+            text: "test",
+            pages: [summaryJson]
+        }
+    ],
+    selected: [
+        {
+            text: "test",
+            pages: [summaryJson]
+        }
+    ]
+}
+
 export const rawJson = {
     contentformat: 'text/x-wiki',
     contentmodel: 'wikitext',
@@ -102,8 +135,8 @@ export const mediaJson = {
         section_id: 1,
         type: "image",
         caption: {
-            html: "dance with me",
-            text: "run baby"
+            html: "test",
+            text: "test"
         },
         showInGallery: true,
         srcset: [{

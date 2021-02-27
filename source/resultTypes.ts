@@ -97,6 +97,11 @@ export interface wikiSummary {
   },
   extract: string
   extract_html: string
+  normalizedtitle?: string,
+  coordinates?: {
+    lat: number,
+    lon: number
+  }
 }
 
 export interface wikiMediaResult {
@@ -120,4 +125,41 @@ export interface mediaResult {
 export interface srcResult {
   src: string,
   scale: string
+}
+
+export interface eventResult {
+  births?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>
+      year?: number
+    }
+  ],
+  deaths?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>,
+      year?: number
+    }
+  ],
+  events?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>,
+      year?: number
+    }
+  ],
+  holidays?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>
+    }
+  ],
+  selected?: [
+    {
+      text: string,
+      pages: Array<wikiSummary>,
+      year?: number
+    }
+  ]
 }

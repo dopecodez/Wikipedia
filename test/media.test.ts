@@ -70,7 +70,7 @@ test('related method on index returns wikiMediaResult', async () => {
 test('media method on index returns wikiMediaResult even when autosuggest is true', async () => {
     requestMock.mockImplementation(async () => { return mediaJson });
     setTitleMock.mockImplementation(async () => { return "test" });
-    const result = await wiki.related("Test", { autoSuggest: true });
+    const result = await wiki.media("Test", { autoSuggest: true });
     expect(setTitleMock).toHaveBeenCalledTimes(1);
     expect(result).toStrictEqual(mediaJson);
 });
