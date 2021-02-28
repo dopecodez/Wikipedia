@@ -5,7 +5,9 @@ Wikipedia for node.
 Implements [legacy](https://www.mediawiki.org/wiki/API:Main_page) wiki endpoints and also the newer 
 [REST API](https://en.wikipedia.org/api/rest_v1/#/).
 
-Try out the new `summary()` REST endpoint for a introduction to your page and the main images optimized for browsers and mobile!
+Try out the new [`summary()`][9] REST endpoint for a introduction to your page and the main images optimized for browsers and mobile!
+
+You can also now get the events which happened on a particular day using the [`onThisDay()`][8] api, which supports filtering by [event types][7] as well.
 
 Built with latest ES6 and native support for async/await and promises.
 
@@ -34,6 +36,7 @@ For detailed documentation of methods available on `wiki` and `page`,
 - Get a summary for a page which contains the intro and main image optimized for web and mobile with the new wikipedia [REST APIs](https://en.wikipedia.org/api/rest_v1/#/)
 - Fetch article content
 - Find all links/images/categories in a page
+- Gets all the relevant events that happened on a particular day. You can further filter this by [event type][7]
 - Find related articles from the given article
 - Find articles by geographical location
 - Supports switching languages
@@ -78,6 +81,24 @@ const wiki = require('wikipedia');
 	}
 })();
 ```
+You can now get the events which happened on a particular day using the new `onThisDay()` api on the wiki object.
+
+```js
+const wiki = require('wikipedia');
+
+(async () => {
+	try {
+		const events = await wiki.onThisDay();
+		const deaths = await wiki.onThisDay({type:'deaths', month:'2', day:'28'});
+		console.log(events); // returns all the events which happened today
+		console.log(deaths); // returns all deaths which happened on Feb 28
+	} catch (error) {
+		console.log(error);
+		//=> Typeof wikiError
+	}
+})();
+```
+
 There are other methods like `search()`, `geoSearch()`, `suggest()`, `setLang()` which should be called on the wiki object directly. Read up on the [wiki documentation][4] to see a complete list of methods available on the wiki default object.
 
 ```js
@@ -116,3 +137,6 @@ Before opening a pull request please make sure your changes follow the [contribu
 [4]: https://github.com/dopecodez/wikipedia/blob/master/docs/wiki.md
 [5]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md
 [6]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md
+[7]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#eventOptions
+[8]: https://github.com/dopecodez/wikipedia/blob/master/docs/wiki.md#onThisDay
+[9]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#summary
