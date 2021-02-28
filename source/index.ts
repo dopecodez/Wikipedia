@@ -517,8 +517,8 @@ wiki.suggest = async (query: string): Promise<string | null> => {
 wiki.onThisDay = async (eventOptions: eventOptions = {}): Promise<eventResult> => {
     try {
         const type = eventOptions.type || 'all';
-        const mm = eventOptions.month ||  getCurrentMonth();
-        const dd = eventOptions.day || getCurrentDay();
+        const mm = (eventOptions.month || getCurrentMonth()).toString().padStart(2, "0")
+        const dd = (eventOptions.day || getCurrentDay()).toString().padStart(2, "0")
         const path = `feed/onthisday/${type}/${mm}/${dd}`;
         const result = await makeRestRequest(path, true);
         return result;

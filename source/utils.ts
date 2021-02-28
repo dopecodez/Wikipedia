@@ -41,15 +41,15 @@ export function setPageId(params: any, results: any): number {
 }
 
 //Get current month
-export function getCurrentMonth(): string {
+export function getCurrentMonth(): number {
     const date = new Date();
     const month = date.getMonth();
-    return month.toString();
+    return (month + 1); //javascript months are indexed at zero for some reason
 }
 
 //Get current day
-export function getCurrentDay(): string {
+export function getCurrentDay(): number {
     const date = new Date();
-    const day = date.getDay();
-    return day.toString();
+    const day = date.getDate();
+    return day;
 }

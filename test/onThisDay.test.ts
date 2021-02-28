@@ -24,9 +24,16 @@ test('Returns with results as eventResult', async () => {
     expect(result).toStrictEqual(eventsMock);
 });
 
-test('events method call with params passed', async () => {
+test('events method call with params passed and no padding', async () => {
     requestMock.mockImplementation(async () => { return eventsMock });
     const result = await wiki.onThisDay({ type: 'deaths', month: '6', day: '9' });
     expect(result).toStrictEqual(eventsMock);
-    expect(requestMock).toBeCalledWith(`feed/onthisday/deaths/6/9`, true);
+    expect(requestMock).toBeCalledWith(`feed/onthisday/deaths/06/09`, true);
+});
+
+test('events method call with params passed', async () => {
+    requestMock.mockImplementation(async () => { return eventsMock });
+    const result = await wiki.onThisDay({ type: 'deaths', month: '11', day: '25' });
+    expect(result).toStrictEqual(eventsMock);
+    expect(requestMock).toBeCalledWith(`feed/onthisday/deaths/11/25`, true);
 });
