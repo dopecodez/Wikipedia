@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 import request, { makeRestRequest, setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions } from './optionTypes';
+||||||| constructed merge base
+import request, { setAPIUrl } from './request'
+import { pageOptions, searchOptions, geoOptions, listOptions } from './optionTypes';
+=======
+import request, { setAPIUrl, makeRestRequest } from './request'
+import { pageOptions, searchOptions, geoOptions, listOptions } from './optionTypes';
+>>>>>>> random: add method to get random page URI
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
     references, infobox, tables, summary, related, media
@@ -524,6 +532,22 @@ wiki.onThisDay = async (eventOptions: eventOptions = {}): Promise<eventResult> =
         return result;
     } catch (error) {
         throw new eventsError(error);
+    }
+}
+
+/**
+ * Returns a random page
+ *
+ * @param format - The desired return format
+ * @returns Returns content from a random page
+ */
+wiki.random = async (format: string): Promise<any> => {
+    try {
+        const path = `page/random/${format}`;
+        const result = await makeRestRequest(path);
+        return result;
+    } catch (error) {
+        throw new Error(error);
     }
 }
 
