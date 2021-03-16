@@ -56,7 +56,7 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
 //change language of both urls
 export function setAPIUrl(prefix: string) : string {
     API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/w/api.php?';
-    REST_API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/api/rest_v1/page/';
+    REST_API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/api/rest_v1/';
     return API_URL;
 }
 
