@@ -131,6 +131,14 @@ All the returned result types are documented as well. You can find them [here][6
 
 Before opening a pull request please make sure your changes follow the [contribution guidelines][1].
 
+
+## Contributors
+
+The project would not be the way it is without these rockstars.
+
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
+
 [1]: https://github.com/dopecodez/wikipedia/blob/master/CONTRIBUTING.md
 [2]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md
 [3]: https://github.com/dopecodez/wikipedia/blob/master/docs/USAGE.md#when-to-use-page
