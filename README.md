@@ -136,7 +136,31 @@ Before opening a pull request please make sure your changes follow the [contribu
 
 The project would not be the way it is without these rockstars.
 
-<!-- readme: contributors -start -->
+<!-- readme: contributors -start --> 
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/dopecodez">
+            <img src="https://avatars.githubusercontent.com/u/34269105?v=4" width="100;" alt="dopecodez"/>
+            <br />
+            <sub><b>Govind S</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/0xflotus">
+            <img src="https://avatars.githubusercontent.com/u/26602940?v=4" width="100;" alt="0xflotus"/>
+            <br />
+            <sub><b>0xflotus</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/zaccolley">
+            <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zaccolley"/>
+            <br />
+            <sub><b>Zac Colley</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: contributors -end -->
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/CONTRIBUTING.md
