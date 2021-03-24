@@ -163,3 +163,23 @@ export interface eventResult {
     }
   ]
 }
+
+export interface titleItem {
+  title: string,
+  page_id: number,
+  rev: number,
+  tid: number,
+  namespace: number,
+  user_id: number,
+  user_text: string,
+  timestamp: string,
+  comment: string,
+  tags: Array<string>,
+  restrictions: Array<string>,
+  page_language: string,
+  redirect: boolean
+}
+
+export interface title {
+  items: Array<titleItem>
+}
