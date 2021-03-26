@@ -147,6 +147,13 @@ The project would not be the way it is without these rockstars.
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/bumbummen99">
+            <img src="https://avatars.githubusercontent.com/u/4533331?v=4" width="100;" alt="bumbummen99"/>
+            <br />
+            <sub><b>Patrick</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/0xflotus">
             <img src="https://avatars.githubusercontent.com/u/26602940?v=4" width="100;" alt="0xflotus"/>
             <br />
