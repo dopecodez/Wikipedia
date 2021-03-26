@@ -1,5 +1,5 @@
 import fetch, { RequestInit } from 'node-fetch';
-import { URLSearchParams } from 'url';
+import { URLSearchParams, URL } from 'url';
 import { wikiError } from './errors';
  
 let API_URL = 'http://en.wikipedia.org/w/api.php?',
@@ -7,7 +7,7 @@ let API_URL = 'http://en.wikipedia.org/w/api.php?',
     // RATE_LIMIT = false,
     // RATE_LIMIT_MIN_WAIT = undefined,
     // RATE_LIMIT_LAST_CALL = undefined,
-    const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
+const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 
 // Makes a request to legacy php endpoint
 async function makeRequest(params: any, redirect = true): Promise<any> {
@@ -24,7 +24,7 @@ async function makeRequest(params: any, redirect = true): Promise<any> {
                 'User-Agent': USER_AGENT
             }
         }
-        const response = await fetch(API_URL + search, options);
+        const response = await fetch(new URL(API_URL + search), options);
         const responseBuffer = await response.buffer();
         const result = JSON.parse(responseBuffer.toString());
         return result;
@@ -44,7 +44,7 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
                 'User-Agent': USER_AGENT
             }
         }
-        const response = await fetch(REST_API_URL + path, options);
+        const response = await fetch(new URL(REST_API_URL + path), options);
         const responseBuffer = await response.buffer();
         const result = JSON.parse(responseBuffer.toString());
         return result;
@@ -61,7 +61,6 @@ export function setAPIUrl(prefix: string) : string {
 }
 
 export default makeRequest;
-
 
 
 

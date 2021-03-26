@@ -1,6 +1,7 @@
 import request, {makeRestRequest, setAPIUrl} from '../source/request';
 import * as fetch from 'node-fetch';
 import { Response } from 'node-fetch';
+import { URL } from 'url';
 import { wikiError } from '../source/errors';
 const fetchMock = jest.spyOn(fetch, "default");
 
@@ -24,7 +25,7 @@ test('makeRequest method calls and returns with expected params', async () => {
     fetchMock.mockImplementation(async () => { return response1 } );
     await request({}, true);
     expect(fetchMock).toHaveBeenCalledWith(
-        apiUrl + 'format=json&redirects=&action=query',
+        new URL(apiUrl + 'format=json&redirects=&action=query'),
         options
     );
 });
@@ -33,7 +34,7 @@ test('makeRequest method calls and returns with expected params when no value pa
     fetchMock.mockImplementation(async () => { return response3 } );
     await request({});
     expect(fetchMock).toHaveBeenCalledWith(
-        apiUrl + 'format=json&redirects=&action=query',
+        new URL(apiUrl + 'format=json&redirects=&action=query'),
         options
     );
 });
@@ -50,7 +51,7 @@ test('makeRestRequest method calls and returns with expected params', async () =
     fetchMock.mockImplementation(async () => { return response2 } );
     await makeRestRequest("path", false);
     expect(fetchMock).toHaveBeenCalledWith(
-        restApiUrl + 'path?redirect=false',
+        new URL(restApiUrl + 'path?redirect=false'),
         options
     );
 });
