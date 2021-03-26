@@ -1,5 +1,5 @@
 import fetch, { RequestInit } from 'node-fetch';
-import { URLSearchParams } from 'url';
+import { URLSearchParams, URL } from 'url';
 import { wikiError } from './errors';
  
 let API_URL = 'http://en.wikipedia.org/w/api.php?',
