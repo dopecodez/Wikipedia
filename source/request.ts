@@ -1,7 +1,6 @@
 import fetch, { RequestInit } from 'node-fetch';
 import { URLSearchParams } from 'url';
 import { wikiError } from './errors';
-import { URL } from 'url';
  
 let API_URL = 'http://en.wikipedia.org/w/api.php?',
     REST_API_URL = 'http://en.wikipedia.org/api/rest_v1/';
@@ -62,7 +61,6 @@ export function setAPIUrl(prefix: string) : string {
 }
 
 export default makeRequest;
-
 
 
 
