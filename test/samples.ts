@@ -145,3 +145,95 @@ export const mediaJson = {
         }]
     }]
 }
+
+export const mobileSections = {
+    lead: {
+        ns: 0,
+        id: 3449027,
+        revision: "1000443218",
+        lastmodified: "2021-01-15T03:44:53Z",
+        lastmodifier: {
+            user: "Ser Amantio di Nicolao",
+            gender: "unknown"
+        },
+        displaytitle: "<i>Girls Like Me</i>",
+        normalizedtitle: "Girls Like Me",
+        wikibase_item: "Q5564650",
+        description: "1986 studio album by Tanya Tucker",
+        description_source: "local",
+        protection: {},
+        editable: true,
+        languagecount: 1,
+        image: {
+            file: "TanyaTuckerGirlsLikeMeOriginal.jpg",
+            urls: {
+            320: "https://upload.wikimedia.org/wikipedia/en/4/48/TanyaTuckerGirlsLikeMeOriginal.jpg",
+            640: "https://upload.wikimedia.org/wikipedia/en/4/48/TanyaTuckerGirlsLikeMeOriginal.jpg",
+            800: "https://upload.wikimedia.org/wikipedia/en/4/48/TanyaTuckerGirlsLikeMeOriginal.jpg",
+            1024: "https://upload.wikimedia.org/wikipedia/en/4/48/TanyaTuckerGirlsLikeMeOriginal.jpg"
+            }
+        },
+        issues: [
+            {
+                html: "This is article",
+                text: "This is article"
+            }
+        ],
+        sections: [
+            {
+                id: 0,
+                text: "<p>This is article</p>"
+            },
+            {
+                id: 1,
+                toclevel: 1,
+                anchor: "Track_listing",
+                line: "Track listing"
+            },
+            {
+                id: 2,
+                toclevel: 1,
+                anchor: "Chart_performance",
+                line: "Chart performance"
+            }
+        ]
+    },
+    remaining: {
+        sections: [
+            {
+                id: 1,
+                text: "\n<ol><li>\"<a href=\"/wiki/One_Love_at_a_Time\" title=\"One Love at a Time\">One Love at a Time</a>\"</li></ol>",
+                toclevel: 1,
+                line: "Track listing",
+                anchor: "Track_listing"
+            },
+            {
+                id: 2,
+                text: "\n<table class=\"wikitable\">\n<tbody><tr><th>abc</th></tr></tbody></table>",
+                toclevel: 1,
+                line: "Chart performance",
+                anchor: "Chart_performance"
+            }
+        ]
+    }
+}
+
+export const title = {
+  items: [
+    {
+      title: "White-naped_seedeater",
+      page_id: 12450272,
+      rev: 1012232317,
+      tid: "fce161c0-8ea1-11eb-8f0f-a75f37ec29b6",
+      namespace: 0,
+      user_id: 40600116,
+      user_text: "ShortDescBot",
+      timestamp: "2021-03-15T09:14:24Z",
+      comment: "[[User:ShortDescBot|ShortDescBot]] adding [[Wikipedia:Short description|short description]] \"Species of bird\"",
+      tags: [],
+      restrictions: [],
+      page_language: "en",
+      redirect: false
+    }
+  ]
+}

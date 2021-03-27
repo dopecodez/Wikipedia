@@ -1,6 +1,6 @@
 import * as request from '../source/request';
 import wiki from "../source/index";
-import { summaryJson } from './samples';
+import { mobileSections, summaryJson, title } from './samples';
 const requestMock = jest.spyOn(request, "makeRestRequest");
 
 afterAll(() => {
@@ -13,10 +13,22 @@ test('Throws error if response is error', async () => {
     expect(err).rejects.toThrowError(Error);
 });
 
-test('Returns summary of random article', async () => {
+test('Returns summary of random article summary', async () => {
     requestMock.mockImplementation(async () => { return summaryJson });
     const result = await wiki.random("summary");
     expect(result).toStrictEqual(summaryJson);
+});
+
+test('Returns summary of random article mobile sections', async () => {
+    requestMock.mockImplementation(async () => { return mobileSections });
+    const result = await wiki.random("mobile-sections");
+    expect(result).toStrictEqual(mobileSections);
+});
+
+test('Returns summary of random article title', async () => {
+    requestMock.mockImplementation(async () => { return title });
+    const result = await wiki.random("title");
+    expect(result).toStrictEqual(title);
 });
 
 test('Request includes arg provided to method', async () => {
