@@ -183,7 +183,7 @@ export interface title {
   items: Array<titleItem>
 }
 
-export interface related {
+export interface relatedResult {
   pages: Array<wikiSummary>
 }
 

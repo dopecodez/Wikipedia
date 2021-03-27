@@ -49,7 +49,7 @@ The `Page` class has the following properties:
     _infobox!: any; // Stores the infobox in case it is preloaded or called on the page object earlier
     _tables!: Array<any>; // Stores the tables in case it is preloaded or called on the page object earlier
     _intro!: string; // Stores the intro in case it is preloaded or called on the page object earlier
-    _related!: Array<wikiSummary>; // Stores the related info in case it is preloaded or called on the page object earlier
+    _related!: Array<relatedResult>; // Stores the related info in case it is preloaded or called on the page object earlier
 ```
 
 ## Functions
@@ -125,7 +125,7 @@ const html = await page.intro({redirect: false});
 Returns the related pages given for a a page.
 
 ```js
-related = async (pageOptions?: pageOptions): Promise<Array<wikiSummary>>
+related = async (pageOptions?: pageOptions): Promise<relatedResult>
 ```
 - @param [pageOptions][1] - the options for the page
 - @result[wikiSummary][2] - the summary object for the wiki page

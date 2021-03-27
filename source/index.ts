@@ -1,10 +1,11 @@
 import request, { makeRestRequest, setAPIUrl } from './request'
-import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions } from './optionTypes';
+import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, randomFormats } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
     references, infobox, tables, summary, related, media
 } from './page';
 import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
+    relatedResult, 
     title, wikiMediaResult, wikiSearchResult, wikiSummary } from './resultTypes';
 import {
     categoriesError,
@@ -245,7 +246,7 @@ wiki.categories = async (title: string, listOptions?: listOptions): Promise<Arra
  * 
  * @experimental
  */
-wiki.related = async (title: string, pageOptions?: pageOptions): Promise<Array<wikiSummary>> => {
+wiki.related = async (title: string, pageOptions?: pageOptions): Promise<relatedResult> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -532,8 +533,11 @@ wiki.onThisDay = async (eventOptions: eventOptions = {}): Promise<eventResult> =
  * @param format - The desired return format
  * @returns Returns content from a random page
  */
-wiki.random = async (format: string): Promise<wikiSummary | title | string> => {
+wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | relatedResult | string> => {
     try {
+        if(!format){
+            format = 'summary';
+        }
         const path = `page/random/${format}`;
         const result = await makeRestRequest(path);
         return result;

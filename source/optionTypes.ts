@@ -33,3 +33,6 @@ export interface eventOptions {
 
 export type eventTypes =
     'all' | 'selected' | 'births' | 'deaths' | 'events' | 'holidays'
+
+export type randomFormats =
+    'title' | 'summary' | 'related' | 'mobile-sections' | 'mobile-sections-lead'

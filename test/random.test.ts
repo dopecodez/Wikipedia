@@ -37,3 +37,10 @@ test('Request includes arg provided to method', async () => {
     expect(result).toStrictEqual(summaryJson);
     expect(requestMock).toBeCalledWith(`page/random/summary`);
 });
+
+test('Calling random with no arguments', async () => {
+    requestMock.mockImplementation(async () => { return summaryJson });
+    const result = await wiki.random();
+    expect(result).toStrictEqual(summaryJson);
+    expect(requestMock).toBeCalledWith(`page/random/summary`);
+});
