@@ -5,7 +5,7 @@ import Page, {
     references, infobox, tables, summary, related, media
 } from './page';
 import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
-    relatedResult, 
+    mobileSections, relatedResult, 
     title, wikiMediaResult, wikiSearchResult, wikiSummary } from './resultTypes';
 import {
     categoriesError,
@@ -533,7 +533,7 @@ wiki.onThisDay = async (eventOptions: eventOptions = {}): Promise<eventResult> =
  * @param format - The desired return format
  * @returns Returns content from a random page
  */
-wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | relatedResult | string> => {
+wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | relatedResult | mobileSections | string> => {
     try {
         if(!format){
             format = 'summary';

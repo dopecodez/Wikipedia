@@ -134,10 +134,10 @@ console.log(suggestion); //Returns 'Batman'
 
 ### random()
 
-Returns a random wiki page in any of the available formats. Formats can be `summary`, `title`, `related`, `mobile-sections` or `mobile-sections-lead`. Defaults to summary by default.
+Returns a random wiki page in any of the available formats. Formats can be `summary`, `title`, `html`, `related`, `mobile-sections` or `mobile-sections-lead`. Defaults to summary.
 
 ```js
-random = async (format?: randomFormats): Promise<wikiSummary | title | relatedResult | string>
+random = async (format?: randomFormats): Promise<wikiSummary | title | string | relatedResult | mobileSections>
 ```
 - @param format - the format for the random page
 - @result the random page in requested format
