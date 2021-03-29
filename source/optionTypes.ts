@@ -35,4 +35,4 @@ export type eventTypes =
     'all' | 'selected' | 'births' | 'deaths' | 'events' | 'holidays'
 
 export type randomFormats =
-    'title' | 'summary' | 'html' | 'related' | 'mobile-sections' | 'mobile-sections-lead'
+    'title' | 'summary' | 'related' | 'mobile-sections' | 'mobile-sections-lead'
