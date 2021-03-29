@@ -147,6 +147,13 @@ The project would not be the way it is without these rockstars.
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/friendofdog">
+            <img src="https://avatars.githubusercontent.com/u/8337121?v=4" width="100;" alt="friendofdog"/>
+            <br />
+            <sub><b>Kevin Kee</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/bumbummen99">
             <img src="https://avatars.githubusercontent.com/u/4533331?v=4" width="100;" alt="bumbummen99"/>
             <br />
