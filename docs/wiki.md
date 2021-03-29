@@ -10,6 +10,7 @@
     - [languages()](#languages)
     - [setLang()](#setLang)
     - [suggest()](#suggest)
+    - [random()](#random)
     - [Page Methods](#page-methods)
 
 ## Functions
@@ -129,6 +130,24 @@ suggest = async (query: string): Promise<string | null>
 //example
 const suggestion = await wiki.suggest('Batma');
 console.log(suggestion); //Returns 'Batman'
+```
+
+### random()
+
+Returns a random wiki page in any of the available formats. Formats can be `summary`, `title`, `related`, `mobile-sections` or `mobile-sections-lead`. Defaults to summary.
+
+```js
+random = async (format?: randomFormats): Promise<wikiSummary | title | string | relatedResult | mobileSections>
+```
+- @param format - the format for the random page
+- @result the random page in requested format
+
+```js
+//example
+const randomSummary = await wiki.random();
+console.log(random); //Returns wikiSummary of a random pageOption
+const randomMobileSections = await wiki.random("mobile-sections");
+console.log(randomMobileSections); // Returns random mobile sections for a page
 ```
 
 ### Page Methods

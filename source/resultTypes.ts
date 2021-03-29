@@ -57,6 +57,8 @@ export interface langLinksResult {
 }
 
 export interface wikiSummary {
+  ns?: number,
+  index?: number,
   type: string,
   title: string,
   displaytitle: string,
@@ -114,10 +116,7 @@ export interface mediaResult {
   title: string,
   section_id: number,
   type: string,
-  caption?: {
-    html: string,
-    text: string
-  },
+  caption?: htmlText,
   showInGallery: boolean,
   srcset: Array<srcResult>
 }
@@ -162,4 +161,80 @@ export interface eventResult {
       year?: number
     }
   ]
+}
+
+export interface titleItem {
+  title: string,
+  page_id: number,
+  rev: number,
+  tid: number,
+  namespace: number,
+  user_id: number,
+  user_text: string,
+  timestamp: string,
+  comment: string,
+  tags: Array<string>,
+  restrictions: Array<string>,
+  page_language: string,
+  redirect: boolean
+}
+
+export interface title {
+  items: Array<titleItem>
+}
+
+export interface relatedResult {
+  pages: Array<wikiSummary>
+}
+
+export interface mobileSections {
+  lead: {
+    ns: number,
+    id: number,
+    revision: string,
+    lastmodified: string,
+    lastmodifier: {
+      user: string,
+      gender: string
+    },
+    displaytitle: string,
+    normalizedtitle: string,
+    wikibase_item: string,
+    description: string,
+    description_source: string,
+    protection: Record<string, unknown>,
+    editable: boolean,
+    languagecount: number,
+    image: {
+      file: string,
+      urls: {
+        320: string,
+        640: string,
+        800: string,
+        1024: string
+      }
+    },
+    issues: Array<htmlText>,
+    geo?: {
+      latitude: string,
+      longitude: string
+    }
+    sections: Array<section>
+  },
+  remaining: {
+    sections: Array<section>
+  }
+}
+
+export interface section {
+  id: number,
+  text: string,
+  toclevel: number,
+  line: string,
+  anchor: string
+}
+
+export interface htmlText {
+  html: string,
+  text: string
 }

@@ -11,6 +11,9 @@
 - [languageResult](#languageResult)
 - [wikiMediaResult](#wikiMediaResult)
 - [eventResult](#eventResult)
+- [relatedResult](#relatedResult)
+- [titleItem](#titleItem)
+- [mobileSections](#mobileSections)
 
 ### wikiSummary
 
@@ -205,5 +208,93 @@ interface eventResult {
       year?: number
     }
   ]
+}
+```
+
+### relatedResult
+
+The related result.
+```js
+interface relatedResult {
+  pages: Array<wikiSummary>
+}
+```
+
+### titleItem
+
+The title item object for the page
+```js
+interface titleItem {
+  title: string,
+  page_id: number,
+  rev: number,
+  tid: number,
+  namespace: number,
+  user_id: number,
+  user_text: string,
+  timestamp: string,
+  comment: string,
+  tags: Array<string>,
+  restrictions: Array<string>,
+  page_language: string,
+  redirect: boolean
+}
+
+// The result for the random titles query
+interface title {
+  items: Array<titleItem>
+}
+```
+
+### mobileSections
+
+The mobile sections for the page
+
+```js
+interface mobileSections {
+  lead: {
+    ns: number,
+    id: number,
+    revision: string,
+    lastmodified: string,
+    lastmodifier: {
+      user: string,
+      gender: string
+    },
+    displaytitle: string,
+    normalizedtitle: string,
+    wikibase_item: string,
+    description: string,
+    description_source: string,
+    protection: Record<string, unknown>,
+    editable: boolean,
+    languagecount: number,
+    image: {
+      file: string,
+      urls: {
+        320: string,
+        640: string,
+        800: string,
+        1024: string
+      }
+    },
+    issues: Array<htmlText>,
+    geo?: {
+      latitude: string,
+      longitude: string
+    }
+    sections: Array<section>
+  },
+  remaining: {
+    sections: Array<section>
+  }
+}
+
+interface section {
+  id: number,
+  text: string,
+  toclevel: number,
+  line: string,
+  anchor: string
 }
 ```

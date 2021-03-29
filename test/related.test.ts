@@ -7,7 +7,7 @@ import { pageJson, summaryJson } from './samples';
 const requestMock = jest.spyOn(request, "makeRestRequest");
 const setTitleMock = jest.spyOn(utils, "setTitleForPage");
 
-const relatedMock = [summaryJson, summaryJson];
+const relatedMock = {pages: [summaryJson, summaryJson]};
 
 afterAll(() => {
     requestMock.mockRestore();

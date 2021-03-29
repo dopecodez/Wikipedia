@@ -1,7 +1,7 @@
 import { categoriesError, contentError, coordinatesError, htmlError, imageError, 
     infoboxError, introError, linksError, mediaError, preloadError, relatedError, summaryError } from './errors';
 import request, { makeRestRequest } from './request';
-import { coordinatesResult, imageResult, langLinksResult, pageResult, wikiMediaResult, wikiSummary } from './resultTypes';
+import { coordinatesResult, imageResult, langLinksResult, pageResult, relatedResult, wikiMediaResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
 import { listOptions, pageOptions } from './optionTypes';
 import { MSGS } from './messages';
@@ -38,7 +38,7 @@ export class Page {
     _infobox!: any;
     _tables!: Array<any>;
     _intro!: string;
-    _related!: Array<wikiSummary>;
+    _related!: relatedResult;
     _media!: wikiMediaResult;
     constructor(response: pageResult) {
         this.pageid = response.pageid;
@@ -337,7 +337,7 @@ export class Page {
      * 
      * @experimental
      */
-    public related = async (pageOptions?: pageOptions): Promise<Array<wikiSummary>> => {
+    public related = async (pageOptions?: pageOptions): Promise<relatedResult> => {
         try {
             if (!this._related) {
                 const result = await related(this.title, pageOptions?.redirect);
@@ -753,7 +753,7 @@ export const summary = async (title: string, redirect = true): Promise<wikiSumma
  * 
  * @experimental
  */
-export const related = async (title: string, redirect = true): Promise<Array<wikiSummary>> => {
+export const related = async (title: string, redirect = true): Promise<relatedResult> => {
     try {
         const path = 'page/related/' + title.replace(" ", "_");
         const response = await makeRestRequest(path, redirect);

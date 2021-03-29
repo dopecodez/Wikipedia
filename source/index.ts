@@ -1,12 +1,12 @@
 import request, { makeRestRequest, setAPIUrl } from './request'
-import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions } from './optionTypes';
+import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, randomFormats } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
     references, infobox, tables, summary, related, media
 } from './page';
 import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
-    wikiMediaResult, 
-    wikiSearchResult, wikiSummary } from './resultTypes';
+    mobileSections, relatedResult, 
+    title, wikiMediaResult, wikiSearchResult, wikiSummary } from './resultTypes';
 import {
     categoriesError,
     contentError, coordinatesError, eventsError, geoSearchError, htmlError, imageError, infoboxError,
@@ -246,7 +246,7 @@ wiki.categories = async (title: string, listOptions?: listOptions): Promise<Arra
  * 
  * @experimental
  */
-wiki.related = async (title: string, pageOptions?: pageOptions): Promise<Array<wikiSummary>> => {
+wiki.related = async (title: string, pageOptions?: pageOptions): Promise<relatedResult> => {
     try {
         if (pageOptions?.autoSuggest) {
             title = await setTitleForPage(title);
@@ -524,6 +524,25 @@ wiki.onThisDay = async (eventOptions: eventOptions = {}): Promise<eventResult> =
         return result;
     } catch (error) {
         throw new eventsError(error);
+    }
+}
+
+/**
+ * Returns a random page
+ *
+ * @param format - The desired return format
+ * @returns Returns content from a random page
+ */
+wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | relatedResult | mobileSections | string> => {
+    try {
+        if(!format){
+            format = 'summary';
+        }
+        const path = `page/random/${format}`;
+        const result = await makeRestRequest(path);
+        return result;
+    } catch (error) {
+        throw new Error(error);
     }
 }
 
