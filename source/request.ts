@@ -30,8 +30,6 @@ async function makeRequest(params: any, redirect = true): Promise<any> {
         });
         const response = await fetch(encodeURI(API_URL + searchParam), options);
         const result = await response.json();
-        console.log(result);
-        // const result = JSON.parse(responseBuffer.toString());
         return result;
     } catch (error) {
         throw new wikiError(error);
@@ -50,8 +48,7 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
             }
         }
         const response = await fetch(encodeURI(REST_API_URL + path), options);
-        const responseBuffer = await response.buffer();
-        const result = JSON.parse(responseBuffer.toString());
+        const result = await response.json();
         return result;
     } catch (error) {
         throw new wikiError(error);
