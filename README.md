@@ -1,6 +1,6 @@
 # WIKIPEDIA [![build](https://github.com/dopecodez/Wikipedia/workflows/build/badge.svg)](https://github.com/dopecodez/Wikipedia/actions) [![Test Coverage](https://api.codeclimate.com/v1/badges/a44c826dbef8c7f5ea45/test_coverage)](https://codeclimate.com/github/dopecodez/Wikipedia/test_coverage) [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues) [![npm version](https://badge.fury.io/js/wikipedia.svg)](https://badge.fury.io/js/wikipedia)
 
-Wikipedia for node.
+Wikipedia for node. Works in the browser as well.
 
 Implements [legacy](https://www.mediawiki.org/wiki/API:Main_page) wiki endpoints and also the newer 
 [REST API](https://en.wikipedia.org/api/rest_v1/#/).
