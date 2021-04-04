@@ -1,5 +1,4 @@
 import fetch, { RequestInit } from 'node-fetch';
-import { URLSearchParams, URL } from 'url';
 import { wikiError } from './errors';
  
 let API_URL = 'http://en.wikipedia.org/w/api.php?',
@@ -12,21 +11,25 @@ const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 // Makes a request to legacy php endpoint
 async function makeRequest(params: any, redirect = true): Promise<any> {
     try {
-        const search = new URLSearchParams({ ...params })
-        search.set('format', 'json');
+        const search = { ...params }
+        search['format'] = 'json';
         if (redirect) {
-            search.set('redirects', '');
+            search['redirects'] = '';
         }
         if (!params.action)
-            search.set('action', "query")
+            search['action'] = "query";
+        search['origin'] = '*';
         const options: RequestInit = {
             headers: {
-                'User-Agent': USER_AGENT
+                'User-Agent': USER_AGENT,
             }
         }
-        const response = await fetch(new URL(API_URL + search), options);
-        const responseBuffer = await response.buffer();
-        const result = JSON.parse(responseBuffer.toString());
+        let searchParam = '';
+        Object.keys(search).forEach(key => {
+            searchParam += `${key}=${search[key]}&`
+        });
+        const response = await fetch(encodeURI(API_URL + searchParam), options);
+        const result = await response.json();
         return result;
     } catch (error) {
         throw new wikiError(error);
@@ -44,9 +47,8 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
                 'User-Agent': USER_AGENT
             }
         }
-        const response = await fetch(new URL(REST_API_URL + path), options);
-        const responseBuffer = await response.buffer();
-        const result = JSON.parse(responseBuffer.toString());
+        const response = await fetch(encodeURI(REST_API_URL + path), options);
+        const result = await response.json();
         return result;
     } catch (error) {
         throw new wikiError(error);
