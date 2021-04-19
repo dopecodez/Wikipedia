@@ -238,3 +238,11 @@ export interface htmlText {
   html: string,
   text: string
 }
+
+export interface notFound {
+  type: string,
+  title: string,
+  method: string,
+  detail: string,
+  uri: string
+}

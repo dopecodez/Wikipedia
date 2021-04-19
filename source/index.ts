@@ -6,7 +6,7 @@ import Page, {
 } from './page';
 import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     mobileSections, relatedResult, 
-    title, wikiMediaResult, wikiSearchResult, wikiSummary } from './resultTypes';
+    title, wikiMediaResult, wikiSearchResult, wikiSummary, notFound } from './resultTypes';
 import {
     categoriesError,
     contentError, coordinatesError, eventsError, geoSearchError, htmlError, imageError, infoboxError,
@@ -543,6 +543,24 @@ wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | rela
         return result;
     } catch (error) {
         throw new Error(error);
+    }
+}
+
+/**
+ * Returns mobile-optimised HTML of a page
+ * 
+ * @param title - The title of the page to query
+ * @param redirect - Whether to redirect in case of 302
+ * @returns Returns HTML string
+ */
+
+wiki.mobileHtml = async (title: string, redirect?: boolean): Promise<notFound | string> => {
+    try {
+        const path = `page/mobile-html/${title}`;
+        const result = await makeRestRequest(path, redirect);
+        return result;
+    } catch (error) {
+        throw new htmlError(error);
     }
 }
 

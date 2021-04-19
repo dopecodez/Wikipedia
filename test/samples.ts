@@ -237,3 +237,13 @@ export const title = {
     }
   ]
 }
+
+export const notFoundJson = {
+  type: "https://mediawiki.org/wiki/HyperSwitch/errors/not_found",
+  title: "Not found.",
+  method: "get",
+  detail: "Page or revision not found.",
+  uri: "/en.wikipedia.org/v1/page/mobile-html/does-not-exist-on-wikipedia"
+}
+
+export const htmlString = "<!DOCTYPE html><html>abcde</html>";
