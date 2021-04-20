@@ -1,6 +1,7 @@
 import * as request from '../source/request';
 import wiki from "../source/index";
 import { htmlString, notFoundJson } from './samples';
+import { htmlError } from '../source/errors';
 const requestMock = jest.spyOn(request, "makeRestRequest");
 
 afterAll(() => {
@@ -11,6 +12,14 @@ test('Returns HTML when page successfully queried', async () => {
     requestMock.mockImplementation(async () => { return htmlString });
     const result = await wiki.mobileHtml("ACID");
     expect(result).toStrictEqual(htmlString);
+});
+
+test('Returns notFound if page not found', async () => {
+    requestMock.mockImplementation(async () => { throw new Error("This is an error") });
+    const t = async () => {
+        await wiki.mobileHtml("ACID");
+    };
+    expect(t).rejects.toThrowError(htmlError);
 });
 
 test('Returns notFound if page not found', async () => {
