@@ -16,6 +16,7 @@
     - [coordinates()](#coordinates)
     - [references()](#references)
     - [langLinks()](#langLinks)
+    - [mobileHtml()](#mobileHtml)
 
 ## Class Members
 
@@ -271,6 +272,26 @@ tables = async (pageOptions?: pageOptions): Promise<Array<any>>
 //example
 const page = await wiki.page('Batman');
 const tables = await page.tables({redirect: false});
+```
+
+
+### mobileHtml()
+
+Returns mobile-optimised HTML for a wiki page, given a title. Follows redirects by default.
+
+```js
+mobileHtml = async (title: string, redirect?: boolean): Promise<notFound | string>
+```
+- @param title - the title of the page to query
+- @param redirect - whether to redirect in case of 302
+
+```js
+const htmlJohnLocke = mobileHtml("John_Locke");
+console.log(htmlJohnLocke); // displays HTML for John Locke's wiki page
+const htmlDiscoStu = mobileHtml("Disco_Stu");
+console.log(htmlDiscoStu); // redirects to List of recurring The Simpsons characters
+const htmlDiscoStuNoRedirect = mobileHtml("Disco_Stu", false);
+console.log(htmlDiscoStuNoRedirect); // no result, as redirect is false
 ```
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions
