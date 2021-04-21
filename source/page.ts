@@ -1,7 +1,7 @@
 import { categoriesError, contentError, coordinatesError, htmlError, imageError, 
     infoboxError, introError, linksError, mediaError, preloadError, relatedError, summaryError } from './errors';
 import request, { makeRestRequest } from './request';
-import { coordinatesResult, imageResult, langLinksResult, pageResult, relatedResult, wikiMediaResult, wikiSummary } from './resultTypes';
+import { coordinatesResult, imageResult, langLinksResult, notFound, pageResult, relatedResult, wikiMediaResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
 import { listOptions, pageOptions } from './optionTypes';
 import { MSGS } from './messages';
@@ -40,6 +40,7 @@ export class Page {
     _intro!: string;
     _related!: relatedResult;
     _media!: wikiMediaResult;
+    _mobileHtml!: string | notFound;
     constructor(response: pageResult) {
         this.pageid = response.pageid;
         this.ns = response.ns;
@@ -371,6 +372,25 @@ export class Page {
             return this._media;
         } catch (error) {
             throw new mediaError(error);
+        }
+    }
+
+    /**
+    * Returns mobile-optimised HTML of a page
+    * 
+    * @param title - The title of the page to query
+    * @param redirect - Whether to redirect in case of 302
+    * @returns Returns HTML string
+    */
+    public mobileHtml = async (pageOptions?: pageOptions): Promise<notFound | string> => {
+        try {
+            if (!this._mobileHtml) {
+                const result = await mobileHtml(this.title, pageOptions?.redirect);
+                this._mobileHtml = result;
+            }
+            return this._mobileHtml;
+        } catch (error) {
+            throw new htmlError(error);
         }
     }
 
@@ -783,6 +803,23 @@ export const media = async (title: string, redirect = true): Promise<wikiMediaRe
         return response;
     } catch (error) {
         throw new mediaError(error);
+    }
+}
+
+/**
+ * Returns mobile-optimised HTML of a page
+ * 
+ * @param title - The title of the page to query
+ * @param redirect - Whether to redirect in case of 302
+ * @returns Returns HTML string
+ */
+export const mobileHtml = async (title: string, redirect = true): Promise<notFound | string> => {
+    try {
+        const path = `page/mobile-html/${title}`;
+        const result = await makeRestRequest(path, redirect);
+        return result;
+    } catch (error) {
+        throw new htmlError(error);
     }
 }
 
