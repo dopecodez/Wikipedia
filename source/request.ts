@@ -48,8 +48,14 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
             }
         }
         const response = await fetch(encodeURI(REST_API_URL + path), options);
-        const result = await response.json();
-        return result;
+
+        let result = await response.text();
+        try {
+            result = JSON.parse(result);
+        }
+        finally {
+            return result;
+        }
     } catch (error) {
         throw new wikiError(error);
     }

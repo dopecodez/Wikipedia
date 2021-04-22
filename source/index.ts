@@ -2,11 +2,11 @@ import request, { makeRestRequest, setAPIUrl } from './request'
 import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, randomFormats } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
-    references, infobox, tables, summary, related, media
+    references, infobox, tables, summary, related, media, mobileHtml
 } from './page';
 import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     mobileSections, relatedResult, 
-    title, wikiMediaResult, wikiSearchResult, wikiSummary } from './resultTypes';
+    title, wikiMediaResult, wikiSearchResult, wikiSummary, notFound } from './resultTypes';
 import {
     categoriesError,
     contentError, coordinatesError, eventsError, geoSearchError, htmlError, imageError, infoboxError,
@@ -543,6 +543,26 @@ wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | rela
         return result;
     } catch (error) {
         throw new Error(error);
+    }
+}
+
+/**
+ * Returns mobile-optimised HTML of a page
+ * 
+ * @param title - The title of the page to query
+ * @param pageOptions - Whether to redirect in case of 302
+ * @returns Returns HTML string
+ */
+
+wiki.mobileHtml = async (title: string, pageOptions?: pageOptions): Promise<notFound | string> => {
+    try {
+        if (pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const result = await mobileHtml(title, pageOptions?.redirect);
+        return result;
+    } catch (error) {
+        throw new htmlError(error);
     }
 }
 
