@@ -34,6 +34,7 @@ jobs:
     coverage:
         needs: [ build ]
         name: coverage
+        if: secrets.CC_TEST_REPORTER_ID
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
