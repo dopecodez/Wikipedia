@@ -6,7 +6,7 @@ on:
     tags:
     - '!*' # Do not execute on tags
     paths:
-    - src/*
+    - source/*
     - test/*
     - '*.json'
     - package.lock
