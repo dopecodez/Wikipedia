@@ -811,7 +811,7 @@ export const media = async (title: string, redirect = true): Promise<wikiMediaRe
  * 
  * @param title - The title of the page to query
  * @param redirect - Whether to redirect in case of 302
- * @returns Returns Mobile HTML string
+ * @returns Returns HTML string
  */
 export const mobileHtml = async (title: string, redirect = true): Promise<notFound | string> => {
     try {
