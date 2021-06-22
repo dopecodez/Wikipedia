@@ -33,13 +33,14 @@ jobs:
             - run: yarn build
     coverage:
         name: coverage
+        if: secrets.CC_TEST_REPORTER_ID
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@master
             - uses: actions/setup-node@master
               with:
                 node-version: '12'
-            - run: yarn test
+            - run: npm run test
             - uses: paambaati/codeclimate-action@v2.7.5
               env:
                 CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
