@@ -542,7 +542,7 @@ wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | rela
         const result = await makeRestRequest(path);
         return result;
     } catch (error) {
-        throw new Error(error);
+        throw new wikiError(error);
     }
 }
 

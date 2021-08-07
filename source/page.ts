@@ -1,4 +1,4 @@
-import { categoriesError, contentError, coordinatesError, htmlError, imageError, 
+import { categoriesError, contentError, coordinatesError, htmlError, imageError, wikiError,
     infoboxError, introError, linksError, mediaError, preloadError, relatedError, summaryError } from './errors';
 import request, { makeRestRequest } from './request';
 import { coordinatesResult, imageResult, langLinksResult, notFound, pageResult, relatedResult, wikiMediaResult, wikiSummary } from './resultTypes';
@@ -727,7 +727,7 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
         options = setPageIdOrTitleParam(options, title);
         const response = await request(options, redirect);
         if (!(response.query?.pages)) {
-            throw new Error(MSGS.INFOBOX_NOT_EXIST);
+            throw new wikiError(MSGS.INFOBOX_NOT_EXIST);
         }
         const pageId = setPageId(options, response);
         const data = response.query.pages[pageId]['revisions'][0];
