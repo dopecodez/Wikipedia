@@ -47,6 +47,7 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
                 'User-Agent': USER_AGENT
             }
         }
+        console.log(encodeURI(REST_API_URL + path));
         const response = await fetch(encodeURI(REST_API_URL + path), options);
 
         let result = await response.text();
