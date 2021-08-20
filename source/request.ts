@@ -62,6 +62,12 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
     }
 }
 
+//return rest uri
+export function returnRestUrl(path: string): string {
+    const url = encodeURI(REST_API_URL + path);
+    return url;
+}
+
 //change language of both urls
 export function setAPIUrl(prefix: string) : string {
     API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/w/api.php?';

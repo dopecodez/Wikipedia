@@ -1,6 +1,6 @@
 import { categoriesError, contentError, coordinatesError, htmlError, imageError, wikiError, pdfError,
     infoboxError, introError, linksError, mediaError, preloadError, relatedError, summaryError } from './errors';
-import request, { makeRestRequest } from './request';
+import request, { makeRestRequest, returnRestUrl } from './request';
 import { coordinatesResult, imageResult, langLinksResult, notFound, pageResult, relatedResult, wikiMediaResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
 import { listOptions, pageOptions, pdfOptions } from './optionTypes';
@@ -394,7 +394,13 @@ export class Page {
         }
     }
 
-    public pdf = async (pdfOptions: pdfOptions): Promise<any> => {
+    /**
+     * Returns pdf of a given page
+     * 
+     * @param pdfOptions - {@link pdfOptions | pdfOptions }
+     * @returns Returns path string
+     */
+    public pdf = async (pdfOptions?: pdfOptions): Promise<string> => {
         try {
             const result = await pdf(this.title, pdfOptions)
 
@@ -840,13 +846,13 @@ export const mobileHtml = async (title: string, redirect = true): Promise<notFou
  * @param pdfOptions - {@link pdfOptions | pdfOptions }
  * @returns Returns pdf format
  */
- export const pdf = async (title: string, pdfOptions?: pdfOptions): Promise<any> => {
+ export const pdf = async (title: string, pdfOptions?: pdfOptions): Promise<string> => {
     try {
         let path = `page/pdf/${title}`;
         pdfOptions?.format ? path += `/${pdfOptions.format}` : null;
         pdfOptions?.type ? path += `/${pdfOptions.type}` : null;
 
-        const result = await makeRestRequest(path);
+        const result = returnRestUrl(path);
         return result;
     } catch (error) {
         throw new pdfError(error);
