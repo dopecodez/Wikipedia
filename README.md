@@ -39,6 +39,7 @@ For detailed documentation of methods available on `wiki` and `page`,
 - Gets all the relevant events that happened on a particular day. You can further filter this by [event type][7]
 - Find related articles from the given article
 - Find articles by geographical location
+- Get a wikipedia page as a pdf document
 - Supports switching languages
 - Parses infoboxes using [infobox-parser](https://github.com/dijs/infobox-parser)
 

@@ -152,7 +152,7 @@ console.log(randomMobileSections); // Returns random mobile sections for a page
 
 ### Page Methods
 
-All the methods defined in the [Page][4] documentation can be called directly from the wiki object as well. This includes [summary()][8], [images()][9], [intro()][10], [html()][11], [related()][12], [content()][13], [categories()][14], [links()][15], [references()][16], [coordinates()][17], [langLinks()][18], [infobox()][19], [mobileHtml()](25) and [tables()][20].
+All the methods defined in the [Page][4] documentation can be called directly from the wiki object as well. This includes [summary()][8], [images()][9], [intro()][10], [html()][11], [related()][12], [content()][13], [categories()][14], [links()][15], [references()][16], [coordinates()][17], [langLinks()][18], [infobox()][19], [mobileHtml()](25), [pdf()](26) and [tables()][20].
 
 **Read up [here][21] to understand when you should use these methods directly and when you should use the page methods**.
 Also, note that if called directly from the wiki object, you can use the `autoSuggest` option present in the [pageOptions][3] object which will be ignored if called through page.
@@ -189,5 +189,6 @@ console.log(html); //Returns html for the environmentalist
 [23]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#eventOptions
 [24]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#eventResult
 [25]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#mobileHtml
+[26]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#pdf
 
 

@@ -17,6 +17,7 @@
     - [references()](#references)
     - [langLinks()](#langLinks)
     - [mobileHtml()](#mobileHtml)
+    - [pdf()](#pdf)
 
 ## Class Members
 
@@ -274,24 +275,39 @@ const page = await wiki.page('Batman');
 const tables = await page.tables({redirect: false});
 ```
 
-
 ### mobileHtml()
 
 Returns mobile-optimised HTML for a wiki page, given a title. Follows redirects by default.
 
 ```js
-mobileHtml = async (title: string, redirect?: boolean): Promise<notFound | string>
+mobileHtml = async (redirect?: boolean): Promise<notFound | string>
 ```
-- @param title - the title of the page to query
 - @param redirect - whether to redirect in case of 302
 
 ```js
-const htmlJohnLocke = mobileHtml("John_Locke");
+const page = await wiki.page('John_Locke');
+const htmlJohnLocke = page.mobileHtml();
 console.log(htmlJohnLocke); // displays HTML for John Locke's wiki page
-const htmlDiscoStu = mobileHtml("Disco_Stu");
+const page = await wiki.page('Disco_Stu');
+const htmlDiscoStu = page.mobileHtml("Disco_Stu");
 console.log(htmlDiscoStu); // redirects to List of recurring The Simpsons characters
-const htmlDiscoStuNoRedirect = mobileHtml("Disco_Stu", false);
-console.log(htmlDiscoStuNoRedirect); // no result, as redirect is false
+const page = await wiki.page('Disco_Stu', {redirect: false});
+console.log(page); // no result, as redirect is false
+```
+
+### pdf()
+
+Returns the wikipedia link to pdf. Valid `format` are `a4`. `letter`, `legal`. Valid `type` are `desktop`, `mobile`.(by default fetches `a4` for `desktop`).
+
+```js
+pdf = async (pdfOptions?: pdfOptions): Promise<string>
+```
+- @param [pdfOptions][7] - the options for the pdf
+
+```js
+//example
+const page = await wiki.page('Batman');
+const pdf = await page.pdf({type:'mobile', format: 'legal'});
 ```
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions
@@ -301,3 +317,4 @@ console.log(htmlDiscoStuNoRedirect); // no result, as redirect is false
 [5]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#coordinatesResult
 [5]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#langLinksResult
 [6]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#wikiMediaResult
+[7]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pdfOptions

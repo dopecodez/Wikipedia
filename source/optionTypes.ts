@@ -40,11 +40,11 @@ export type randomFormats =
 export type format = 
     'a4' | 'letter' | 'legal'
 
-export type type = 
+export type pdfType = 
     'desktop' | 'mobile'
 
 export interface pdfOptions {
     autoSuggest?: boolean
     format?: format
-    type?: type
+    type?: pdfType
 }
