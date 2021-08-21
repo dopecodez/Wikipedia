@@ -118,3 +118,10 @@ export class eventsError extends wikiError {
         this.name = 'eventsError';
     }
 }
+
+export class pdfError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'pdfError';
+    }
+}

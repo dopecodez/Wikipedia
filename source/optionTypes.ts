@@ -36,3 +36,15 @@ export type eventTypes =
 
 export type randomFormats =
     'title' | 'summary' | 'related' | 'mobile-sections' | 'mobile-sections-lead'
+
+export type format = 
+    'a4' | 'letter' | 'legal'
+
+export type pdfType = 
+    'desktop' | 'mobile'
+
+export interface pdfOptions {
+    autoSuggest?: boolean
+    format?: format
+    type?: pdfType
+}

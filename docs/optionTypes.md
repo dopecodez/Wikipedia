@@ -7,6 +7,7 @@
 - [searchOptions](#searchOptions)
 - [geoOptions](#geoOptions)
 - [eventOptions](#eventOptions)
+- [pdfOptions](#pdfOptions)
 
 ### pageOptions
 
@@ -77,5 +78,19 @@ The options for the onThisDay function on wiki object.
 - `type : eventTypes`(default = all) - Accepts types of valid events on the wikipedia Rest API. Events can be one of `all`, `selected`, `births`, `deaths`, `events`, `holidays`.
 - `month : string`(default = date.getMonth()) - Use this to pass the month you want as a string. By default, it will take current month.
 - `day : string`(default = date.getDay()) - Use this to pass the day you want as a string. By default, it will take current day.
+
+### pdfOptions
+```js
+interface pdfOptions {
+    autoSuggest?: boolean
+    format?: format
+    type?: pdfType
+}
+```
+The options for the onThisDay function on wiki object.
+
+- `type : pdfType`(default = a4) - type can be one of `a4`, `letter`, `legal`.
+- `format : format`(default = desktop) - format can be `desktop` or `mobile`.
+- `autoSuggest : boolean`(default = false) - suggest a page title which is reccomened by wikipedia for given search string*
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#functions

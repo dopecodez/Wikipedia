@@ -1,8 +1,8 @@
 import request, { makeRestRequest, setAPIUrl } from './request'
-import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, randomFormats } from './optionTypes';
+import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, randomFormats, pdfOptions } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
-    references, infobox, tables, summary, related, media, mobileHtml
+    references, infobox, tables, summary, related, media, mobileHtml, pdf
 } from './page';
 import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     mobileSections, relatedResult, 
@@ -10,7 +10,8 @@ import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinks
 import {
     categoriesError,
     contentError, coordinatesError, eventsError, geoSearchError, htmlError, imageError, infoboxError,
-    introError, linksError, mediaError, pageError, relatedError, searchError, summaryError, wikiError
+    introError, linksError, mediaError, pageError, relatedError, searchError, summaryError, wikiError,
+    pdfError
 } from './errors';
 import { MSGS } from './messages';
 import { getCurrentDay, getCurrentMonth, setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
@@ -553,7 +554,6 @@ wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | rela
  * @param pageOptions - Whether to redirect in case of 302
  * @returns Returns HTML string
  */
-
 wiki.mobileHtml = async (title: string, pageOptions?: pageOptions): Promise<notFound | string> => {
     try {
         if (pageOptions?.autoSuggest) {
@@ -563,6 +563,25 @@ wiki.mobileHtml = async (title: string, pageOptions?: pageOptions): Promise<notF
         return result;
     } catch (error) {
         throw new htmlError(error);
+    }
+}
+
+/**
+ * Returns pdf of a given page
+ * 
+ * @param title - The title of the page to query
+ * @param pdfOptions - {@link pdfOptions | pdfOptions }
+ * @returns Returns pdf format
+ */
+ wiki.pdf = async (title: string, pdfOptions?: pdfOptions): Promise<any> => {
+    try {
+        if (pdfOptions?.autoSuggest) {
+            title = await setTitleForPage(title);
+        }
+        const result = await pdf(title, pdfOptions);
+        return result;
+    } catch (error) {
+        throw new pdfError(error);
     }
 }
 

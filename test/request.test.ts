@@ -1,4 +1,4 @@
-import request, {makeRestRequest, setAPIUrl} from '../source/request';
+import request, {makeRestRequest, setAPIUrl, returnRestUrl} from '../source/request';
 import * as fetch from 'node-fetch';
 import { Response } from 'node-fetch';
 import { wikiError } from '../source/errors';
@@ -58,7 +58,7 @@ test('makeRestRequest method calls and returns with expected params', async () =
 test('makeRestRequest throws wiki error if error is raised', async () => {
     fetchMock.mockImplementation(async () => { throw new Error("Error") });
     const t = async () => {
-        await makeRestRequest("", true)
+        await makeRestRequest("")
     };
     expect(t).rejects.toThrowError(wikiError);
 });
@@ -71,6 +71,11 @@ test('makeRestRequest throws wiki error if error is raised', async () => {
 //         options
 //     );
 // });
+
+test('Return rest url', () => {
+    const result = returnRestUrl("path/pdf");
+    expect(result).toStrictEqual("http://en.wikipedia.org/api/rest_v1/path/pdf");
+});
 
 test('Set language returns api url with language set', () => {
     const result = setAPIUrl("mal");

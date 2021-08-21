@@ -1,9 +1,9 @@
-import { categoriesError, contentError, coordinatesError, htmlError, imageError, wikiError,
+import { categoriesError, contentError, coordinatesError, htmlError, imageError, wikiError, pdfError,
     infoboxError, introError, linksError, mediaError, preloadError, relatedError, summaryError } from './errors';
-import request, { makeRestRequest } from './request';
+import request, { makeRestRequest, returnRestUrl } from './request';
 import { coordinatesResult, imageResult, langLinksResult, notFound, pageResult, relatedResult, wikiMediaResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
-import { listOptions, pageOptions } from './optionTypes';
+import { listOptions, pageOptions, pdfOptions } from './optionTypes';
 import { MSGS } from './messages';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -391,6 +391,22 @@ export class Page {
             return this._mobileHtml;
         } catch (error) {
             throw new htmlError(error);
+        }
+    }
+
+    /**
+     * Returns pdf of a given page
+     * 
+     * @param pdfOptions - {@link pdfOptions | pdfOptions }
+     * @returns Returns path string
+     */
+    public pdf = async (pdfOptions?: pdfOptions): Promise<string> => {
+        try {
+            const result = await pdf(this.title, pdfOptions)
+
+            return result;
+        } catch (error) {
+            throw new pdfError(error);
         }
     }
 
@@ -821,6 +837,26 @@ export const mobileHtml = async (title: string, redirect = true): Promise<notFou
     } catch (error) {
         throw new htmlError(error);
     }
+}
+
+/**
+ * Returns pdf of a given page
+ * 
+ * @param title - The title of the page to query
+ * @param pdfOptions - {@link pdfOptions | pdfOptions }
+ * @returns Returns pdf format
+ */
+ export const pdf = async (title: string, pdfOptions?: pdfOptions): Promise<string> => {
+    try {
+        let path = `page/pdf/${title}`;
+        pdfOptions?.format ? path += `/${pdfOptions.format}` : null;
+        pdfOptions?.type ? path += `/${pdfOptions.type}` : null;
+
+        const result = returnRestUrl(path);
+        return result;
+    } catch (error) {
+        throw new pdfError(error);
+   }
 }
 
 export default Page;

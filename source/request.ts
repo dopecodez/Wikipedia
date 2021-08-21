@@ -47,6 +47,7 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
                 'User-Agent': USER_AGENT
             }
         }
+        console.log(encodeURI(REST_API_URL + path));
         const response = await fetch(encodeURI(REST_API_URL + path), options);
 
         let result = await response.text();
@@ -59,6 +60,12 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
     } catch (error) {
         throw new wikiError(error);
     }
+}
+
+//return rest uri
+export function returnRestUrl(path: string): string {
+    const url = encodeURI(REST_API_URL + path);
+    return url;
 }
 
 //change language of both urls

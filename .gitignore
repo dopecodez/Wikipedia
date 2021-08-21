@@ -2,3 +2,4 @@ node_modules
 dist
 coverage
 test.js
+.DS_Store
