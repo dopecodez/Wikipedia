@@ -1,6 +1,6 @@
 {
   "name": "wikipedia",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A JavaScript wrapper for the wikipedia apis",
   "main": "dist",
   "engines": {
