@@ -1,8 +1,8 @@
 import fetch, { RequestInit } from 'node-fetch';
 import { wikiError } from './errors';
  
-let API_URL = 'http://en.wikipedia.org/w/api.php?',
-    REST_API_URL = 'http://en.wikipedia.org/api/rest_v1/';
+let API_URL = 'https://en.wikipedia.org/w/api.php?',
+    REST_API_URL = 'https://en.wikipedia.org/api/rest_v1/';
     // RATE_LIMIT = false,
     // RATE_LIMIT_MIN_WAIT = undefined,
     // RATE_LIMIT_LAST_CALL = undefined,
@@ -70,8 +70,8 @@ export function returnRestUrl(path: string): string {
 
 //change language of both urls
 export function setAPIUrl(prefix: string) : string {
-    API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/w/api.php?';
-    REST_API_URL = 'http://' + prefix.toLowerCase() + '.wikipedia.org/api/rest_v1/';
+    API_URL = 'https://' + prefix.toLowerCase() + '.wikipedia.org/w/api.php?';
+    REST_API_URL = 'https://' + prefix.toLowerCase() + '.wikipedia.org/api/rest_v1/';
     return API_URL;
 }
 

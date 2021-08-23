@@ -8,8 +8,8 @@ const response1 : Response = new Response('{"test1": "test1"}');
 const response2 : Response = new Response('{"test2": "test2"}');
 const response3 : Response = new Response('{"test3": "test3"}');
 const response4 : Response = new Response('{"test4": "test4"}');
-const apiUrl = "http://en.wikipedia.org/w/api.php?";
-const restApiUrl = 'http://en.wikipedia.org/api/rest_v1/';
+const apiUrl = "https://en.wikipedia.org/w/api.php?";
+const restApiUrl = 'https://en.wikipedia.org/api/rest_v1/';
 const options: RequestInit = {
     headers: {
         'User-Agent': 'wikipedia (https://github.com/dopecodez/Wikipedia/)'
@@ -74,10 +74,10 @@ test('makeRestRequest throws wiki error if error is raised', async () => {
 
 test('Return rest url', () => {
     const result = returnRestUrl("path/pdf");
-    expect(result).toStrictEqual("http://en.wikipedia.org/api/rest_v1/path/pdf");
+    expect(result).toStrictEqual("https://en.wikipedia.org/api/rest_v1/path/pdf");
 });
 
 test('Set language returns api url with language set', () => {
     const result = setAPIUrl("mal");
-    expect(result).toStrictEqual("http://mal.wikipedia.org/w/api.php?");
+    expect(result).toStrictEqual("https://mal.wikipedia.org/w/api.php?");
 });
