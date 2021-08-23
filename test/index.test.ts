@@ -144,7 +144,7 @@ test('Languages method returns array of languageResult', async () => {
 
 test('Set language returns api url with language set', () => {
     const result = wiki.setLang("mal");
-    expect(result).toStrictEqual("http://mal.wikipedia.org/w/api.php?");
+    expect(result).toStrictEqual("https://mal.wikipedia.org/w/api.php?");
 });
 
 test('Geo search error is thrown in case of error', async () => {
