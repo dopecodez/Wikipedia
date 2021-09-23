@@ -125,3 +125,10 @@ export class pdfError extends wikiError {
         this.name = 'pdfError';
     }
 }
+
+export class citationError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'citationError';
+    }
+}

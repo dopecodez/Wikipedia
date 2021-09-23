@@ -1,9 +1,9 @@
 import { categoriesError, contentError, coordinatesError, htmlError, imageError, wikiError, pdfError,
-    infoboxError, introError, linksError, mediaError, preloadError, relatedError, summaryError } from './errors';
+    infoboxError, introError, linksError, mediaError, preloadError, relatedError, summaryError, citationError } from './errors';
 import request, { makeRestRequest, returnRestUrl } from './request';
 import { coordinatesResult, imageResult, langLinksResult, notFound, pageResult, relatedResult, wikiMediaResult, wikiSummary } from './resultTypes';
 import { setPageId, setPageIdOrTitleParam } from './utils';
-import { listOptions, pageOptions, pdfOptions } from './optionTypes';
+import { citationFormat, listOptions, pageOptions, pdfOptions } from './optionTypes';
 import { MSGS } from './messages';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -856,6 +856,28 @@ export const mobileHtml = async (title: string, redirect = true): Promise<notFou
         return result;
     } catch (error) {
         throw new pdfError(error);
+   }
+}
+
+/**
+ * Returns citation of a given page, or query string
+ * 
+ * @param format - the format of the citation result
+ * @param query - url or query string
+ * @param language - if you want lanuage enabled results
+ * @returns Returns ciation data
+ */
+export const citation = async (query: string, format?: citationFormat, language?: string): Promise<any> => {
+    try {
+        let path = `data/citation`;
+        path += format ? `/${format}` : `/mediawiki`;
+        path += `/${query}`;
+        language ? path += `/${language}` : null;
+
+        const result = await makeRestRequest(path);
+        return result;
+    } catch (error) {
+        throw new citationError(error);
    }
 }
 
