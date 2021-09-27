@@ -11,6 +11,7 @@
     - [setLang()](#setLang)
     - [suggest()](#suggest)
     - [random()](#random)
+    - [citation()](#citation)
     - [Page Methods](#page-methods)
 
 ## Functions
@@ -148,6 +149,25 @@ const randomSummary = await wiki.random();
 console.log(random); //Returns wikiSummary of a random pageOption
 const randomMobileSections = await wiki.random("mobile-sections");
 console.log(randomMobileSections); // Returns random mobile sections for a page
+```
+### citation
+
+Generates citation data given a URL, DOI, PMID, ISBN, or PMCID. Defaults to mediawiki format. Format can be 'mediawiki', 'mediawiki-basefields', 'zotero', 'bibtex', 'wikibase'.
+
+```js
+citation = async (query: string, format?: citationFormat, language?: string): Promise<any>
+```
+- @param query - url or query string
+- @param format - the format of the citation result
+- @param language - if you want lanuage enabled results
+- @returns Returns citation data
+
+```js
+//example
+const citation = await wiki.citation("batman");
+console.log(random); //Returns citations in an array
+const citationsWiki = await wiki.citation("test", "mediawiki", "fr") ;
+console.log(citationsWiki); // Returns citations in mediawiki format
 ```
 
 ### Page Methods
