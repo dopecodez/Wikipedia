@@ -48,3 +48,6 @@ export interface pdfOptions {
     format?: format
     type?: pdfType
 }
+
+export type citationFormat =
+    'mediawiki' | 'mediawiki-basefields' | 'zotero' | 'bibtex' | 'wikibase'

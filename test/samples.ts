@@ -247,3 +247,57 @@ export const notFoundJson = {
 }
 
 export const htmlString = "<!DOCTYPE html><html>abcde</html>";
+
+export const citationData = {
+    data: [
+        {
+            "itemType": "journalArticle",
+            "issue": "2",
+            "DOI": "10.23884/ijesg.2017.2.2.04",
+            "pages": "47–63",
+            "title": "A MODEL APPLICATION OF MICRO GRID: BATMAN UNIVERSITY MICRO GRID",
+            "volume": "2",
+            "publicationTitle": "International Journal of Energy and Smart Grid",
+            "date": "2017-12-30",
+            "url": "http://dx.doi.org/10.23884/ijesg.2017.2.2.04",
+            "ISSN": [
+                "2548-0332"
+            ],
+            "accessDate": "2021-09-23",
+            "author": [
+                [
+                    "Mehmet Esref",
+                    "Demir"
+                ],
+                [
+                    "Musa",
+                    "Yilmaz"
+                ],
+                [
+                    "Ahmet",
+                    "Gündogdu"
+                ]
+            ],
+            "source": [
+                "Crossref"
+            ]
+        },
+        {
+            "itemType": "book",
+            "title": "Batman.",
+            "url": "http://worldcat.org/oclc/983466999",
+            "abstractNote": "\"Batman: Arkham Asylum exposes players to a dark and atmospheric adventure that takes them into the depths of Arkham Asylum. Batman Arkham City introduces a brand-new story that draws together an all-star cast of classic characters and murderous villains from the Batman universe\"--Amazon.com.",
+            "oclc": "983466999",
+            "author": [
+                [
+                    "WB Games (Firm), contributor. Warner Bros. Interactive Entertainment,",
+                    "publisher."
+                ]
+            ],
+            "accessDate": "2021-09-23",
+            "source": [
+                "WorldCat"
+            ]
+        }
+    ]
+}

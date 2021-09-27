@@ -1,8 +1,8 @@
 import request, { makeRestRequest, setAPIUrl } from './request'
-import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, randomFormats, pdfOptions } from './optionTypes';
+import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, randomFormats, pdfOptions, citationFormat } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
-    references, infobox, tables, summary, related, media, mobileHtml, pdf
+    references, infobox, tables, summary, related, media, mobileHtml, pdf, citation
 } from './page';
 import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     mobileSections, relatedResult, 
@@ -11,7 +11,8 @@ import {
     categoriesError,
     contentError, coordinatesError, eventsError, geoSearchError, htmlError, imageError, infoboxError,
     introError, linksError, mediaError, pageError, relatedError, searchError, summaryError, wikiError,
-    pdfError
+    pdfError,
+    citationError
 } from './errors';
 import { MSGS } from './messages';
 import { getCurrentDay, getCurrentMonth, setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
@@ -582,6 +583,23 @@ wiki.mobileHtml = async (title: string, pageOptions?: pageOptions): Promise<notF
         return result;
     } catch (error) {
         throw new pdfError(error);
+    }
+}
+
+/**
+ * Returns citation of a given page, or query string
+ * 
+ * @param format - the format of the citation result
+ * @param query - url or query string
+ * @param language - if you want lanuage enabled results
+ * @returns Returns citation data
+ */
+wiki.citation = async (query: string, format?: citationFormat, language?: string): Promise<any> => {
+    try {
+        const result = await citation(query, format, language);
+        return result;
+    } catch (error) {
+        throw new citationError(error);
     }
 }
 
