@@ -768,7 +768,7 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
  */
 export const summary = async (title: string, redirect = true): Promise<wikiSummary> => {
     try {
-        const path = 'page/summary/' + title.replace(" ", "_");
+        const path = 'page/summary/' + encodeURIComponent(title.replace(" ", "_"));
         const response = await makeRestRequest(path, redirect);
         return response;
     } catch (error) {
@@ -791,7 +791,7 @@ export const summary = async (title: string, redirect = true): Promise<wikiSumma
  */
 export const related = async (title: string, redirect = true): Promise<relatedResult> => {
     try {
-        const path = 'page/related/' + title.replace(" ", "_");
+        const path = 'page/related/' + encodeURIComponent(title.replace(" ", "_"));
         const response = await makeRestRequest(path, redirect);
         return response;
     } catch (error) {
@@ -814,7 +814,7 @@ export const related = async (title: string, redirect = true): Promise<relatedRe
  */
 export const media = async (title: string, redirect = true): Promise<wikiMediaResult> => {
     try {
-        const path = 'page/media-list/' + title.replace(" ", "_");
+        const path = 'page/media-list/' + encodeURIComponent(title.replace(" ", "_"));
         const response = await makeRestRequest(path, redirect);
         return response;
     } catch (error) {
@@ -831,7 +831,7 @@ export const media = async (title: string, redirect = true): Promise<wikiMediaRe
  */
 export const mobileHtml = async (title: string, redirect = true): Promise<notFound | string> => {
     try {
-        const path = `page/mobile-html/${title}`;
+        const path = `page/mobile-html/${encodeURIComponent(title)}`;
         const result = await makeRestRequest(path, redirect);
         return result;
     } catch (error) {
@@ -848,7 +848,7 @@ export const mobileHtml = async (title: string, redirect = true): Promise<notFou
  */
  export const pdf = async (title: string, pdfOptions?: pdfOptions): Promise<string> => {
     try {
-        let path = `page/pdf/${title}`;
+        let path = `page/pdf/${encodeURIComponent(title)}`;
         pdfOptions?.format ? path += `/${pdfOptions.format}` : null;
         pdfOptions?.type ? path += `/${pdfOptions.type}` : null;
 

@@ -22,7 +22,7 @@ export async function setTitleForPage(title: string) {
 //Set page id or title param for legacy api queries
 export function setPageIdOrTitleParam(params: any, title: string) {
     if (isString(title)) {
-        params.titles = title
+        params.titles = encodeURIComponent(title)
     } else {
         params.pageids = title
     }
