@@ -7,6 +7,7 @@
     - [page()](#page)
     - [geoSearch()](#geoSearch)
     - [onThisDay()](#onThisDay)
+    - [featuredContent()](#featuredContent)
     - [languages()](#languages)
     - [setLang()](#setLang)
     - [suggest()](#suggest)
@@ -68,6 +69,28 @@ const events = await wiki.onThisDay();
 const deaths = await wiki.onThisDay({type:'deaths', month:'2', day:'28'});
 console.log(events); // returns all the events which happened today
 console.log(deaths); // returns all deaths which happened on Feb 28
+```
+
+### featuredContent()
+
+Returns featured content of a given day, depending on input `year`, `month`, `day` arguments. By default, it will return featured content of the current day. Returns a array of [fcResult][27] object.
+
+```js
+featuredContent = async ({year: string, month: string, day: string}): Promise<fcResult>
+```
+- @param year - The year to search for. Takes current year by default.
+- @param month - The month to search for. Takes current month by default.
+- @param day - The day to search for. Takes current day by default.
+- @result [fcResult][27] - a fcResult object.
+
+```js
+//example
+const content = await wiki.featuredContent();
+const contentNewYear2020 = await wiki.featuredContent({year:'2020', month:'01', day:'01'});
+const contentNewYear = await wiki.featuredContent({month:'01', day:'01'});
+console.log(content); // returns featured content from today
+console.log(contentNewYear2020); // returns featured content from 2020-01-01
+console.log(contentNewYear); // returns featured content from 01-01 of this year
 ```
 
 ### geoSearch()
@@ -210,5 +233,6 @@ console.log(html); //Returns html for the environmentalist
 [24]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#eventResult
 [25]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#mobileHtml
 [26]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#pdf
+[27]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#fcResult
 
 

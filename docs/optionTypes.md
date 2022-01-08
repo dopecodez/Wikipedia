@@ -7,6 +7,7 @@
 - [searchOptions](#searchOptions)
 - [geoOptions](#geoOptions)
 - [eventOptions](#eventOptions)
+- [fcOptions](#fcOptions)
 - [pdfOptions](#pdfOptions)
 
 ### pageOptions
@@ -76,6 +77,20 @@ interface eventOptions {
 The options for the onThisDay function on wiki object.
 
 - `type : eventTypes`(default = all) - Accepts types of valid events on the wikipedia Rest API. Events can be one of `all`, `selected`, `births`, `deaths`, `events`, `holidays`.
+- `month : string`(default = date.getMonth()) - Use this to pass the month you want as a string. By default, it will take current month.
+- `day : string`(default = date.getDay()) - Use this to pass the day you want as a string. By default, it will take current day.
+
+### fcOptions
+```js
+interface fcOptions {
+    year?: string,
+    month?: string,
+    day?: string
+}
+```
+The options for the featured content function on wiki object.
+
+- `year : string`(default = date.getYear()) - Use this to pass the year you want as a string. By default, it will take current year.
 - `month : string`(default = date.getMonth()) - Use this to pass the month you want as a string. By default, it will take current month.
 - `day : string`(default = date.getDay()) - Use this to pass the day you want as a string. By default, it will take current day.
 

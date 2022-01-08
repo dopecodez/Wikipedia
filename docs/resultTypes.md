@@ -11,6 +11,7 @@
 - [languageResult](#languageResult)
 - [wikiMediaResult](#wikiMediaResult)
 - [eventResult](#eventResult)
+- [fcResult](#fcResult)
 - [relatedResult](#relatedResult)
 - [titleItem](#titleItem)
 - [mobileSections](#mobileSections)
@@ -206,6 +207,59 @@ interface eventResult {
       text: string,
       pages: Array<wikiSummary>,
       year?: number
+    }
+  ]
+}
+```
+
+### fcResult
+
+The result for the `featuredContent` function call.
+```js
+interface fcResult {
+  tfa: wikiSummary;
+  mostread: {
+    date: string;
+    articles: Array<wikiSummary>
+  };
+  image: {
+    title: string;
+    thumbnail: {
+      source: string;
+      width: number;
+      height: number;
+    };
+    image: {
+      source: string;
+      width: number;
+      height: number;
+    };
+    file_page: string;
+    artist: Artist;
+    credit: htmlText;
+    license: {
+      type: string;
+      code: string;
+    };
+    description: Description;
+    wb_entity_id: string;
+    structured: {
+      captions: {
+        [key: string]: string;
+      }
+    };
+  };
+  news: [
+    {
+      links: Array<wikiSummary>;
+      story: string;
+    }
+  ];
+  onthisday: [
+    {
+      text: string;
+      pages: Array<wikiSummary>;
+      year: number;
     }
   ]
 }
