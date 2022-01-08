@@ -119,6 +119,13 @@ export class eventsError extends wikiError {
     }
 }
 
+export class fcError extends wikiError {
+    constructor(message: string) {
+        super(message);
+        this.name = 'featuredContentError';
+    }
+}
+
 export class pdfError extends wikiError {
     constructor(message: string) {
         super(message);
