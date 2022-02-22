@@ -195,10 +195,10 @@ The project would not be the way it is without these rockstars.
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/zaccolley">
-            <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zaccolley"/>
+        <a href="https://github.com/zactopus">
+            <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zactopus"/>
             <br />
-            <sub><b>Zac Colley</b></sub>
+            <sub><b>Zac [they/them]</b></sub>
         </a>
     </td></tr>
 </table>
