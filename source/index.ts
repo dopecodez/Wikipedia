@@ -1,21 +1,21 @@
 import request, { makeRestRequest, setAPIUrl } from './request'
-import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, randomFormats, pdfOptions, citationFormat } from './optionTypes';
+import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, fcOptions, randomFormats, pdfOptions, citationFormat } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
     references, infobox, tables, summary, related, media, mobileHtml, pdf, citation
 } from './page';
-import { coordinatesResult, eventResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
+import { coordinatesResult, eventResult, featuredContentResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     mobileSections, relatedResult, 
     title, wikiMediaResult, wikiSearchResult, wikiSummary, notFound } from './resultTypes';
 import {
     categoriesError,
-    contentError, coordinatesError, eventsError, geoSearchError, htmlError, imageError, infoboxError,
+    contentError, coordinatesError, eventsError, fcError, geoSearchError, htmlError, imageError, infoboxError,
     introError, linksError, mediaError, pageError, relatedError, searchError, summaryError, wikiError,
     pdfError,
     citationError
 } from './errors';
 import { MSGS } from './messages';
-import { getCurrentDay, getCurrentMonth, setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
+import { getCurrentDay, getCurrentMonth, getCurrentYear, setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
 
 /**
  * The default wiki export
@@ -526,6 +526,28 @@ wiki.onThisDay = async (eventOptions: eventOptions = {}): Promise<eventResult> =
         return result;
     } catch (error) {
         throw new eventsError(error);
+    }
+}
+
+/**
+ * Returns featured content for a given day
+ *
+ * @remarks
+ * The api returns content featured at a particular date
+ *
+ * @param fcOptions - the year/month/day of featured content by {@link fcOptions | eventOptions}
+ * @returns Returns the results as array of {@link fcResult | fcResult}
+ */
+wiki.featuredContent = async (fcOptions: fcOptions = {}): Promise<featuredContentResult> => {
+    try {
+        const yyyy = (fcOptions.year || getCurrentYear()).toString()
+        const mm = (fcOptions.month || getCurrentMonth()).toString().padStart(2, "0")
+        const dd = (fcOptions.day || getCurrentDay()).toString().padStart(2, "0")
+        const path = `feed/featured/${yyyy}/${mm}/${dd}`;
+        const result = await makeRestRequest(path, true);
+        return result;
+    } catch (error) {
+        throw new fcError(error);
     }
 }
 

@@ -40,6 +40,13 @@ export function setPageId(params: any, results: any): number {
     return pageId;
 }
 
+//Get current year
+export function getCurrentYear(): number {
+    const date = new Date();
+    const year = date.getFullYear();
+    return (year);
+}
+
 //Get current month
 export function getCurrentMonth(): number {
     const date = new Date();

@@ -31,6 +31,12 @@ export interface eventOptions {
     day?: string
 }
 
+export interface fcOptions {
+    year?: string,
+    month?: string,
+    day?: string
+}
+
 export type eventTypes =
     'all' | 'selected' | 'births' | 'deaths' | 'events' | 'holidays'
 

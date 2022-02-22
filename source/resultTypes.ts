@@ -106,6 +106,17 @@ export interface wikiSummary {
   }
 }
 
+export interface MostRead extends wikiSummary {
+  views: number;
+  rank: number;
+  view_history: [
+    {
+      date: string;
+      views: number;
+    }
+  ]
+}
+
 export interface wikiMediaResult {
   revision: string,
   tid: string,
@@ -239,10 +250,67 @@ export interface htmlText {
   text: string
 }
 
+export interface Artist extends htmlText {
+  name: string;
+  user_page?: string;
+}
+
+export interface Description extends htmlText {
+  lang: string;
+}
+
 export interface notFound {
   type: string,
   title: string,
   method: string,
   detail: string,
   uri: string
+}
+
+export interface featuredContentResult {
+  tfa: wikiSummary;
+  mostread: {
+    date: string;
+    articles: Array<wikiSummary>
+  };
+  image: {
+    title: string;
+    thumbnail: {
+      source: string;
+      width: number;
+      height: number;
+    };
+    image: {
+      source: string;
+      width: number;
+      height: number;
+    };
+    file_page: string;
+    artist: Artist;
+    credit: htmlText;
+    license: {
+      type: string;
+      code: string;
+    };
+    description: Description;
+    wb_entity_id: string;
+    structured: {
+      captions: {
+        [key: string]: string;
+      }
+    };
+  };
+  news: [
+    {
+      links: Array<wikiSummary>;
+      story: string;
+    }
+  ];
+  onthisday: [
+    {
+      text: string;
+      pages: Array<wikiSummary>;
+      year: number;
+    }
+  ]
 }
