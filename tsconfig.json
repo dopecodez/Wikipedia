@@ -13,7 +13,8 @@
         "allowSyntheticDefaultImports": true,
         "module": "commonjs",
         "moduleResolution": "node",
-        "declaration": true
+        "declaration": true,
+        "useUnknownInCatchVariables": false
     },
     "include": [
         "source"
