@@ -12,7 +12,7 @@ const apiUrl = "https://en.wikipedia.org/w/api.php?";
 const restApiUrl = 'https://en.wikipedia.org/api/rest_v1/';
 const options: RequestInit = {
     headers: {
-        'User-Agent': 'wikipedia (https://github.com/dopecodez/Wikipedia/)'
+        'Api-User-Agent': 'wikipedia (https://github.com/dopecodez/Wikipedia/)'
     }
 }
 

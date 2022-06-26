@@ -21,7 +21,7 @@ async function makeRequest(params: any, redirect = true): Promise<any> {
         search['origin'] = '*';
         const options: RequestInit = {
             headers: {
-                'User-Agent': USER_AGENT,
+                'Api-User-Agent': USER_AGENT,
             }
         }
         let searchParam = '';
@@ -44,7 +44,7 @@ export async function makeRestRequest(path: string, redirect = true): Promise<an
         }
         const options: RequestInit = {
             headers: {
-                'User-Agent': USER_AGENT
+                'Api-User-Agent': USER_AGENT
             }
         }
         const response = await fetch(encodeURI(REST_API_URL + path), options);
