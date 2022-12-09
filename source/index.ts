@@ -6,13 +6,14 @@ import Page, {
 } from './page';
 import { coordinatesResult, eventResult, featuredContentResult, geoSearchResult, imageResult, langLinksResult, languageResult, 
     mobileSections, relatedResult, 
-    title, wikiMediaResult, wikiSearchResult, wikiSummary, notFound } from './resultTypes';
+    title, wikiMediaResult, wikiSearchResult, wikiSummary, notFound, wikiAutocompletionResult } from './resultTypes';
 import {
     categoriesError,
     contentError, coordinatesError, eventsError, fcError, geoSearchError, htmlError, imageError, infoboxError,
     introError, linksError, mediaError, pageError, relatedError, searchError, summaryError, wikiError,
     pdfError,
-    citationError
+    citationError,
+    autocompletionError
 } from './errors';
 import { MSGS } from './messages';
 import { getCurrentDay, getCurrentMonth, getCurrentYear, setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
@@ -56,6 +57,34 @@ wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wiki
     } catch (error) {
         throw new searchError(error);
     }
+}
+
+/**
+ * Returns the search results for a given query
+ *
+ * @remarks
+ * Limits results by default to 10
+ *
+ * @param query - The string to search for
+ * @param autocompletionOptions - The number of results and if suggestion needed {@link autocompletionOptions | autocompletionOptions }
+ * @returns an array of {@link wikiSearchResult | wikiAutocompletionResult }
+ */
+ wiki.autocomplete = async (query: string, autocompletionOptions?: searchOptions): Promise<wikiAutocompletionResult> => {
+  try {
+      const autocompletionParams: any = {
+          'list': 'search',
+          'limit': autocompletionOptions?.limit || 10,
+          'search': query,
+          'action': 'opensearch',
+          'redirect': 'return'
+      }
+
+      const [_, autocompletions] = await request(autocompletionParams, false);
+
+      return autocompletions;
+  } catch (error) {
+      throw new autocompletionError(error);
+  }
 }
 
 /**

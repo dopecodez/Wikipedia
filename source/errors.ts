@@ -14,6 +14,14 @@ export class searchError extends wikiError {
     }
 }
 
+export class autocompletionError extends wikiError {
+  constructor(message: string) {
+      super(message);
+      this.name = 'autocompletionError';
+  }
+}
+
+
 export class pageError extends wikiError {
     constructor(message: string) {
         super(message);

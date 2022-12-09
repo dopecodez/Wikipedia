@@ -69,6 +69,18 @@ test('Search returns results as wikiSearchResult with suggestions as null', asyn
     });
 });
 
+test('Autocompletes returns results as wikiSearchResult', async () => {
+  requestMock.mockImplementation(async () => {
+      return ["Test", ["Test", "Testosterone", "Testicle", "Test cricket", "Test-driven development", "Testosterone (medication)", "Testicular cancer", "Tests of general relativity", "Test (wrestler)", "Test of English as a Foreign Language"]]
+
+  });
+  const result = await wiki.autocomplete("Test");
+
+  expect(result).toStrictEqual(
+    ["Test", "Testosterone", "Testicle", "Test cricket", "Test-driven development", "Testosterone (medication)", "Testicular cancer", "Tests of general relativity", "Test (wrestler)", "Test of English as a Foreign Language"]
+  );
+});
+
 test('Throws page error if result doesnt have page', async () => {
     requestMock.mockImplementation(async () => { return { } });
     const t = async () => {
