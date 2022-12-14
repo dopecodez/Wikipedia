@@ -3,8 +3,6 @@ export interface wikiSearchResult {
   suggestion: string
 }
 
-export type wikiAutocompletionResult = string[]
-
 export interface pageResult {
   pageid: number,
   ns: number,
