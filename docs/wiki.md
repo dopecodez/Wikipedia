@@ -193,6 +193,20 @@ const citationsWiki = await wiki.citation("test", "mediawiki", "fr") ;
 console.log(citationsWiki); // Returns citations in mediawiki format
 ```
 
+#### autocompletions()
+
+Returns the autocompletions of a given title
+
+```js
+autocompletions = async (autocompletionOptions?: autocompletionOptions): Promise<Array<string>>
+```
+- @param [autocompletionOptions][28] - the options for the autocompletions
+
+```js
+//example
+const autocompletions = await wiki.autocompletions({limit: 20});
+```
+
 ### Page Methods
 
 All the methods defined in the [Page][4] documentation can be called directly from the wiki object as well. This includes [summary()][8], [images()][9], [intro()][10], [html()][11], [related()][12], [content()][13], [categories()][14], [links()][15], [references()][16], [coordinates()][17], [langLinks()][18], [infobox()][19], [mobileHtml()][25], [pdf()][26] and [tables()][20].
@@ -234,5 +248,7 @@ console.log(html); //Returns html for the environmentalist
 [25]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#mobileHtml
 [26]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#pdf
 [27]: https://github.com/dopecodez/wikipedia/blob/master/docs/resultTypes.md#fcResult
+[28]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#autocompletionOptions
+
 
 

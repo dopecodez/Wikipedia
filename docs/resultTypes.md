@@ -352,3 +352,18 @@ interface section {
   anchor: string
 }
 ```
+
+### autocompletionsResult
+
+The autocompletions result for the page.
+
+```js
+interface imageResult {
+  pageid: number,
+  ns: number,
+  title: string,
+  imagerepository: string,
+  imageinfo: any,
+  url: string // This will contain the image url
+}
+```
