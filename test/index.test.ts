@@ -1,4 +1,4 @@
-import { searchError, pageError, geoSearchError, wikiError } from '../source/errors';
+import { searchError, pageError, geoSearchError, wikiError, autocompletionsError } from '../source/errors';
 import * as request from '../source/request';
 import wiki from "../source/index";
 import Page from '../source/page';
@@ -25,6 +25,8 @@ const imageMock = {
 
 const imageResult = [{ pageid: 500, ns: 0, title: 'test', imagerepository: 'testRepo', imageinfo: [{ url: 'testUrl' }], url: 'testUrl' },
 { pageid: 501, ns: 1, title: 'test', imagerepository: 'testRepo', imageinfo: [{ url: 'testUrl' }], url: 'testUrl' }]
+
+const autocompletionsMock = ["Test", ["Test", "Testosterone", "Testicle", "Test cricket", "Test-driven development"]]
 
 const pageObject = new Page(pageJson);
 
@@ -69,16 +71,20 @@ test('Search returns results as wikiSearchResult with suggestions as null', asyn
     });
 });
 
-test('Autocompletions returns results as autocompletionResult', async () => {
-  requestMock.mockImplementation(async () => {
-      return ["Test", ["Test", "Testosterone", "Testicle", "Test cricket", "Test-driven development", "Testosterone (medication)", "Testicular cancer", "Tests of general relativity", "Test (wrestler)", "Test of English as a Foreign Language"]]
-
-  });
+test('Autocompletions returns results as array of strings', async () => {
+  requestMock.mockImplementation(async () => { return autocompletionsMock });
   const result = await wiki.autocompletions("Test");
-
   expect(result).toStrictEqual(
-    ["Test", "Testosterone", "Testicle", "Test cricket", "Test-driven development", "Testosterone (medication)", "Testicular cancer", "Tests of general relativity", "Test (wrestler)", "Test of English as a Foreign Language"]
+    ["Test", "Testosterone", "Testicle", "Test cricket", "Test-driven development"]
   );
+});
+
+test('Throws autocompletions error if some error occurs', async () => {
+  requestMock.mockImplementation(async () => { return { autocompletionsMock } });
+  const t = async () => {
+      await wiki.autocompletions("Test")
+  };
+  expect(t).rejects.toThrowError(autocompletionsError);
 });
 
 test('Throws page error if result doesnt have page', async () => {
