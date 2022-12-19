@@ -637,21 +637,21 @@ wiki.citation = async (query: string, format?: citationFormat, language?: string
  * @returns an array of string
  */
 wiki.autocompletions = async (query: string, autocompletionOptions?: autocompletionOptions): Promise<Array<string>> => {
-try {
+  try {
     const autocompletionsParams: any = {
-        'list': 'search',
-        'limit': autocompletionOptions?.limit || 10,
-        'search': query,
-        'action': 'opensearch',
-        'redirect': 'return'
-    }
+      list: "search",
+      limit: autocompletionOptions?.limit || 10,
+      search: query,
+      action: "opensearch",
+      redirect: "return"
+    };
 
     const [, autocompletions] = await request(autocompletionsParams, false);
 
     return autocompletions;
-} catch (error) {
+  } catch (error) {
     throw new autocompletionsError(error);
-}
+  }
 }
 
 export default wiki;

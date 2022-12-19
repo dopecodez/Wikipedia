@@ -9,6 +9,7 @@
 - [eventOptions](#eventOptions)
 - [fcOptions](#fcOptions)
 - [pdfOptions](#pdfOptions)
+- [autocompletionOptions](#autocompletionoptions)
 
 ### pageOptions
 
