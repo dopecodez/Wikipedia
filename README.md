@@ -156,7 +156,7 @@ Before opening a pull request please make sure your changes follow the [contribu
 
 The project would not be the way it is without these rockstars.
 
-<!-- readme: contributors -start --> 
+<!-- readme: contributors -start -->
 <table>
 <tr>
     <td align="center">
@@ -199,6 +199,14 @@ The project would not be the way it is without these rockstars.
             <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zactopus"/>
             <br />
             <sub><b>Zac [they/them]</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/bigmistqke">
+            <img src="https://avatars.githubusercontent.com/u/10504064?v=4" width="100;" alt="bigmistqke"/>
+            <br />
+            <sub><b>Bigmistqke</b></sub>
         </a>
     </td></tr>
 </table>
