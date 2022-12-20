@@ -3,6 +3,10 @@ export interface searchOptions {
     suggestion?: boolean
 }
 
+export interface autocompletionOptions {
+  limit?: number
+}
+
 export interface pageOptions {
     autoSuggest?: boolean
     redirect?: boolean

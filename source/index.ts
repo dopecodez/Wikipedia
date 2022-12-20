@@ -1,5 +1,5 @@
 import request, { makeRestRequest, setAPIUrl } from './request'
-import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, fcOptions, randomFormats, pdfOptions, citationFormat } from './optionTypes';
+import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, fcOptions, randomFormats, pdfOptions, citationFormat, autocompletionOptions } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
     references, infobox, tables, summary, related, media, mobileHtml, pdf, citation
@@ -12,7 +12,8 @@ import {
     contentError, coordinatesError, eventsError, fcError, geoSearchError, htmlError, imageError, infoboxError,
     introError, linksError, mediaError, pageError, relatedError, searchError, summaryError, wikiError,
     pdfError,
-    citationError
+    citationError,
+    autocompletionsError
 } from './errors';
 import { MSGS } from './messages';
 import { getCurrentDay, getCurrentMonth, getCurrentYear, setPageId, setPageIdOrTitleParam, setTitleForPage } from './utils';
@@ -623,6 +624,34 @@ wiki.citation = async (query: string, format?: citationFormat, language?: string
     } catch (error) {
         throw new citationError(error);
     }
+}
+
+/**
+ * Returns the autocompletion results for a given query
+ *
+ * @remarks
+ * Limits results by default to 10
+ *
+ * @param query - The string to search for
+ * @param autocompletionOptions - The number of results {@link autocompletionOptions | autocompletionOptions }
+ * @returns an array of string
+ */
+wiki.autocompletions = async (query: string, autocompletionOptions?: autocompletionOptions): Promise<Array<string>> => {
+  try {
+    const autocompletionsParams: any = {
+      list: "search",
+      limit: autocompletionOptions?.limit || 10,
+      search: query,
+      action: "opensearch",
+      redirect: "return"
+    };
+
+    const [, autocompletions] = await request(autocompletionsParams, false);
+
+    return autocompletions;
+  } catch (error) {
+    throw new autocompletionsError(error);
+  }
 }
 
 export default wiki;

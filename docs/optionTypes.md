@@ -9,6 +9,7 @@
 - [eventOptions](#eventOptions)
 - [fcOptions](#fcOptions)
 - [pdfOptions](#pdfOptions)
+- [autocompletionOptions](#autocompletionoptions)
 
 ### pageOptions
 
@@ -107,5 +108,15 @@ The options for the onThisDay function on wiki object.
 - `type : pdfType`(default = a4) - type can be one of `a4`, `letter`, `legal`.
 - `format : format`(default = desktop) - format can be `desktop` or `mobile`.
 - `autoSuggest : boolean`(default = false) - suggest a page title which is reccomened by wikipedia for given search string*
+
+### autocompletionOptions
+```js
+interface autocompletionOptions {
+    limit?: number
+}
+```
+The options for the autocompletions function on wiki object.
+
+- `limit : number`(default = 10) - Use this to increase/decrease number of results in the returned array
 
 [1]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#functions
