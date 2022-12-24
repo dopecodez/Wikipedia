@@ -22,8 +22,8 @@ jobs:
             matrix:
                 node-version:
                     - 14
-                    - 12
-                    - 10
+                    - 16
+                    - 18
         steps:
             - uses: actions/checkout@v2
             - uses: actions/setup-node@v1
@@ -38,10 +38,10 @@ jobs:
             - uses: actions/checkout@master
             - uses: actions/setup-node@master
               with:
-                node-version: '12'
+                node-version: '16'
             - run: npm install
             - run: npm run test
-            - uses: paambaati/codeclimate-action@v2.7.5
+            - uses: paambaati/codeclimate-action@v3.2.0
               env:
                 CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
               if: env.CC_TEST_REPORTER_ID != null
