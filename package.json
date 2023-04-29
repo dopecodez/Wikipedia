@@ -25,7 +25,6 @@
     "@types/infobox-parser": "^3.3.1",
     "@types/jest": "^29.2.4",
     "@types/node": "^18.11.17",
-    "@types/node-fetch": "^2.5.7",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "eslint": "^8.30.0",
@@ -40,7 +39,7 @@
   "types": "dist/",
   "dependencies": {
     "infobox-parser": "^3.6.2",
-    "node-fetch": "2.6.1"
+    "axios": "^1.4.0"
   },
   "keywords": [
     "wiki",

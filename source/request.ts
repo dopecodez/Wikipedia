@@ -1,6 +1,6 @@
-import fetch, { RequestInit } from 'node-fetch';
+import axios, { AxiosRequestConfig } from 'axios';
 import { wikiError } from './errors';
- 
+
 let API_URL = 'https://en.wikipedia.org/w/api.php?',
     REST_API_URL = 'https://en.wikipedia.org/api/rest_v1/';
     // RATE_LIMIT = false,
@@ -10,61 +10,60 @@ const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 
 // Makes a request to legacy php endpoint
 async function makeRequest(params: any, redirect = true): Promise<any> {
-    try {
-        const search = { ...params }
-        search['format'] = 'json';
-        if (redirect) {
-            search['redirects'] = '';
-        }
-        if (!params.action)
-            search['action'] = "query";
-        search['origin'] = '*';
-        const options: RequestInit = {
-            headers: {
-                'Api-User-Agent': USER_AGENT,
-            }
-        }
-        let searchParam = '';
-        Object.keys(search).forEach(key => {
-            searchParam += `${key}=${search[key]}&`
-        });
-        const response = await fetch(encodeURI(API_URL + searchParam), options);
-        const result = await response.json();
-        return result;
-    } catch (error) {
-        throw new wikiError(error);
+    const search = { ...params };
+    search['format'] = 'json';
+    if (redirect) {
+        search['redirects'] = '';
     }
+    if (!params.action)
+        search['action'] = "query";
+    search['origin'] = '*';
+    const options: AxiosRequestConfig = {
+        headers: {
+            'Api-User-Agent': USER_AGENT
+        }
+    };
+    let searchParam = '';
+    Object.keys(search).forEach(key => {
+        searchParam += `${key}=${search[key]}&`;
+    });
+    
+    return await axios.get(encodeURI(API_URL + searchParam), options)
+                      .then (response=> {
+	                      console.log(response);
+	                      return response;
+                      })
+                      .then(response => response.data)
+                      .catch(error => {
+                          throw new wikiError(error);
+                      });
 }
 
 // Makes a request to rest api endpoint
 export async function makeRestRequest(path: string, redirect = true): Promise<any> {
-    try {
-        if (!redirect) {
-            path += '?redirect=false'
-        }
-        const options: RequestInit = {
-            headers: {
-                'Api-User-Agent': USER_AGENT
-            }
-        }
-        const response = await fetch(encodeURI(REST_API_URL + path), options);
-
-        let result = await response.text();
-        try {
-            result = JSON.parse(result);
-        }
-        finally {
-            return result;
-        }
-    } catch (error) {
-        throw new wikiError(error);
+    if (!redirect) {
+        path += '?redirect=false';
     }
+    const options: AxiosRequestConfig = {
+        headers: {
+            'Api-User-Agent': USER_AGENT
+        }
+    };
+    
+    return await axios.get(encodeURI(REST_API_URL + path), options)
+                      .then (response=> {
+						  console.log(response);
+						  return response;
+                      })
+                      .then(response => response.data)
+                      .catch(error => {
+                          throw new wikiError(error);
+                      });
 }
 
 //return rest uri
 export function returnRestUrl(path: string): string {
-    const url = encodeURI(REST_API_URL + path);
-    return url;
+    return encodeURI(REST_API_URL + path);
 }
 
 //change language of both urls
