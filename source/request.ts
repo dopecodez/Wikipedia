@@ -6,7 +6,7 @@ let API_URL = 'https://en.wikipedia.org/w/api.php?',
     // RATE_LIMIT = false,
     // RATE_LIMIT_MIN_WAIT = undefined,
     // RATE_LIMIT_LAST_CALL = undefined,
-const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
+const USER_AGENT = process.env.WIKIPEDIA_USER_AGENT || 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 
 // Makes a request to legacy php endpoint
 async function makeRequest(params: any, redirect = true): Promise<any> {
