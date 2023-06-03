@@ -8,21 +8,18 @@ let API_URL = 'https://en.wikipedia.org/w/api.php?',
     // RATE_LIMIT_LAST_CALL = undefined,
 const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 
-function callAPI(url: string) {
-    const options: AxiosRequestConfig = {
-        headers: {
-            'Api-User-Agent': USER_AGENT
-        }
-    };
-    
-    return axios.get(url, options)
-                .then(response => {
-                    return response;
-                })
-                .then(response => response.data)
-                .catch(error => {
-                    throw new wikiError(error);
-                });
+async function callAPI(url: string) {
+  const options: AxiosRequestConfig = {
+    headers: {
+      "Api-User-Agent": USER_AGENT,
+    },
+  };
+  try {
+    const { data } = await axios.get(url, options);
+    return data;
+  } catch (error) {
+    throw new wikiError(error);
+  }
 }
 
 // Makes a request to legacy php endpoint
