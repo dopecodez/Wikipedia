@@ -1,20 +1,22 @@
+import axios, {AxiosHeaders} from 'axios';
+import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import request, {makeRestRequest, setAPIUrl, returnRestUrl} from '../source/request';
-import * as fetch from 'node-fetch';
-import { Response } from 'node-fetch';
-import { wikiError } from '../source/errors';
-const fetchMock = jest.spyOn(fetch, "default");
+import { wikiError } from '../source';
+const fetchMock = jest.spyOn(axios, "get");
 
-const response1 : Response = new Response('{"test1": "test1"}');
-const response2 : Response = new Response('{"test2": "test2"}');
-const response3 : Response = new Response('{"test3": "test3"}');
-const response4 : Response = new Response('{"test4": "test4"}');
+const options: AxiosRequestConfig = {
+	headers: {
+		'Api-User-Agent': 'wikipedia (https://github.com/dopecodez/Wikipedia/)'
+	}
+}
+const baseConfig : AxiosResponse['config'] = { headers: new AxiosHeaders()};
+const baseResponse : Omit<AxiosResponse, 'data'> = { status: 200, statusText: 'Ok', request: {}, headers: {}, config: baseConfig};
+const response1 : AxiosResponse = {...baseResponse, data:{"test1": "test1"}};
+const response2 : AxiosResponse = {...baseResponse, data:{"test2": "test2"}};
+const response3 : AxiosResponse = {...baseResponse, data:{"test3": "test3"}};
+//const response4 : AxiosResponse = {...baseResponse, data:{"test4": "test4"}};
 const apiUrl = "https://en.wikipedia.org/w/api.php?";
 const restApiUrl = 'https://en.wikipedia.org/api/rest_v1/';
-const options: RequestInit = {
-    headers: {
-        'Api-User-Agent': 'wikipedia (https://github.com/dopecodez/Wikipedia/)'
-    }
-}
 
 afterAll(() => {
     fetchMock.mockRestore();
