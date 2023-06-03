@@ -181,6 +181,13 @@ The project would not be the way it is without these rockstars.
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/gtibrett">
+            <img src="https://avatars.githubusercontent.com/u/47423?v=4" width="100;" alt="gtibrett"/>
+            <br />
+            <sub><b>Brett</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/0xflotus">
             <img src="https://avatars.githubusercontent.com/u/26602940?v=4" width="100;" alt="0xflotus"/>
             <br />
@@ -193,15 +200,15 @@ The project would not be the way it is without these rockstars.
             <br />
             <sub><b>Greeshma R</b></sub>
         </a>
-    </td>
+    </td></tr>
+<tr>
     <td align="center">
         <a href="https://github.com/zactopus">
             <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zactopus"/>
             <br />
             <sub><b>Zac [they/them]</b></sub>
         </a>
-    </td></tr>
-<tr>
+    </td>
     <td align="center">
         <a href="https://github.com/bigmistqke">
             <img src="https://avatars.githubusercontent.com/u/10504064?v=4" width="100;" alt="bigmistqke"/>
