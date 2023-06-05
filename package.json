@@ -1,6 +1,6 @@
 {
   "name": "wikipedia",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A JavaScript wrapper for the wikipedia apis",
   "main": "dist",
   "engines": {
@@ -38,8 +38,8 @@
   ],
   "types": "dist/",
   "dependencies": {
-    "infobox-parser": "^3.6.2",
-    "axios": "^1.4.0"
+    "axios": "^1.4.0",
+    "infobox-parser": "^3.6.2"
   },
   "keywords": [
     "wiki",
