@@ -4,7 +4,7 @@ import { MSGS } from "./messages";
 
 //check if input is string
 export function isString(title: any){
-    return isNaN(title);
+    return typeof title === 'string' || title instanceof String;
 }
 
 //set title for page in case autoSuggest is true
