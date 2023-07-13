@@ -430,7 +430,7 @@ export class Page {
  * @param listOptions - {@link listOptions | listOptions }
  * @returns an array of imageResult {@link imageResult | imageResult }
  */
-export const images = async (title: string, listOptions?: listOptions): Promise<Array<imageResult>> => {
+export const images = async (title: string|number, listOptions?: listOptions): Promise<Array<imageResult>> => {
     try {
         let imageOptions: any = {
             generator: 'images',
@@ -463,7 +463,7 @@ export const images = async (title: string, listOptions?: listOptions): Promise<
  * @param redirect - Whether to redirect in case of 302
  * @returns The intro string
  */
-export const intro = async (title: string, redirect = true): Promise<string> => {
+export const intro = async (title: string|number, redirect = true): Promise<string> => {
     try {
         let introOptions: any = {
             prop: 'extracts',
@@ -491,7 +491,7 @@ export const intro = async (title: string, redirect = true): Promise<string> => 
  * 
  * @beta
  */
-export const html = async (title: string, redirect = true): Promise<string> => {
+export const html = async (title: string|number, redirect = true): Promise<string> => {
     try {
         let htmlOptions: any = {
             'prop': 'revisions',
@@ -518,7 +518,7 @@ export const html = async (title: string, redirect = true): Promise<string> => {
  * @param redirect - Whether to redirect in case of 302
  * @returns The plain text as string and the parent and revision ids
  */
-export const content = async (title: string, redirect = true): Promise<any> => {
+export const content = async (title: string|number, redirect = true): Promise<any> => {
     try {
         let contentOptions: any = {
             'prop': 'extracts|revisions',
@@ -552,7 +552,7 @@ export const content = async (title: string, redirect = true): Promise<any> => {
  * @param listOptions - {@link listOptions | listOptions }
  * @returns The categories as an array of string
  */
-export const categories = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
+export const categories = async (title: string|number, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let categoryOptions: any = {
             prop: 'categories',
@@ -577,7 +577,7 @@ export const categories = async (title: string, listOptions?: listOptions): Prom
  * @param listOptions - {@link listOptions | listOptions }
  * @returns The links as an array of string
  */
-export const links = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
+export const links = async (title: string|number, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let linksOptions: any = {
             prop: 'links',
@@ -604,7 +604,7 @@ export const links = async (title: string, listOptions?: listOptions): Promise<A
  * @param listOptions - {@link listOptions | listOptions }
  * @returns The references as an array of string
  */
-export const references = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
+export const references = async (title: string|number, listOptions?: listOptions): Promise<Array<string>> => {
     try {
         let extLinksOptions: any = {
             prop: 'extlinks',
@@ -630,7 +630,7 @@ export const references = async (title: string, listOptions?: listOptions): Prom
  * @param redirect - Whether to redirect in case of 302
  * @returns The coordinates as {@link coordinatesResult | coordinatesResult}
  */
-export const coordinates = async (title: string, redirect = true): Promise<coordinatesResult> => {
+export const coordinates = async (title: string|number, redirect = true): Promise<coordinatesResult> => {
     try {
         let coordinatesOptions: any = {
             prop: 'coordinates',
@@ -655,7 +655,7 @@ export const coordinates = async (title: string, redirect = true): Promise<coord
  * @param listOptions - {@link listOptions | listOptions }
  * @returns The links as an array of {@link langLinksResult | langLinksResult }
  */
-export const langLinks = async (title: string, listOptions?: listOptions): Promise<Array<langLinksResult>> => {
+export const langLinks = async (title: string|number, listOptions?: listOptions): Promise<Array<langLinksResult>> => {
     try {
         let languageOptions: any = {
             prop: 'langlinks',
@@ -688,7 +688,7 @@ export const langLinks = async (title: string, listOptions?: listOptions): Promi
  * @param redirect - Whether to redirect in case of 302
  * @returns The info as JSON object
  */
-export const infobox = async (title: string, redirect = true): Promise<any> => {
+export const infobox = async (title: string|number, redirect = true): Promise<any> => {
     try {
         const infoboxOptions: any = {
             prop: 'revisions',
@@ -713,7 +713,7 @@ export const infobox = async (title: string, redirect = true): Promise<any> => {
  * @param redirect - Whether to redirect in case of 302
  * @returns The tables as arrays of JSON objects
  */
-export const tables = async (title: string, redirect = true): Promise<Array<any>> => {
+export const tables = async (title: string|number, redirect = true): Promise<Array<any>> => {
     try {
         const tableOptions: any = {
             prop: 'revisions',
@@ -738,7 +738,7 @@ export const tables = async (title: string, redirect = true): Promise<Array<any>
  * @returns The rawInfo of the page 
  * 
  */
-export const rawInfo = async (title: string, options: any, redirect = true): Promise<any> => {
+export const rawInfo = async (title: string|number, options: any, redirect = true): Promise<any> => {
     try {
         options = setPageIdOrTitleParam(options, title);
         const response = await request(options, redirect);
@@ -762,7 +762,7 @@ export const rawInfo = async (title: string, options: any, redirect = true): Pro
  * @remarks
  * Called in page object and also through wiki default object
  *
- * @param title - The title or page Id of the page
+ * @param title - The title of the page
  * @param redirect - Whether to redirect in case of 302
  * @returns The summary of the page as {@link wikiSummary | wikiSummary}
  */
@@ -783,7 +783,7 @@ export const summary = async (title: string, redirect = true): Promise<wikiSumma
  * @remarks
  * Called in page object and also through index
  *
- * @param title - The title or page Id of the page
+ * @param title - The title of the page
  * @param redirect - Whether to redirect in case of 302
  * @returns The related pages and summary as an array of {@link wikiSummary | wikiSummary}
  * 
@@ -806,7 +806,7 @@ export const related = async (title: string, redirect = true): Promise<relatedRe
  * @remarks
  * Called in page object and also through index
  *
- * @param title - The title or page Id of the page
+ * @param title - The title of the page
  * @param redirect - Whether to redirect in case of 302
  * @returns The related pages and summary as an array of {@link wikiMediaResult | wikiMediaResult}
  * 
