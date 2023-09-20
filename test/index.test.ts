@@ -213,3 +213,8 @@ test('Suggest returns string', async () => {
     const result = await wiki.suggest("test");
     expect(result).toStrictEqual("suggest");
 });
+
+test('sets the user agent', async () => {
+    let result = wiki.setUserAgent("testUser");
+    expect(result).toStrictEqual(undefined);
+});
