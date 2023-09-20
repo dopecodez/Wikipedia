@@ -10,6 +10,7 @@
     - [featuredContent()](#featuredContent)
     - [languages()](#languages)
     - [setLang()](#setLang)
+    - [setUserAgent()](#setUserAgent)
     - [suggest()](#suggest)
     - [random()](#random)
     - [citation()](#citation)
@@ -138,6 +139,22 @@ setLang = (language: string): string
 ```js
 //example
 const changedLang = await wiki.setLang('fr'); // sets language to french
+```
+
+### setUserAgent()
+
+Changes the user agent used in the request to wikipedia from 'wikipedia (https://github.com/dopecodez/Wikipedia/)' to the string passed.
+As per the wikipedia docs - Set a unique userAgent header that allows us to contact you quickly. Email addresses or URLs of contact pages work well. Check https://meta.wikimedia.org/wiki/User-Agent_policy for more info.
+
+```js
+setUserAgent = (userAgent: string)
+```
+- @param language - The language code for the wiki.
+- @result null
+
+```js
+//example
+await wiki.setUserAgent('Govind (gvind4@gmail.com)'); // sets userAgent to this value
 ```
 
 ### suggest()
