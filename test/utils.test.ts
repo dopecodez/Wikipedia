@@ -41,10 +41,16 @@ test('Sets title param for string titles', () => {
     expect(result.titles).toBe("Test");
 });
 
-test('Sets page ids params for number titles', () => {
+test('Handle number strings as titles', () => {
     const params = {}
     const result = setPageIdOrTitleParam(params, "112")
-    expect(result.pageids).toBe("112");
+    expect(result.titles).toBe("112");
+});
+
+test('Handle numbers as pageids', () => {
+    const params = {}
+    const result = setPageIdOrTitleParam(params, 112)
+    expect(result.pageids).toBe(112);
 });
 
 test('Sets pageId from params if present', () => {
