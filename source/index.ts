@@ -1,4 +1,4 @@
-import request, { makeRestRequest, setAPIUrl } from './request'
+import request, { makeRestRequest, setAPIUrl, setUserAgent } from './request'
 import { pageOptions, searchOptions, geoOptions, listOptions, eventOptions, fcOptions, randomFormats, pdfOptions, citationFormat, autocompletionOptions } from './optionTypes';
 import Page, {
     intro, images, html, content, categories, links, coordinates, langLinks,
@@ -652,6 +652,15 @@ wiki.autocompletions = async (query: string, autocompletionOptions?: autocomplet
   } catch (error) {
     throw new autocompletionsError(error);
   }
+}
+
+/**
+ * Change the default user agent for wikipedia
+ *
+ * @param userAgent - The new custom userAgent
+ */
+wiki.setUserAgent = (userAgent: string) => {
+    setUserAgent(userAgent);
 }
 
 export default wiki;

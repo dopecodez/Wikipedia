@@ -1,6 +1,6 @@
 import axios, {AxiosHeaders} from 'axios';
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
-import request, {makeRestRequest, setAPIUrl, returnRestUrl} from '../source/request';
+import request, {makeRestRequest, setAPIUrl, returnRestUrl, setUserAgent} from '../source/request';
 import { wikiError } from '../source';
 const fetchMock = jest.spyOn(axios, "get");
 
@@ -82,4 +82,19 @@ test('Return rest url', () => {
 test('Set language returns api url with language set', () => {
     const result = setAPIUrl("mal");
     expect(result).toStrictEqual("https://mal.wikipedia.org/w/api.php?");
+});
+
+test('Set user agent and use it to call the api', async () => {
+    setUserAgent("testUser");
+    fetchMock.mockImplementation(async () => { return response1 } );
+    await request({}, true);
+    const modifiedOptions : AxiosRequestConfig = {
+        headers: {
+            'Api-User-Agent': 'testUser'
+        }
+    }
+    expect(fetchMock).toHaveBeenCalledWith(
+        expect.anything(),
+        modifiedOptions
+    );
 });

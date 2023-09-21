@@ -2,11 +2,11 @@ import axios, { AxiosRequestConfig } from 'axios';
 import { wikiError } from './errors';
 
 let API_URL = 'https://en.wikipedia.org/w/api.php?',
-    REST_API_URL = 'https://en.wikipedia.org/api/rest_v1/';
+    REST_API_URL = 'https://en.wikipedia.org/api/rest_v1/',
     // RATE_LIMIT = false,
     // RATE_LIMIT_MIN_WAIT = undefined,
     // RATE_LIMIT_LAST_CALL = undefined,
-const USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
+    USER_AGENT = 'wikipedia (https://github.com/dopecodez/Wikipedia/)';
 
 async function callAPI(url: string) {
   const options: AxiosRequestConfig = {
@@ -60,6 +60,11 @@ export function setAPIUrl(prefix: string) : string {
     API_URL = 'https://' + prefix.toLowerCase() + '.wikipedia.org/w/api.php?';
     REST_API_URL = 'https://' + prefix.toLowerCase() + '.wikipedia.org/api/rest_v1/';
     return API_URL;
+}
+
+//change user agent
+export function setUserAgent(userAgent: string) {
+  USER_AGENT = userAgent;
 }
 
 export default makeRequest;

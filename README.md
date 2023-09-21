@@ -100,7 +100,7 @@ const wiki = require('wikipedia');
 })();
 ```
 
-There are other methods like `search()`, `geoSearch()`, `suggest()`, `setLang()` which should be called on the wiki object directly. Read up on the [wiki documentation][4] to see a complete list of methods available on the wiki default object.
+There are other methods like `search()`, `geoSearch()`, `suggest()`, `setLang()`, `setUserAgent()` which should be called on the wiki object directly. Read up on the [wiki documentation][4] to see a complete list of methods available on the wiki default object.
 
 ```js
 const wiki = require('wikipedia');
