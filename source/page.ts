@@ -665,7 +665,7 @@ export const langLinks = async (title: string, listOptions?: listOptions): Promi
         languageOptions = setPageIdOrTitleParam(languageOptions, title);
         const response = await request(languageOptions, listOptions?.redirect);
         const pageId = setPageId(languageOptions, response);
-        const result = response.query.pages[pageId].langlinks.map((link: any) => {
+        const result = (response.query.pages[pageId].langlinks ?? []).map((link: any) => {
             return {
                 lang: link.lang,
                 title: link['*'],
