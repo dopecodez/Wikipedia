@@ -58,6 +58,12 @@ test('Returns empty if no lang links are available', async () => {
     expect(result).toStrictEqual([]);
 });
 
+test('Returns empty if lang links object itself is not available', async () => {
+    requestMock.mockImplementation(async () => { return { query: { pages: {404: {}} } } });
+    const result = await langLinks("Test");
+    expect(result).toStrictEqual([]);
+});
+
 test('Returns with results an array of langLinksResult object', async () => {
     requestMock.mockImplementation(async () => { return { query: { pages: langLinkskMock } } });
     const result = await langLinks("Test");
