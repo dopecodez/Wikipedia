@@ -215,6 +215,13 @@ The project would not be the way it is without these rockstars.
             <br />
             <sub><b>Bigmistqke</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/yg-i">
+            <img src="https://avatars.githubusercontent.com/u/148152939?v=4" width="100;" alt="yg-i"/>
+            <br />
+            <sub><b>Null</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: contributors -end -->
