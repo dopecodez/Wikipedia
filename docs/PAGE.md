@@ -119,7 +119,7 @@ html = async (pageOptions?: pageOptions): Promise<string>
 ```js
 //example
 const page = await wiki.page('Batman');
-const html = await page.intro({redirect: false});
+const html = await page.html({redirect: false});
 ```
 
 #### related()
@@ -135,7 +135,7 @@ related = async (pageOptions?: pageOptions): Promise<relatedResult>
 ```js
 //example
 const page = await wiki.page('Batman');
-const related = await page.intro({redirect: false});
+const related = await page.related({redirect: false});
 ```
 
 #### media()
@@ -151,7 +151,7 @@ media = async (pageOptions?: pageOptions): Promise<wikiMediaResult>
 ```js
 //example
 const page = await wiki.page('Batman');
-const related = await page.intro({redirect: false});
+const media = await page.media({redirect: false});
 ```
 
 #### content()
@@ -166,7 +166,7 @@ content = async (pageOptions?: pageOptions): Promise<string>
 ```js
 //example
 const page = await wiki.page('Batman');
-const content = await page.intro({redirect: false});
+const content = await page.content({redirect: false});
 ```
 
 #### categories()
