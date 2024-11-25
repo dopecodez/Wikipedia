@@ -203,10 +203,17 @@ The project would not be the way it is without these rockstars.
     </td></tr>
 <tr>
     <td align="center">
-        <a href="https://github.com/zactopus">
-            <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zactopus"/>
+        <a href="https://github.com/Jman1868">
+            <img src="https://avatars.githubusercontent.com/u/43161576?v=4" width="100;" alt="Jman1868"/>
             <br />
-            <sub><b>Zac [they/them]</b></sub>
+            <sub><b>Jamal Ahmed</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/zoetrope69">
+            <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zoetrope69"/>
+            <br />
+            <sub><b>Z</b></sub>
         </a>
     </td>
     <td align="center">
