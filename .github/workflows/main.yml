@@ -32,6 +32,7 @@ jobs:
             - run: yarn
             - run: yarn build
     coverage:
+        needs: [ build ]
         name: coverage
         runs-on: ubuntu-latest
         steps:
