@@ -158,78 +158,82 @@ The project would not be the way it is without these rockstars.
 
 <!-- readme: contributors -start -->
 <table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/dopecodez">
-            <img src="https://avatars.githubusercontent.com/u/34269105?v=4" width="100;" alt="dopecodez"/>
-            <br />
-            <sub><b>Govind S</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/friendofdog">
-            <img src="https://avatars.githubusercontent.com/u/8337121?v=4" width="100;" alt="friendofdog"/>
-            <br />
-            <sub><b>Kevin Kee</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/bumbummen99">
-            <img src="https://avatars.githubusercontent.com/u/4533331?v=4" width="100;" alt="bumbummen99"/>
-            <br />
-            <sub><b>Patrick</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/gtibrett">
-            <img src="https://avatars.githubusercontent.com/u/47423?v=4" width="100;" alt="gtibrett"/>
-            <br />
-            <sub><b>Brett</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/0xflotus">
-            <img src="https://avatars.githubusercontent.com/u/26602940?v=4" width="100;" alt="0xflotus"/>
-            <br />
-            <sub><b>0xflotus</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/Greeshmareji">
-            <img src="https://avatars.githubusercontent.com/u/57181018?v=4" width="100;" alt="Greeshmareji"/>
-            <br />
-            <sub><b>Greeshma R</b></sub>
-        </a>
-    </td></tr>
-<tr>
-    <td align="center">
-        <a href="https://github.com/Jman1868">
-            <img src="https://avatars.githubusercontent.com/u/43161576?v=4" width="100;" alt="Jman1868"/>
-            <br />
-            <sub><b>Jamal Ahmed</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/zoetrope69">
-            <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zoetrope69"/>
-            <br />
-            <sub><b>Z</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/bigmistqke">
-            <img src="https://avatars.githubusercontent.com/u/10504064?v=4" width="100;" alt="bigmistqke"/>
-            <br />
-            <sub><b>Bigmistqke</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/yg-i">
-            <img src="https://avatars.githubusercontent.com/u/148152939?v=4" width="100;" alt="yg-i"/>
-            <br />
-            <sub><b>Null</b></sub>
-        </a>
-    </td></tr>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/dopecodez">
+                    <img src="https://avatars.githubusercontent.com/u/34269105?v=4" width="100;" alt="dopecodez"/>
+                    <br />
+                    <sub><b>Govind S</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/friendofdog">
+                    <img src="https://avatars.githubusercontent.com/u/8337121?v=4" width="100;" alt="friendofdog"/>
+                    <br />
+                    <sub><b>Kevin Kee</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/bumbummen99">
+                    <img src="https://avatars.githubusercontent.com/u/4533331?v=4" width="100;" alt="bumbummen99"/>
+                    <br />
+                    <sub><b>Patrick</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/gtibrett">
+                    <img src="https://avatars.githubusercontent.com/u/47423?v=4" width="100;" alt="gtibrett"/>
+                    <br />
+                    <sub><b>Brett</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/0xflotus">
+                    <img src="https://avatars.githubusercontent.com/u/26602940?v=4" width="100;" alt="0xflotus"/>
+                    <br />
+                    <sub><b>0xflotus</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/Greeshmareji">
+                    <img src="https://avatars.githubusercontent.com/u/57181018?v=4" width="100;" alt="Greeshmareji"/>
+                    <br />
+                    <sub><b>Greeshma R</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/Jman1868">
+                    <img src="https://avatars.githubusercontent.com/u/43161576?v=4" width="100;" alt="Jman1868"/>
+                    <br />
+                    <sub><b>Jamal Ahmed</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/zoetrope69">
+                    <img src="https://avatars.githubusercontent.com/u/2591901?v=4" width="100;" alt="zoetrope69"/>
+                    <br />
+                    <sub><b>Z</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/bigmistqke">
+                    <img src="https://avatars.githubusercontent.com/u/10504064?v=4" width="100;" alt="bigmistqke"/>
+                    <br />
+                    <sub><b>Bigmistqke</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/yg-i">
+                    <img src="https://avatars.githubusercontent.com/u/148152939?v=4" width="100;" alt="yg-i"/>
+                    <br />
+                    <sub><b>Null</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
 </table>
 <!-- readme: contributors -end -->
 
