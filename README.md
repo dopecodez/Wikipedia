@@ -1,4 +1,4 @@
-# WIKIPEDIA [![build](https://github.com/dopecodez/Wikipedia/workflows/build/badge.svg)](https://github.com/dopecodez/Wikipedia/actions) [![Test Coverage](https://api.codeclimate.com/v1/badges/a44c826dbef8c7f5ea45/test_coverage)](https://codeclimate.com/github/dopecodez/Wikipedia/test_coverage) [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues) [![npm version](https://badge.fury.io/js/wikipedia.svg)](https://badge.fury.io/js/wikipedia)
+# WIKIPEDIA [![build](https://github.com/dopecodez/Wikipedia/workflows/build/badge.svg)](https://github.com/dopecodez/Wikipedia/actions) [![Test Coverage](https://codecov.io/gh/dopecodez/Wikipedia/graph/badge.svg?token=MPOCB8O6N6)](https://codecov.io/gh/dopecodez/Wikipedia) [![Contributions](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dopecodez/Wikipedia/issues) [![npm version](https://badge.fury.io/js/wikipedia.svg)](https://badge.fury.io/js/wikipedia)
 
 Wikipedia for node. Works in the browser as well.
 
