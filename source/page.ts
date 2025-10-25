@@ -8,8 +8,6 @@ import { MSGS } from './messages';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const infoboxParser = require('infobox-parser');
-
-
 export class Page {
     pageid!: number;
     ns!: number;

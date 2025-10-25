@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
         "outDir": "dist",
-        "target": "es2018", // Node.js 10
+        "target": "es2022", // Node.js 18
         "lib": [
-            "es2018"
+            "es2022"
         ],
         "types" : [ "node", "jest" ],
         "strict": true,
@@ -14,7 +14,9 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "declaration": true,
-        "useUnknownInCatchVariables": false
+        "useUnknownInCatchVariables": false,
+        "noPropertyAccessFromIndexSignature": false,
+		"isolatedModules": true
     },
     "include": [
         "source"
