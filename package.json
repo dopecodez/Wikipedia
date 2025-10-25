@@ -49,5 +49,8 @@
     "jest",
     "node-wiki",
     "wiki-node"
-  ]
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
 }
