@@ -21,30 +21,27 @@ jobs:
             fail-fast: false
             matrix:
                 node-version:
-                    - 14
                     - 16
                     - 18
+                    - 20
         steps:
-            - uses: actions/checkout@v2
-            - uses: actions/setup-node@v1
+            - uses: actions/checkout@v5
+            - uses: actions/setup-node@v6
               with:
                 node-version: ${{ matrix.node-version }}
             - run: yarn
             - run: yarn build
     coverage:
+        needs: [ build ]
         name: coverage
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@master
-            - uses: actions/setup-node@master
+            - uses: actions/checkout@v5
+            - uses: actions/setup-node@v6
               with:
-                node-version: '16'
-            - run: npm install
-            - run: npm run test
-            - uses: paambaati/codeclimate-action@v3.2.0
-              env:
-                CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-              if: env.CC_TEST_REPORTER_ID != null
+                node-version: '18'
+            - run: yarn
+            - run: yarn test
+            - uses: codecov/codecov-action@v5
               with:
-                coverageCommand: yarn test
-                debug: true
+                token: ${{ secrets.CODECOV_TOKEN }}
