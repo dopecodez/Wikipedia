@@ -16,7 +16,7 @@ test('Is String returns true for strings', () => {
 });
 
 test('Returns error if no suggestion or search results are present', async () => {
-    searchMock.mockImplementation(async () => { return { suggestion: null, results: [] } });
+    searchMock.mockImplementation(async () => { return { suggestion: "", results: [] } });
     const t = async () => {
         await setTitleForPage("Test")
     };
@@ -30,7 +30,7 @@ test('Returns suggestion if suggestion is present', async () => {
 });
 
 test('Returns title if no suggestion but search results are present', async () => {
-    searchMock.mockImplementation(async () => { return { suggestion: null, results: ['result'] } });
+    searchMock.mockImplementation(async () => { return { suggestion: "", results: ['result'] } });
     const result = await setTitleForPage("Test");
     expect(result).toBe("Test");
 });
@@ -58,3 +58,21 @@ test('Sets pageid from result if not present in params', () => {
     const result = setPageId({}, output);
     expect(result).toBe("500");
 });
+
+test('Returns the correct title if given url', async () => {
+    const result = await setTitleForPage("https://en.wikipedia.org/wiki/Batman", { url: true });
+    expect(result).toBe("Batman");
+});
+
+test('Returns the correct title if url has special chars in title', async () => {
+    const result = await setTitleForPage("https://en.wikipedia.org/wiki/666_(number)", { url: true });
+    expect(result).toBe("666_(number)");
+});
+
+test('Throws error if url not wikipedia', async () => {
+    const t = async () => {
+        await setTitleForPage("https://example.com/666_(number)", { url: true });
+    };
+    expect(t).rejects.toThrowError(pageError);
+});
+
