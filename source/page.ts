@@ -31,7 +31,7 @@ export class Page {
     _categories!: Array<string>;
     _references!: Array<string>;
     _links!: Array<string>;
-    _coordinates!: coordinatesResult;
+    _coordinates!: coordinatesResult | null;
     _langLinks!: Array<langLinksResult>;
     _infobox!: any;
     _tables!: Array<any>;
@@ -245,7 +245,7 @@ export class Page {
      * @param redirect - Whether to redirect in case of 302
      * @returns The coordinates as {@link coordinatesResult | coordinatesResult}
      */
-    public coordinates = async (pageOptions?: pageOptions): Promise<coordinatesResult> => {
+    public coordinates = async (pageOptions?: pageOptions): Promise<coordinatesResult | null> => {
         try {
             if (!this._coordinates) {
                 const result = await coordinates(this.pageid.toString(), pageOptions?.redirect);
@@ -628,7 +628,7 @@ export const references = async (title: string, listOptions?: listOptions): Prom
  * @param redirect - Whether to redirect in case of 302
  * @returns The coordinates as {@link coordinatesResult | coordinatesResult}
  */
-export const coordinates = async (title: string, redirect = true): Promise<coordinatesResult> => {
+export const coordinates = async (title: string, redirect = true): Promise<coordinatesResult | null> => {
     try {
         let coordinatesOptions: any = {
             prop: 'coordinates',

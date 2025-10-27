@@ -66,13 +66,13 @@ wiki.search = async (query: string, searchOptions?: searchOptions): Promise<wiki
  * Call this method to get the basic info for page and also to preload any params you might use in future
  *
  * @param title - The title or page Id of the page
- * @param pageOptions - Whether to redirect, autoSuggest or preload any fields {@link pageOptions | pageOptions }
+ * @param pageOptions - Whether to redirect, autoSuggest, use url or preload any fields {@link pageOptions | pageOptions }
  * @returns The intro string
  */
 wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         let pageParams: any = {
             prop: 'info|pageprops',
@@ -114,8 +114,8 @@ wiki.page = async (title: string, pageOptions?: pageOptions): Promise<Page> => {
  */
 wiki.intro = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const result = await intro(title, pageOptions?.redirect);
         return result;
@@ -136,8 +136,8 @@ wiki.intro = async (title: string, pageOptions?: pageOptions): Promise<string> =
  */
 wiki.images = async (title: string, listOptions?: listOptions): Promise<Array<imageResult>> => {
     try {
-        if (listOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (listOptions?.url || listOptions?.autoSuggest) {
+            title = await setTitleForPage(title, listOptions);
         }
         const result = await images(title, listOptions);
         return result;
@@ -158,8 +158,8 @@ wiki.images = async (title: string, listOptions?: listOptions): Promise<Array<im
  */
 wiki.summary = async (title: string, pageOptions?: pageOptions): Promise<wikiSummary> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const result = await summary(title, pageOptions?.redirect);
         return result;
@@ -182,8 +182,8 @@ wiki.summary = async (title: string, pageOptions?: pageOptions): Promise<wikiSum
  */
 wiki.html = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const result = await html(title, pageOptions?.redirect);
         return result;
@@ -204,8 +204,8 @@ wiki.html = async (title: string, pageOptions?: pageOptions): Promise<string> =>
  */
 wiki.content = async (title: string, pageOptions?: pageOptions): Promise<string> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const response = await content(title, pageOptions?.redirect);
         return response.result;
@@ -226,8 +226,8 @@ wiki.content = async (title: string, pageOptions?: pageOptions): Promise<string>
  */
 wiki.categories = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
-        if (listOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (listOptions?.url || listOptions?.autoSuggest) {
+            title = await setTitleForPage(title, listOptions);
         }
         const response = await categories(title, listOptions);
         return response;
@@ -251,8 +251,8 @@ wiki.categories = async (title: string, listOptions?: listOptions): Promise<Arra
  */
 wiki.related = async (title: string, pageOptions?: pageOptions): Promise<relatedResult> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const response = await related(title, pageOptions?.redirect);
         return response;
@@ -276,8 +276,8 @@ wiki.related = async (title: string, pageOptions?: pageOptions): Promise<related
  */
 wiki.media = async (title: string, pageOptions?: pageOptions): Promise<wikiMediaResult> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const response = await media(title, pageOptions?.redirect);
         return response;
@@ -298,8 +298,8 @@ wiki.media = async (title: string, pageOptions?: pageOptions): Promise<wikiMedia
  */
 wiki.links = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
-        if (listOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (listOptions?.url || listOptions?.autoSuggest) {
+            title = await setTitleForPage(title, listOptions);
         }
         const response = await links(title, listOptions);
         return response;
@@ -320,8 +320,8 @@ wiki.links = async (title: string, listOptions?: listOptions): Promise<Array<str
  */
 wiki.references = async (title: string, listOptions?: listOptions): Promise<Array<string>> => {
     try {
-        if (listOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (listOptions?.url || listOptions?.autoSuggest) {
+            title = await setTitleForPage(title, listOptions);
         }
         const response = await references(title, listOptions);
         return response;
@@ -342,8 +342,8 @@ wiki.references = async (title: string, listOptions?: listOptions): Promise<Arra
  */
 wiki.coordinates = async (title: string, pageOptions?: pageOptions): Promise<coordinatesResult | null> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const response = await coordinates(title, pageOptions?.redirect);
         return response;
@@ -364,8 +364,8 @@ wiki.coordinates = async (title: string, pageOptions?: pageOptions): Promise<coo
  */
 wiki.langLinks = async (title: string, listOptions?: listOptions): Promise<Array<langLinksResult>> => {
     try {
-        if (listOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (listOptions?.url || listOptions?.autoSuggest) {
+            title = await setTitleForPage(title, listOptions);
         }
         const response = await langLinks(title, listOptions);
         return response;
@@ -386,8 +386,8 @@ wiki.langLinks = async (title: string, listOptions?: listOptions): Promise<Array
  */
 wiki.infobox = async (title: string, pageOptions?: pageOptions): Promise<any> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const response = await infobox(title, pageOptions?.redirect);
         return response;
@@ -408,8 +408,8 @@ wiki.infobox = async (title: string, pageOptions?: pageOptions): Promise<any> =>
  */
 wiki.tables = async (title: string, pageOptions?: pageOptions): Promise<Array<any>> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const response = await tables(title, pageOptions?.redirect);
         return response;
@@ -580,8 +580,8 @@ wiki.random = async (format?: randomFormats): Promise<wikiSummary | title | rela
  */
 wiki.mobileHtml = async (title: string, pageOptions?: pageOptions): Promise<notFound | string> => {
     try {
-        if (pageOptions?.autoSuggest) {
-            title = await setTitleForPage(title);
+        if (pageOptions?.url || pageOptions?.autoSuggest) {
+            title = await setTitleForPage(title, pageOptions);
         }
         const result = await mobileHtml(title, pageOptions?.redirect);
         return result;
