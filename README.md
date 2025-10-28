@@ -65,9 +65,9 @@ const wiki = require('wikipedia');
 
 You can also pass a valid wikipedia url instead of a string by using the url parameters in [pageOptions][10] like this. If you use an url without the url option it will fail.
 ```js
-    const page = await wiki.page('https://en.wikipedia.org/wiki/Batman',{url:true});
-    console.log(page);
-    //Response will be the same as passing a string
+const page = await wiki.page('https://en.wikipedia.org/wiki/Batman',{url:true});
+console.log(page);
+//Response will be the same as passing a string
 ```
 
 The page method returns a [Page][2] class object which has fields like `pageid`, `title`, `parentid`, `revisionid` and methods like `summary()`, `intro()`, `images()`, `html()` and more.
