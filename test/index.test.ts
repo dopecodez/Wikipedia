@@ -218,3 +218,10 @@ test('sets the user agent', async () => {
     let result = wiki.setUserAgent("testUser");
     expect(result).toStrictEqual(undefined);
 });
+
+test('Page returns results as Page Class if url given instead of title', async () => {
+    requestMock.mockImplementation(async () => { return { query: { pages: { 500: pageJson } } } });
+    setTitleMock.mockImplementation(async () => { return "test" });
+    const result = await wiki.page("https://en.wikipedia.org/wiki/Test", { url: true });
+    expect(result.toString()).toStrictEqual(pageObject.toString());
+});

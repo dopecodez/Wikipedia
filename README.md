@@ -62,9 +62,17 @@ const wiki = require('wikipedia');
 	}
 })();
 ```
+
+You can also pass a valid wikipedia url instead of a string by using the url parameters in [pageOptions][10] like this. If you use an url without the url option it will fail.
+```js
+    const page = await wiki.page('https://en.wikipedia.org/wiki/Batman',{url:true});
+    console.log(page);
+    //Response will be the same as passing a string
+```
+
 The page method returns a [Page][2] class object which has fields like `pageid`, `title`, `parentid`, `revisionid` and methods like `summary()`, `intro()`, `images()`, `html()` and more.
 
-All the page methods can take a title parameter or a pageId. Read up on the [Page documentation][2] here to see a detailed overview of the methods available in page.
+All the page methods can take a title parameter, url or a pageId. Read up on the [Page documentation][2] here to see a detailed overview of the methods available in page.
 
 You can also call methods like `summary()` on the `wiki` object directly. [Read up here][3] to see when you should use the `page` object and when you should call `summary()` directly. There's a performance difference! Long story short, use the method directly if you are using only the `summary` of the page and are not expecting to use any of the other `page` attributes.
 
@@ -246,3 +254,4 @@ The project would not be the way it is without these rockstars.
 [7]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#eventOptions
 [8]: https://github.com/dopecodez/wikipedia/blob/master/docs/wiki.md#onThisDay
 [9]: https://github.com/dopecodez/wikipedia/blob/master/docs/PAGE.md#summary
+[10]: https://github.com/dopecodez/wikipedia/blob/master/docs/optionTypes.md#pageOptions

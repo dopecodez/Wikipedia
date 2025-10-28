@@ -12,12 +12,14 @@ export interface pageOptions {
     redirect?: boolean
     preload?: boolean
     fields?: Array<pageFunctions>
+    url?: boolean
 }
 
 export interface listOptions {
     autoSuggest?: boolean
     redirect?: boolean
     limit?: number
+    url?: boolean
 }
 
 export interface geoOptions {

@@ -1,4 +1,4 @@
-import wiki from ".";
+import wiki, { pageOptions } from ".";
 import { pageError } from "./errors";
 import { MSGS } from "./messages";
 
@@ -7,9 +7,15 @@ export function isString(title: any){
     return isNaN(title);
 }
 
-//set title for page in case autoSuggest is true
-export async function setTitleForPage(title: string) {
+//set title for page in case url or autoSuggest is true
+export async function setTitleForPage(title: string, pageOptions?: pageOptions): Promise<string> {
     {
+        if (pageOptions?.url) {
+            const match = title.match(/(?<=\/wiki\/)[^/?#]+/);
+            if (!match) throw new pageError(`${MSGS.INVALID_WIKIPEDIA_URL}${title}`);
+            title = match[0];
+            return title;
+        }
         const searchResult = await wiki.search(title, { limit: 1, suggestion: true })
         if (!searchResult.suggestion && searchResult.results.length == 0) {
             throw new pageError(`${MSGS.PAGE_NOT_SUGGEST}${title}`)
