@@ -19,12 +19,14 @@ interface pageOptions {
     redirect?: boolean
     preload?: boolean
     fields?: Array<pageFunctions>
+    url?: boolean
 }
 ```
 The options for page methods on `Page` or `wiki`. Generally, can be used for all page methods which do not return a array.
 
 - `redirect : boolean`(default = true) - redirect in case wikipedia returns a 304. **This is the only field that is applicable to any method called on a [Page][1] object**.
 - `autoSuggest : boolean`(default = false) - suggest a page title which is reccomened by wikipedia for given string. Useful in case you are using user input to get details for a page.
+- `url : boolean`(default = false) - allows you to pass a valid wikipedia url in the title to get the information of that page.
 
 The other two fields are only applicable if added on the `wiki.page('title')` method, otherwise its ignored.
 
@@ -38,6 +40,7 @@ interface listOptions {
     autoSuggest?: boolean
     redirect?: boolean
     limit?: number
+    url?: boolean
 }
 ```
 The options for page methods on `Page` or `wiki`. Generally, can be used for all page methods which return an array
@@ -45,6 +48,7 @@ The options for page methods on `Page` or `wiki`. Generally, can be used for all
 - `autoSuggest : boolean`(default = false) - suggest a page title which is reccomened by wikipedia for given search string*
 - `redirect : boolean`(default = true) - redirect in case wikipedia returns a 304
 - `limit : number`(default = 10) - Use this to increase/decrease number of results in the returned array
+- `url : boolean`(default = false) - allows you to pass a valid wikipedia url in the title to get the information of that page.
 
 ### searchOptions
 
