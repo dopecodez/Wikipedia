@@ -9,7 +9,7 @@ Try out the new [`summary()`][9] REST endpoint for a introduction to your page a
 
 You can also now get the events which happened on a particular day using the [`onThisDay()`][8] api, which supports filtering by [event types][7] as well.
 
-Built with latest ES6 and native support for async/await and promises.
+Built with latest ES6 and native support for async/await and promises. Supports CommonJS require too(even though supporting it is becoming a headache lately!)
 
 Built with TypeScript - exports all the types used.
 
