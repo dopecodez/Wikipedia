@@ -663,12 +663,9 @@ wiki.setUserAgent = (userAgent: string) => {
     setUserAgent(userAgent);
 }
 
-export default wiki;
-// For CommonJS default export support
-module.exports = wiki;
-module.exports.default = wiki;
-
 export * from './errors';
 export * from './resultTypes';
 export * from './optionTypes';
 export * from './page';
+
+export default wiki;
