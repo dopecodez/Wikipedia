@@ -2,18 +2,18 @@
   "name": "wikipedia",
   "version": "2.4.0",
   "description": "A JavaScript wrapper for the wikipedia apis",
-  "main": "dist/index.js",
+  "main": "./dist/index.js",
   "engines": {
-    "node": ">=10"
+    "node": ">=16"
   },
   "exports": {
     "import": "./dist/index.js",
     "require": "./dist/index.cjs"
   },
   "scripts": {
-    "prepublishOnly": "tsc --build --clean && tsc && npx rollup ./dist/index.js --file ./dist/index.cjs --format cjs",
+    "prepublishOnly": "tsc --build --clean && tsc && npx rollup -c rollup.config.js --bundleConfigAsCjs",
     "test": "jest --coverage",
-    "build": "yarn lint && tsc --build --clean && tsc && npx rollup ./dist/index.js --file ./dist/index.cjs --format cjs",
+    "build": "yarn lint && tsc --build --clean && tsc && npx rollup -c rollup.config.js --bundleConfigAsCjs",
     "prepare": "yarn build",
     "lint": "eslint source/*.ts",
     "release": "np"
