@@ -45,6 +45,27 @@ For detailed documentation of methods available on `wiki` and `page`,
 
 ## Usage
 
+You can use wikipedia using ES6 directly
+
+```js
+import wiki from 'wikipedia';
+import { wikiSummary, summaryError } from 'wikipedia';
+import { summary } from 'wikipedia';
+
+(async () => {
+	try {
+        let summary: wikiSummary; //sets the object as type wikiSummary
+		summary = await wiki.summary('Batman');
+		console.log(summary);
+        let summary2 = await summary('Batman');//using summary directly
+	} catch (error) {
+		console.log(error);
+		//=> Typeof summaryError, helpful in case you want to handle this error separately
+	}
+})();
+```
+You can also use common-js still, but it is encouraged to use ES6 as supporting cjs is proving to be a headache with newer node versions.
+
 ```js
 const wiki = require('wikipedia');
 
@@ -124,25 +145,6 @@ const wiki = require('wikipedia');
 	} catch (error) {
 		console.log(error);
 		//=> Typeof wikiError
-	}
-})();
-```
-
-You can export types or even specific methods if you are using modern ES6 js or TypeScript.
-```js
-import wiki from 'wikipedia';
-import { wikiSummary, summaryError } from 'wikipedia';
-import { summary } from 'wikipedia';
-
-(async () => {
-	try {
-        let summary: wikiSummary; //sets the object as type wikiSummary
-		summary = await wiki.summary('Batman');
-		console.log(summary);
-        let summary2 = await summary('Batman');//using summary directly
-	} catch (error) {
-		console.log(error);
-		//=> Typeof summaryError, helpful in case you want to handle this error separately
 	}
 })();
 ```

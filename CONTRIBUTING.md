@@ -1,8 +1,7 @@
 # Contributing
 
 We welcome patches and features. There are however a few things that are
-required before your pull request can be merged. Make sure you cut a branch
-from develop and all PRs pointed towards master.
+required before your pull request can be merged. Point your forked repo to master and raise an MR. We currently have 100% test coverage, so please try to write some test cases to cover any new code introduced.
 
 # Tests
 
@@ -12,5 +11,5 @@ For any new feature added, we expect a new test case. Since the repo has a 100% 
 
 ## Running test cases
 
-Make sure your PR passes all the tests by running `npm run test` before
+Make sure your PR passes all the tests by running `yarn test` before
 raising a PR.
