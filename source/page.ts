@@ -554,7 +554,7 @@ export const categories = async (title: string, listOptions?: listOptions): Prom
     try {
         let categoryOptions: any = {
             prop: 'categories',
-            pllimit: listOptions?.limit,
+            cllimit: listOptions?.limit,
         }
         categoryOptions = setPageIdOrTitleParam(categoryOptions, title);
         const response = await request(categoryOptions, listOptions?.redirect);
