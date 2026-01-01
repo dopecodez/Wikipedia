@@ -6,6 +6,7 @@ const fetchMock = jest.spyOn(axios, "get");
 
 const options: AxiosRequestConfig = {
 	headers: {
+        "User-Agent": "wikipedia (https://github.com/dopecodez/Wikipedia/)",
 		'Api-User-Agent': 'wikipedia (https://github.com/dopecodez/Wikipedia/)'
 	}
 }
