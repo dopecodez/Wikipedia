@@ -91,6 +91,7 @@ test('Set user agent and use it to call the api', async () => {
     await request({}, true);
     const modifiedOptions : AxiosRequestConfig = {
         headers: {
+            "User-Agent": "testUser",
             'Api-User-Agent': 'testUser'
         }
     }
