@@ -11,6 +11,7 @@ let API_URL = 'https://en.wikipedia.org/w/api.php?',
 async function callAPI(url: string) {
   const options: AxiosRequestConfig = {
     headers: {
+      "User-Agent": USER_AGENT,
       "Api-User-Agent": USER_AGENT,
     },
   };
