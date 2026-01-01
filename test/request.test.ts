@@ -4,10 +4,12 @@ import request, {makeRestRequest, setAPIUrl, returnRestUrl, setUserAgent} from '
 import { wikiError } from '../source';
 const fetchMock = jest.spyOn(axios, "get");
 
+const expectedDefaultUserAgent = "wikipedia (https://github.com/dopecodez/Wikipedia/)";
+
 const options: AxiosRequestConfig = {
 	headers: {
-        "User-Agent": "wikipedia (https://github.com/dopecodez/Wikipedia/)",
-		'Api-User-Agent': 'wikipedia (https://github.com/dopecodez/Wikipedia/)'
+        "User-Agent": expectedDefaultUserAgent,
+		'Api-User-Agent': expectedDefaultUserAgent
 	}
 }
 const baseConfig : AxiosResponse['config'] = { headers: new AxiosHeaders()};
