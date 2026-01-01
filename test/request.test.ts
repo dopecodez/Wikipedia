@@ -89,12 +89,13 @@ test('Set language returns api url with language set', () => {
 
 test('Set user agent and use it to call the api', async () => {
     setUserAgent("testUser");
+    const userAgentOverride = "testUser";
     fetchMock.mockImplementation(async () => { return response1 } );
     await request({}, true);
     const modifiedOptions : AxiosRequestConfig = {
         headers: {
-            "User-Agent": "testUser",
-            'Api-User-Agent': 'testUser'
+            "User-Agent": userAgentOverride,
+            'Api-User-Agent': userAgentOverride
         }
     }
     expect(fetchMock).toHaveBeenCalledWith(
