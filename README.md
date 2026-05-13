@@ -185,6 +185,13 @@ The project would not be the way it is without these rockstars.
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/rubengmurray">
+                    <img src="https://avatars.githubusercontent.com/u/31162373?v=4" width="100;" alt="rubengmurray"/>
+                    <br />
+                    <sub><b>Reece Daniels</b></sub>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/bumbummen99">
                     <img src="https://avatars.githubusercontent.com/u/4533331?v=4" width="100;" alt="bumbummen99"/>
                     <br />
@@ -205,6 +212,8 @@ The project would not be the way it is without these rockstars.
                     <sub><b>0xflotus</b></sub>
                 </a>
             </td>
+		</tr>
+		<tr>
             <td align="center">
                 <a href="https://github.com/Greeshmareji">
                     <img src="https://avatars.githubusercontent.com/u/57181018?v=4" width="100;" alt="Greeshmareji"/>
@@ -212,8 +221,6 @@ The project would not be the way it is without these rockstars.
                     <sub><b>Greeshma R</b></sub>
                 </a>
             </td>
-		</tr>
-		<tr>
             <td align="center">
                 <a href="https://github.com/Jman1868">
                     <img src="https://avatars.githubusercontent.com/u/43161576?v=4" width="100;" alt="Jman1868"/>
