@@ -4,9 +4,12 @@ import request, {makeRestRequest, setAPIUrl, returnRestUrl, setUserAgent} from '
 import { wikiError } from '../source';
 const fetchMock = jest.spyOn(axios, "get");
 
+const expectedDefaultUserAgent = "wikipedia (https://github.com/dopecodez/Wikipedia/)";
+
 const options: AxiosRequestConfig = {
 	headers: {
-		'Api-User-Agent': 'wikipedia (https://github.com/dopecodez/Wikipedia/)'
+        "User-Agent": expectedDefaultUserAgent,
+		'Api-User-Agent': expectedDefaultUserAgent
 	}
 }
 const baseConfig : AxiosResponse['config'] = { headers: new AxiosHeaders()};
@@ -86,11 +89,13 @@ test('Set language returns api url with language set', () => {
 
 test('Set user agent and use it to call the api', async () => {
     setUserAgent("testUser");
+    const userAgentOverride = "testUser";
     fetchMock.mockImplementation(async () => { return response1 } );
     await request({}, true);
     const modifiedOptions : AxiosRequestConfig = {
         headers: {
-            'Api-User-Agent': 'testUser'
+            "User-Agent": userAgentOverride,
+            'Api-User-Agent': userAgentOverride
         }
     }
     expect(fetchMock).toHaveBeenCalledWith(

@@ -1,6 +1,5 @@
 import * as request from '../source/request';
 import wiki from "../source/index";
-import { htmlString, notFoundJson } from './samples';
 import { pdfError } from '../source/errors';
 import Page, { pdf } from '../source/page';
 import { pageJson } from './samples';
